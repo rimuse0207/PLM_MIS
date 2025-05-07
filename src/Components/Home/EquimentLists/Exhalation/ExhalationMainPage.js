@@ -45,7 +45,7 @@ const ExhalationMainPage = () => {
     return (
         <EquimentListsMainPageMainDivBox>
             <NavigationMainPage></NavigationMainPage>
-            <h1>{Model_Name}</h1>
+            <h1 style={{ margin: '30px' }}>{Model_Name}</h1>
             {/* 그래프 */}
             {MC_Rate_Graph_Data.length > 0 && MC_Graph_Data.length > 0 ? (
                 <div className="Graph_Cotainer">
@@ -69,7 +69,7 @@ const ExhalationMainPage = () => {
             ) : (
                 <></>
             )}
-
+            <div style={{ marginTop: '30px', marginBottom: '30px', border: '1px solid lightgray' }}></div>
             <div>
                 <ul className="Equiment_Lists_Container">
                     {Equipment_Exhalation_Lists.map(list => {
