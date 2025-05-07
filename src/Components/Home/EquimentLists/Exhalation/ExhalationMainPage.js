@@ -81,6 +81,7 @@ const ExhalationMainPage = () => {
                     })}
                 </ul>
             </div>
+
             <Loader loading={Loading}></Loader>
         </EquimentListsMainPageMainDivBox>
     );

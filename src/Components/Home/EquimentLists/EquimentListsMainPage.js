@@ -9,6 +9,20 @@ import { useNavigate } from 'react-router-dom';
 import moment from 'moment/moment';
 
 export const EquimentListsMainPageMainDivBox = styled.div`
+    .Lists_Containers_For_Equipment {
+        position: relative;
+        .Info_Container {
+            position: absolute;
+            top: -10px;
+            right: 10px;
+            color: green;
+            &:hover {
+                cursor: pointer;
+                color: gray;
+            }
+        }
+    }
+
     .Equiment_Lists_Container {
         display: flex;
         flex-flow: wrap;
