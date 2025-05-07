@@ -32,10 +32,12 @@ const ExhalationMainPage = () => {
             console.log(HandleClickDetailEquipmentInfo_Axios);
             setEquipment_Exhalation_Lists(HandleClickDetailEquipmentInfo_Axios.data.Add_BOM_Lists_EQ_NO);
             setMC_Graph_Data([
-                { id: '판가', data: HandleClickDetailEquipmentInfo_Axios.data.Sell_Price_Graph_Data },
-                { id: 'MC', data: HandleClickDetailEquipmentInfo_Axios.data.MC_Graph_Data },
+                { id: '판가', data: HandleClickDetailEquipmentInfo_Axios.data.Sell_Price_Graph_Data.sort((a, b) => a.x - b.x) },
+                { id: 'MC', data: HandleClickDetailEquipmentInfo_Axios.data.MC_Graph_Data.sort((a, b) => a.x - b.x) },
             ]);
-            setMC_Rate_Graph_Data([{ id: 'MC율', data: HandleClickDetailEquipmentInfo_Axios.data.MC_Rate_Graph_Data }]);
+            setMC_Rate_Graph_Data([
+                { id: 'MC율', data: HandleClickDetailEquipmentInfo_Axios.data.MC_Rate_Graph_Data.sort((a, b) => a.x - b.x) },
+            ]);
         }
         setLoading(false);
     };
