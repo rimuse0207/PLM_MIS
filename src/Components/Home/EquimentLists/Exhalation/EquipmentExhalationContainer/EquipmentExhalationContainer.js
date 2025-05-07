@@ -1,8 +1,10 @@
 import React from 'react';
 import { FaInfoCircle } from 'react-icons/fa';
 import ExcelDownload from './ExcelDownload/ExcelDownload';
+import { useParams } from 'react-router-dom';
 
 const EquipmentExhalationContainer = ({ list }) => {
+    const { Model_Name } = useParams();
     return (
         <div className="Lists_Containers_For_Equipment">
             <div className="Title_Container">
@@ -51,9 +53,13 @@ const EquipmentExhalationContainer = ({ list }) => {
                     </div>
                 </div>
             </div>
-            <div className="Info_Container" onClick={() => console.log(list.Bom_Lists.filter(item => item.ERP_PART.startsWith('R')))}>
-                <ExcelDownload list={list}></ExcelDownload>
-            </div>
+            {Model_Name ? (
+                <div className="Info_Container" onClick={() => console.log(list.Bom_Lists.filter(item => item.ERP_PART.startsWith('R')))}>
+                    <ExcelDownload list={list}></ExcelDownload>
+                </div>
+            ) : (
+                <></>
+            )}
         </div>
     );
 };
