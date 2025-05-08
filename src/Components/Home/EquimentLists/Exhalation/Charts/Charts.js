@@ -1,72 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { ResponsiveLine } from '@nivo/line';
-// const Data = [
-//     {
-//         id: '판가',
-//         data: [
-//             {
-//                 x: '1호기',
-//                 y: 19,
-//             },
-//             {
-//                 x: '2호기',
-//                 y: 272,
-//             },
-//             {
-//                 x: '3호기',
-//                 y: 105,
-//             },
-//             {
-//                 x: '4호기',
-//                 y: 212,
-//             },
-//             {
-//                 x: '5호기',
-//                 y: 232,
-//             },
-//             {
-//                 x: '6호기',
-//                 y: 2,
-//             },
-//         ],
-//     },
-//     {
-//         id: 'MC',
-//         data: [
-//             {
-//                 x: '1호기',
-//                 y: 15,
-//             },
-//             {
-//                 x: '2호기',
-//                 y: 164,
-//             },
-//             {
-//                 x: '3호기',
-//                 y: 122,
-//             },
-//             {
-//                 x: '4호기',
-//                 y: 172,
-//             },
-//             {
-//                 x: '5호기',
-//                 y: 291,
-//             },
-//             {
-//                 x: '6호기',
-//                 y: 235,
-//             },
-//         ],
-//     },
-// ];
+
 const Charts = ({ Model_Name, Graph_Data, Rate_Check }) => {
     const [YAxisMax, setyAxisMax] = useState(0);
     useEffect(() => {
         const maxValue = Math.max(...Graph_Data.flatMap(series => series.data.map(point => point.y)));
-        console.log('maxValue', maxValue);
         const yAxisMax = Math.ceil(maxValue * 2); // 10% 여유
         setyAxisMax(yAxisMax);
+        console.log(Graph_Data);
     }, [Graph_Data]);
     return (
         <div style={{ width: '100%', height: '300px', textAlign: 'center' }}>
@@ -76,11 +17,10 @@ const Charts = ({ Model_Name, Graph_Data, Rate_Check }) => {
                 xScale={{ type: 'point' }}
                 yScale={{
                     type: 'linear',
-                    min: 'auto',
-                    max: 'auto',
-                    stacked: true,
+                    // min: 'auto',
+                    // max: 'auto',
+                    stacked: false,
                     reverse: false,
-
                     min: 0,
                     max: Rate_Check ? 100 : YAxisMax,
                 }}
@@ -100,7 +40,7 @@ const Charts = ({ Model_Name, Graph_Data, Rate_Check }) => {
                     tickSize: 5,
                     tickPadding: 5,
                     tickRotation: 0,
-                    legend: Rate_Check ? '%' : '1천만원',
+                    legend: Rate_Check ? '%' : '천만원',
                     legendOffset: -40,
                     legendPosition: 'top',
                     truncateTickAt: 0,

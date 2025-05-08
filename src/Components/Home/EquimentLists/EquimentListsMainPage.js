@@ -7,6 +7,8 @@ import EquipmentExhalationContainer from './Exhalation/EquipmentExhalationContai
 import Loader from '../../../Loader/Loader';
 import { useNavigate } from 'react-router-dom';
 import moment from 'moment/moment';
+import { AllEquipmentsfetchData } from '../../../Models/ReduxThunks/AllEquipmentsReducers/AllEquipmentsReducers';
+import { useDispatch, useSelector } from 'react-redux';
 
 export const EquimentListsMainPageMainDivBox = styled.div`
     .Lists_Containers_For_Equipment {
@@ -14,8 +16,9 @@ export const EquimentListsMainPageMainDivBox = styled.div`
         .Info_Container {
             position: absolute;
             top: -10px;
-            right: 10px;
-            color: green;
+            right: -9px;
+            color: skyblue;
+            font-size: 20px;
             &:hover {
                 cursor: pointer;
                 color: gray;
@@ -148,23 +151,15 @@ const Test_MC_Rate_Graph_Data = [
 ];
 
 const EquimentListsMainPage = () => {
+    const dispatch = useDispatch();
     const Navigation = useNavigate();
-    const [EquimentLists_State, setEquimentLists_State] = useState([]);
-    const [Loading, setLoading] = useState(false);
+    const EquimentLists_State = useSelector(state => state.AllEquipmentsReducers_State);
 
     useEffect(() => {
-        Get_Equiment_Models_Lists_Func();
-    }, []);
-
-    const Get_Equiment_Models_Lists_Func = async () => {
-        setLoading(true);
-        const Get_Equiment_Models_Lists_Axioxs = await Request_Get_Axios('/PLM_Route/PLM_Dashboard/Getting_Equiment_Models_Lists');
-        if (Get_Equiment_Models_Lists_Axioxs.status) {
-            console.log(Get_Equiment_Models_Lists_Axioxs);
-            setEquimentLists_State(Get_Equiment_Models_Lists_Axioxs.data.Add_BOM_Lists_EQ_NO);
+        if (EquimentLists_State?.data?.length === 0) {
+            dispatch(AllEquipmentsfetchData());
         }
-        setLoading(false);
-    };
+    }, []);
 
     return (
         <EquimentListsMainPageMainDivBox>
@@ -175,7 +170,7 @@ const EquimentListsMainPage = () => {
                 </div>
             </div>
             <ul className="Equiment_Lists_Container">
-                {EquimentLists_State.map(list => {
+                {EquimentLists_State?.data.map(list => {
                     return (
                         <li key={list.WO_NO} onClick={() => Navigation(`/Select/Detail/Equipment/${list.MODEL}`)}>
                             <EquipmentExhalationContainer list={list}></EquipmentExhalationContainer>
@@ -184,7 +179,7 @@ const EquimentListsMainPage = () => {
                 })}
             </ul>
 
-            <Loader loading={Loading}></Loader>
+            <Loader loading={EquimentLists_State.loading}></Loader>
         </EquimentListsMainPageMainDivBox>
     );
 };

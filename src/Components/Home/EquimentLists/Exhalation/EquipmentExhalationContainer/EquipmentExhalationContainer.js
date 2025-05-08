@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaInfoCircle } from 'react-icons/fa';
 import ExcelDownload from './ExcelDownload/ExcelDownload';
 import { useParams } from 'react-router-dom';
+import { MdInfo } from 'react-icons/md';
+import ShowModal from './ShowModal/ShowModal';
 
-const EquipmentExhalationContainer = ({ list }) => {
+const EquipmentExhalationContainer = ({ list, HandleClickDetailEquipmentInfo }) => {
     const { Model_Name } = useParams();
+    const [ModalIsOpen, setModalIsOpen] = useState(false);
     return (
         <div className="Lists_Containers_For_Equipment">
             <div className="Title_Container">
@@ -54,9 +57,20 @@ const EquipmentExhalationContainer = ({ list }) => {
                 </div>
             </div>
             {Model_Name ? (
-                <div className="Info_Container" onClick={() => console.log(list.Bom_Lists.filter(item => item.ERP_PART.startsWith('R')))}>
-                    <ExcelDownload list={list}></ExcelDownload>
+                <div className="Info_Container" onClick={() => setModalIsOpen(true)}>
+                    <MdInfo />
                 </div>
+            ) : (
+                <></>
+            )}
+            {ModalIsOpen ? (
+                <ShowModal
+                    onMessage={'원하시는 처리를 클릭 해 주세요.'}
+                    onSubMessage={'원하시는 처리를 클릭 해 주세요.'}
+                    onClose={() => setModalIsOpen(false)}
+                    Select_Data={list}
+                    HandleClickDetailEquipmentInfo={() => HandleClickDetailEquipmentInfo()}
+                ></ShowModal>
             ) : (
                 <></>
             )}
