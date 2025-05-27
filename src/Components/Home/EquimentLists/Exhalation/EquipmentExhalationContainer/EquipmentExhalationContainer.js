@@ -13,9 +13,10 @@ const EquipmentExhalationContainer = ({ list, HandleClickDetailEquipmentInfo }) 
             <div className="Title_Container">
                 <div className="Title_Left_Container">
                     <h2>{list.MODEL}</h2>
+                    <div style={{ fontSize: '14px' }}>( {list.FSC_CD} )</div>
                 </div>
                 <div className="Title_Right_Container">
-                    <div>{list.EQNO_BY_MODEL} 호기</div>
+                    <div>{list.source === 'SBMS' ? `${list.EQNO_BY_MODEL} 호기` : 'PLM'}</div>
                     <div>{list.CUSTOMER}</div>
                 </div>
             </div>
@@ -56,13 +57,16 @@ const EquipmentExhalationContainer = ({ list, HandleClickDetailEquipmentInfo }) 
                     </div>
                 </div>
             </div>
-            {Model_Name ? (
+            {/* {Model_Name ? (
                 <div className="Info_Container" onClick={() => setModalIsOpen(true)}>
                     <MdInfo />
                 </div>
             ) : (
                 <></>
-            )}
+            )} */}
+            <div className="Info_Container" onClick={() => setModalIsOpen(true)}>
+                <MdInfo />
+            </div>
             {ModalIsOpen ? (
                 <ShowModal
                     onMessage={'원하시는 처리를 클릭 해 주세요.'}

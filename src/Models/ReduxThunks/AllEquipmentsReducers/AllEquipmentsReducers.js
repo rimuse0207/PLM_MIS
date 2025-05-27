@@ -16,6 +16,7 @@ export const AllEquipmentsfetchData = () => {
         try {
             console.log('실행2');
             const response = await Request_Get_Axios('/PLM_Route/PLM_Dashboard/Getting_Equiment_Models_Lists'); // Axios API 호출
+            console.log(response);
             if (response.data) dispatch(fetchDataSuccess(response.data.Add_BOM_Lists_EQ_NO)); // 성공 시 데이터 저장
             else dispatch(fetchDataFailure('error'));
         } catch (error) {

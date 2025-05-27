@@ -4,6 +4,8 @@ import ExcelDownload from '../ExcelDownload/ExcelDownload';
 import { CgArrowsExchangeV } from 'react-icons/cg';
 import { Request_Post_Axios } from '../../../../../../API';
 import { toast } from '../../../../../ToastMessage/ToastManager';
+import { useDispatch } from 'react-redux';
+import { AllEquipmentsfetchData } from '../../../../../../Models/ReduxThunks/AllEquipmentsReducers/AllEquipmentsReducers';
 
 const Modal = styled.div`
     background: white;
@@ -72,7 +74,7 @@ const CancelButton = styled.button`
     }
 `;
 
-const OnReturnButton = styled.button`
+const OnReturnButton = styled.div`
     background-color: ${props => (props.BackColors ? props.BackColors : 'lightgray')};
     color: white;
     border: none;
@@ -85,6 +87,11 @@ const OnReturnButton = styled.button`
     width: 150px;
     height: 80px;
     margin-bottom: 10px;
+    display: inline-block;
+    div {
+        height: 100%;
+        line-height: 60px;
+    }
     &:hover {
         background: ${props => (props.hoverBackColors ? props.hoverBackColors : 'gray')};
     }
@@ -108,6 +115,7 @@ const Overlay = styled.div`
 `;
 
 const ShowModal = ({ onMessage, onSubMessage, onClose, Select_Data, HandleClickDetailEquipmentInfo }) => {
+    const dispatch = useDispatch();
     const [Change_SellPrice_Modal, setChange_SellPrice_Modal] = useState(false);
     const [Change_Sell_Price_State, setChange_Sell_Price_State] = useState(Select_Data.Sell_Price);
 
@@ -147,19 +155,28 @@ const ShowModal = ({ onMessage, onSubMessage, onClose, Select_Data, HandleClickD
             const Send_Data_For_Change_The_Sell_Price_Axios = await Request_Post_Axios(
                 '/PLM_Route/PLM_Dashboard/Send_Data_For_Change_The_Sell_Price',
                 {
-                    Select_Data,
+                    Select_Data: {
+                        MODEL: Select_Data.MODEL,
+                        FSC_CD: Select_Data.FSC_CD,
+                        EQ_NO: Select_Data.source === 'PLM' ? Select_Data.FSC_CD : Select_Data.EQ_NO,
+                        WO_NO: Select_Data.source === 'PLM' ? Select_Data.FSC_CD : Select_Data.WO_NO,
+                        EQNO_BY_MODEL: Select_Data.source === 'PLM' ? 1 : Select_Data.EQNO_BY_MODEL,
+                    },
                     Change_Sell_Price_State,
                 }
             );
             if (Send_Data_For_Change_The_Sell_Price_Axios.status) {
                 onClose();
-
                 toast.show({
                     title: `판가 변경이 완료되었습니다.`,
                     successCheck: true,
                     duration: 6000,
                 });
-                await HandleClickDetailEquipmentInfo();
+                if (Select_Data.source === 'PLM') {
+                    dispatch(AllEquipmentsfetchData());
+                } else {
+                    await HandleClickDetailEquipmentInfo();
+                }
             } else {
                 toast.show({
                     title: `오류가 발생되었습니다. IT팀에 문의바랍니다.`,
