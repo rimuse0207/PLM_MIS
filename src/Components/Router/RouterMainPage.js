@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import EquimentMcMainPage from '../Home/EquimentMc/EquimentMcMainPgae';
 import EquimentListsMainPage from '../Home/EquimentLists/EquimentListsMainPage';
 import ExhalationMainPage from '../Home/EquimentLists/Exhalation/ExhalationMainPage';
+import BomListsMainPage from '../Home/BOMLists/BomListsMainPage';
 
 const RouterMainPage = () => {
     const User_Info = useSelector(state => state.Login_Info_Reducer_State.Login_Info);
@@ -19,6 +20,12 @@ const RouterMainPage = () => {
         {
             path: '/Select/Detail/Equipment/:Model_Name',
             element: <ExhalationMainPage></ExhalationMainPage>,
+            withAuthorization: false,
+            withAdminAuthorization: false,
+        },
+        {
+            path: '/Select/BOM/Lists/:Type/:Model_Name/:FSC_CODE/:EQ_NO',
+            element: <BomListsMainPage></BomListsMainPage>,
             withAuthorization: false,
             withAdminAuthorization: false,
         },

@@ -6,6 +6,7 @@ import { Request_Post_Axios } from '../../../../../../API';
 import { toast } from '../../../../../ToastMessage/ToastManager';
 import { useDispatch } from 'react-redux';
 import { AllEquipmentsfetchData } from '../../../../../../Models/ReduxThunks/AllEquipmentsReducers/AllEquipmentsReducers';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const Modal = styled.div`
     background: white;
@@ -115,6 +116,7 @@ const Overlay = styled.div`
 `;
 
 const ShowModal = ({ onMessage, onSubMessage, onClose, Select_Data, HandleClickDetailEquipmentInfo }) => {
+    const Navigate = useNavigate();
     const dispatch = useDispatch();
     const [Change_SellPrice_Modal, setChange_SellPrice_Modal] = useState(false);
     const [Change_Sell_Price_State, setChange_Sell_Price_State] = useState(Select_Data.Sell_Price);
@@ -242,6 +244,20 @@ const ShowModal = ({ onMessage, onSubMessage, onClose, Select_Data, HandleClickD
                         <OnReturnButton BackColors="#8dad59" hoverBackColors="green" onClick={onClose}>
                             {/* Excel 다운로드 */}
                             <ExcelDownload list={Select_Data}></ExcelDownload>
+                        </OnReturnButton>
+                        <OnReturnButton
+                            BackColors="#e49125"
+                            hoverBackColors="orange"
+                            onClick={() =>
+                                Navigate(
+                                    `/Select/BOM/Lists/${Select_Data.source}/${Select_Data.MODEL}/${Select_Data.FSC_CD}/${
+                                        Select_Data.source === 'PLM' ? Select_Data.FSC_CD : Select_Data.EQ_NO
+                                    }`
+                                )
+                            }
+                        >
+                            {/* BOM 조회 */}
+                            <div> B O M 조 회 </div>
                         </OnReturnButton>
 
                         <CancelButton onClick={onClose}>
