@@ -107,62 +107,6 @@ export const EquimentListsMainPageMainDivBox = styled.div`
     }
 `;
 
-const Test_Data = [
-    {
-        All_Price: 0,
-        Bom_Lists: [],
-        CUSTOMER: '삼성물산',
-        EQNO_BY_MODEL: '8',
-        EQ_NO: 'ECFCI25040118',
-        FSC_CD: 'CFCI-003',
-        LINE: 'N/A',
-        MC: 50,
-        MODEL: 'EX9950C',
-        Sell_Price: 100000000,
-        WORKPLACE: '삼성물산',
-        WO_NO: 'WO2503039',
-        rn: '1',
-    },
-];
-
-const Test_MC_Graph_Data = [
-    {
-        id: 'MC',
-        data: [
-            { x: '1호기', y: 40 },
-            { x: '2호기', y: 45 },
-            { x: '3호기', y: 50 },
-            { x: '4호기', y: 60 },
-            { x: '5호기', y: 70 },
-            { x: '6호기', y: 80 },
-        ],
-    },
-    {
-        id: '단가',
-        data: [
-            { x: '1호기', y: 40 * 2 },
-            { x: '2호기', y: 45 * 2 },
-            { x: '3호기', y: 50 * 2 },
-            { x: '4호기', y: 60 * 2 },
-            { x: '5호기', y: 70 * 2 },
-            { x: '6호기', y: 80 * 2 },
-        ],
-    },
-];
-const Test_MC_Rate_Graph_Data = [
-    {
-        id: 'MC율',
-        data: [
-            { x: '1호기', y: 40 },
-            { x: '2호기', y: 45 },
-            { x: '3호기', y: 50 },
-            { x: '4호기', y: 60 },
-            { x: '5호기', y: 70 },
-            { x: '6호기', y: 80 },
-        ],
-    },
-];
-
 const EquimentListsMainPage = () => {
     const dispatch = useDispatch();
     const Navigation = useNavigate();
@@ -268,15 +212,6 @@ const EquimentListsMainPage = () => {
                     * PART 계산은 {moment().format('YY.MM.DD')} 일자의 <span style={{ color: 'red' }}>매매기준율</span>로 계산 됩니다.
                 </div>
             </div>
-            {/* <ul className="Equiment_Lists_Container">
-                {EquimentLists_State?.data.map(list => {
-                    return (
-                        <li key={list.WO_NO} onDoubleClick={() => Navigation(`/Select/Detail/Equipment/${list.MODEL}`)}>
-                            <EquipmentExhalationContainer list={list}></EquipmentExhalationContainer>
-                        </li>
-                    );
-                })}
-            </ul> */}
 
             {DevisionState.map((item, j) => {
                 return (

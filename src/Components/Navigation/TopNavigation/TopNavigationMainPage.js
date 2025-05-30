@@ -14,10 +14,10 @@ const NavigationMainPageMainDivBox = styled.div`
     position: sticky;
     height: 80px;
     width: 100%;
-    border-bottom: 1px solid #dadce0;
+    border-bottom: 4px solid #dadce0;
     z-index: 2;
     background: white;
-    background-color: skyblue;
+    background-color: #fff;
     .NavigationMainFlexdiv {
         display: flex;
         justify-content: space-between;
@@ -146,7 +146,8 @@ const TopNavigationMainPage = () => {
             <div className="NavigationMainFlexdiv">
                 <div className="Main_Logo_Container">
                     <Link to="/">
-                        <img src="/EXICON.PNG" width="140px"></img>
+                        {/* <img src="/EXICON.PNG" width="140px"></img> */}
+                        <h2>EXICON</h2>
                     </Link>
 
                     {/* <div className="Main_Menu_Move_Container">
