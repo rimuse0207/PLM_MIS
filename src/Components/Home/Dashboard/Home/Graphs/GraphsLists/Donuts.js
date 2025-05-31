@@ -49,7 +49,8 @@ const Donuts = () => {
                 arcLinkLabelsThickness={2}
                 arcLinkLabelsColor={{ from: 'color' }} // pad 색상에 따라감
                 arcLabelsSkipAngle={10}
-                animate={false}
+                animate={true} // 애니메이션 활성화
+                motionConfig="gentle" // 애니메이션 설정, 없으면 기본값
                 theme={{
                     labels: {
                         text: {
