@@ -49,7 +49,7 @@ const GraphsMainPage = () => {
                         <option>CLT</option>
                     </select>
                 </div>
-                <Donuts></Donuts>
+                {/* <Donuts></Donuts> */}
             </div>
             <div className="Graph_Container_GR" style={{ width: '58%' }}>
                 <div className="Select_Group">
