@@ -29,18 +29,23 @@ const DepartTopMainPage = () => {
     const [DepartMentLists, setDepartMentLists] = useState([
         {
             Department_Name: 'DC/Module',
+            Department_code: 'Modules',
         },
         {
             Department_Name: 'MBT',
+            Department_code: 'MBT',
         },
         {
             Department_Name: 'Storage',
+            Department_code: 'Storage',
         },
         {
             Department_Name: 'SoC',
+            Department_code: 'SoC',
         },
         {
             Department_Name: 'CLT',
+            Department_code: 'CLT',
         },
     ]);
     return (

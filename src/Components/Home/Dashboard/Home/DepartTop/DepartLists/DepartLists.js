@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const DepartListsMainDivBox = styled.div`
@@ -13,6 +14,10 @@ const DepartListsMainDivBox = styled.div`
     margin-bottom: 10px;
     padding-left: 10px;
     padding-right: 10px;
+    &:hover {
+        cursor: pointer;
+        background-color: #efefef;
+    }
     .Price_Container {
         display: flex;
         align-items: center;
@@ -25,8 +30,14 @@ const DepartListsMainDivBox = styled.div`
 `;
 
 const DepartLists = ({ list }) => {
+    const Navigation = useNavigate();
+
+    const HandleClick_GoTo_DetailPage = Select_Data => {
+        Navigation(`/Detail/${Select_Data.Department_code}`);
+    };
+
     return (
-        <DepartListsMainDivBox>
+        <DepartListsMainDivBox onClick={() => HandleClick_GoTo_DetailPage(list)}>
             <div style={{ marginTop: '10px' }}>
                 <h2>{list.Department_Name}</h2>
             </div>

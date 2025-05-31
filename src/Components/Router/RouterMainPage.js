@@ -8,6 +8,7 @@ import EquimentListsMainPage from '../Home/EquimentLists/EquimentListsMainPage';
 import ExhalationMainPage from '../Home/EquimentLists/Exhalation/ExhalationMainPage';
 import BomListsMainPage from '../Home/BOMLists/BomListsMainPage';
 import DashboardMainPage from '../Home/Dashboard/DashboardMainpage';
+import DetailMainPage from '../Home/Dashboard/Detail/DetailMainPage';
 
 const RouterMainPage = () => {
     const User_Info = useSelector(state => state.Login_Info_Reducer_State.Login_Info);
@@ -15,6 +16,12 @@ const RouterMainPage = () => {
         {
             path: '/',
             element: <DashboardMainPage></DashboardMainPage>,
+            withAuthorization: false,
+            withAdminAuthorization: false,
+        },
+        {
+            path: '/Detail/:Groups_Code',
+            element: <DetailMainPage></DetailMainPage>,
             withAuthorization: false,
             withAdminAuthorization: false,
         },

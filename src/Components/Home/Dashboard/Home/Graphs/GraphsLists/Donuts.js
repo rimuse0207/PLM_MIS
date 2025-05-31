@@ -2,40 +2,34 @@ import React from 'react';
 import { ResponsivePie } from '@nivo/pie';
 const data = [
     {
-        id: 'python',
-        label: 'python',
-        value: 405,
+        id: 'DC/Module',
+        label: 'DC/Module',
+        value: 200,
         color: 'hsl(149, 70%, 50%)',
     },
     {
-        id: 'php',
-        label: 'php',
-        value: 261,
+        id: 'MBT',
+        label: 'MBT',
+        value: 200,
         color: 'hsl(338, 70%, 50%)',
     },
     {
-        id: 'c',
-        label: 'c',
-        value: 530,
+        id: 'Storage',
+        label: 'Storage',
+        value: 200,
         color: 'hsl(116, 70%, 50%)',
     },
     {
-        id: 'hack',
-        label: 'hack',
-        value: 298,
+        id: 'SoC',
+        label: 'SoC',
+        value: 200,
         color: 'hsl(55, 70%, 50%)',
     },
     {
-        id: 'lisp',
-        label: 'lisp',
-        value: 50,
+        id: 'CLT',
+        label: 'CLT',
+        value: 200,
         color: 'hsl(84, 70%, 50%)',
-    },
-    {
-        id: 'react',
-        label: 'react',
-        value: 520,
-        color: 'hsl(14, 30%, 50%)',
     },
 ];
 const Donuts = () => {
@@ -65,7 +59,7 @@ const Donuts = () => {
                 /**
                  * chart 색상
                  */
-                colors={['skyblue', 'orange', 'gray', 'yellow', 'green', 'purple']} // 커스터하여 사용할 때
+                colors={['skyblue', 'orange', 'gray', 'gold', 'green', 'purple']} // 커스터하여 사용할 때
                 // colors={{ scheme: 'nivo' }} // nivo에서 제공해주는 색상 조합 사용할 때
                 /**
                  * pad border 두께 설정
@@ -118,6 +112,7 @@ const Donuts = () => {
                 /**
                  * legend 설정 (default로 하단에 있는 색상별 key 표시)
                  */
+
                 legends={[
                     {
                         anchor: 'bottom', // 위치
@@ -126,12 +121,13 @@ const Donuts = () => {
                         translateX: 0, // chart와 X 간격
                         translateY: 56, // chart와 Y 간격
                         itemsSpacing: 0, // item간 간격
-                        itemWidth: 80, // item width
+                        itemWidth: 100, // item width
                         itemHeight: 18, // item height
                         itemDirection: 'left-to-right', // item 내부에 그려지는 방향
                         itemOpacity: 1, // item opacity
                         symbolSize: 18, // symbol (색상 표기) 크기
                         symbolShape: 'circle', // symbol (색상 표기) 모양
+                        justify: false,
                         effects: [
                             {
                                 // 추가 효과 설정 (hover하면 textColor를 olive로 변경)
@@ -144,6 +140,75 @@ const Donuts = () => {
                         // onClick: handle.legendClick, // legend 클릭 이벤트
                     },
                 ]}
+                layers={[
+                    'arcs',
+                    'arcLinkLabels',
+                    'legends',
+                    ({ centerX, centerY, dataWithArc }) => {
+                        const total = data.reduce((sum, d) => sum + d.value, 0);
+                        return dataWithArc.map(datum => {
+                            const { startAngle, endAngle, outerRadius } = datum.arc;
+
+                            // ⭐ 중심각 보정 (시계 방향으로 -90도 회전)
+                            const angle = (startAngle + endAngle) / 2 - Math.PI / 2;
+
+                            const radius = outerRadius * 0.7;
+                            const x = centerX + radius * Math.cos(angle);
+                            const y = centerY + radius * Math.sin(angle);
+                            const percent = ((datum.value / total) * 100).toFixed(1);
+
+                            return (
+                                <g key={datum.id}>
+                                    <text
+                                        x={x}
+                                        y={y - 6}
+                                        textAnchor="middle"
+                                        dominantBaseline="central"
+                                        style={{
+                                            fill: '#000',
+                                            fontSize: 12,
+                                            fontWeight: 'bold',
+                                        }}
+                                    >
+                                        {datum.value}
+                                    </text>
+                                    <text
+                                        x={x}
+                                        y={y + 8}
+                                        textAnchor="middle"
+                                        dominantBaseline="central"
+                                        style={{
+                                            fill: '#fff',
+                                            fontSize: 11,
+                                        }}
+                                    >
+                                        {percent}%
+                                    </text>
+                                </g>
+                            );
+                        });
+                    },
+                ]}
+                tooltip={({ datum }) => {
+                    const total = data.reduce((sum, d) => sum + d.value, 0);
+                    const percent = ((datum.value / total) * 100).toFixed(1);
+                    return (
+                        <div
+                            style={{
+                                padding: 10,
+                                background: 'white',
+                                border: '1px solid #ccc',
+                                color: '#000',
+                            }}
+                        >
+                            <strong>{datum.label}</strong>
+                            <br />
+                            매출: {datum.value}
+                            <br />
+                            비율: {percent}%
+                        </div>
+                    );
+                }}
             />
         </div>
     );
