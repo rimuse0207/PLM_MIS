@@ -30,6 +30,11 @@ const GraphsMainPageMainDivBox = styled.div`
                 font-size: 1.5em;
                 font-weight: bolder;
             }
+            .Unit_Container {
+                position: absolute;
+                top: 40px;
+                right: 0px;
+            }
         }
     }
 `;
@@ -48,6 +53,7 @@ const GraphsMainPage = () => {
                         <option>SoC</option>
                         <option>CLT</option>
                     </select>
+                    <div className="Unit_Container">*단위 백만원</div>
                 </div>
                 <Donuts></Donuts>
             </div>

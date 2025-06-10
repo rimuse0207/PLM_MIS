@@ -6,9 +6,12 @@ import { useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import EquimentListsMainPage from '../../Home/EquimentLists/EquimentListsMainPage';
+
+import Select from '@mui/material/Select';
+import ReactSelect from 'react-select';
 
 const NavigationMainPageMainDivBox = styled.div`
     position: sticky;
@@ -45,6 +48,12 @@ const NavigationMainPageMainDivBox = styled.div`
     }
     .Main_Logo_Container {
         position: relative;
+        .Select_Containers {
+            position: absolute;
+            right: -350px;
+            width: 300px;
+            top: 0px;
+        }
         .Main_Menu_Move_Container {
             position: absolute;
             right: -400px;
@@ -125,6 +134,15 @@ const TopNavigationMainPage = () => {
         },
     ]);
     const [open, setOpen] = useState(false);
+    const [Select_Values, setSelect_Values] = useState({
+        value: moment().format('YYYY'),
+        label: `${moment().format('YYYY')}년`,
+    });
+    const options = [
+        { value: '2024', label: '2024년' },
+        { value: '2025', label: '2025년' },
+    ];
+
     const Handle_Change_Move_To_Go = e => {
         Navigate(e.target.value);
     };
@@ -168,6 +186,9 @@ const TopNavigationMainPage = () => {
                             </Select>
                         </FormControl>
                     </div> */}
+                    <div className="Select_Containers">
+                        <ReactSelect value={Select_Values} options={options} onChange={e => setSelect_Values(e)} />
+                    </div>
                 </div>
             </div>
         </NavigationMainPageMainDivBox>

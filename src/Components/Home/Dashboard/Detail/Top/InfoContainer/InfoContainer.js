@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { FaAngleDown } from 'react-icons/fa6';
 
 const InfoContainerMainDivBox = styled.div`
     height: 20vh;
@@ -46,23 +47,99 @@ const InfoContainerMainDivBox = styled.div`
             }
         }
     }
+
+    /* select 요소의 컨테이너에 화살표 추가 */
+    .select-container {
+        position: relative;
+        display: inline-block;
+        width: 200px;
+        margin-top: 20px;
+        .Select_Arrow {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            pointer-events: none;
+            font-size: 20px;
+            color: rgb(0, 202, 255);
+        }
+        select {
+            width: 200px;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid rgb(0, 202, 255);
+            border-radius: 5px;
+            background-color: white;
+            color: #333;
+            appearance: none; /* 브라우저 기본 스타일 제거 */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 15px;
+        }
+        /* select 박스가 포커스될 때 스타일 */
+        select:focus {
+            border-color: #ff5e5e;
+            outline: none;
+            box-shadow: 0 0 5px rgba(255, 94, 94, 0.5);
+        }
+
+        /* 옵션 스타일 */
+        option {
+            padding: 10px;
+        }
+    }
 `;
 
 const InfoContainer = () => {
     const { Groups_Code } = useParams();
+    const [DepartMentLists, setDepartMentLists] = useState([
+        {
+            Department_Name: 'DC/Module',
+            Department_code: 'Modules',
+            equipment_Lists: ['S810', 'S1610', 'S3000P', 'i1000', 'i1520'],
+        },
+        {
+            Department_Name: 'MBT',
+            Department_code: 'MBT',
+            equipment_Lists: ['i2122H', 'i2154H'],
+        },
+        {
+            Department_Name: 'Storage',
+            Department_code: 'Storage',
+            equipment_Lists: ['i3930KA', 'SST12KA', 'SST12KF', 'SST12KFQ THB', 'SST32KF', 'SST32KF THB', 'SST64KA'],
+        },
+        {
+            Department_Name: 'SoC',
+            Department_code: 'SoC',
+            equipment_Lists: ['I9950CP', 'EX9950C', 'EX9950D'],
+        },
+        {
+            Department_Name: 'CLT',
+            Department_code: 'CLT',
+            equipment_Lists: ['i7304C'],
+        },
+    ]);
     return (
         <InfoContainerMainDivBox>
             <div className="Select_Line"></div>
             <div className="Info_Container">
                 <div className="Info_Container_Left">
                     <h2>{Groups_Code === 'Modules' ? 'DC/Module' : Groups_Code}</h2>
-                    <select>
-                        <option>전체</option>
-                        <option>S3000P</option>
-                        <option>S1610</option>
-                        <option>S810</option>
-                        <option>i1520</option>
-                    </select>
+                    <div class="select-container">
+                        <select>
+                            <option value="All">전체</option>
+                            {DepartMentLists.filter(item => item.Department_code === Groups_Code).map(lists => {
+                                return lists.equipment_Lists.map(list => {
+                                    return <option value={list}>{list}</option>;
+                                });
+                            })}
+                        </select>
+                        <div className="Select_Arrow">
+                            <FaAngleDown />
+                        </div>
+                    </div>
                 </div>
                 <div className="Info_Container_Right">
                     <ul>

@@ -1,14 +1,28 @@
 import React from 'react';
 import { ResponsiveBar } from '@nivo/bar';
+import styled from 'styled-components';
+
+const BarsMainDivBox = styled.div`
+    width: 100%;
+    height: 90%;
+    text-align: center;
+    margin-top: 20px;
+    position: relative;
+    .Unit_Container {
+        position: absolute;
+        top: 50px;
+        right: 80px;
+    }
+`;
 
 const Bars = () => {
     const barData = [
-        { equipments: 'i7304C 6호기', MC: 1200, price: 2000 },
-        { equipments: 'i7304C 5호기', MC: 2200, price: 3000 },
-        { equipments: 'i7304C 4호기', MC: 3200, price: 5000 },
+        { equipments: 'i7304C 1호기', MC: 1200, price: 2000 },
+        { equipments: 'i7304C 2호기', MC: 2200, price: 3000 },
         { equipments: 'i7304C 3호기', MC: 3200, price: 5000 },
-        { equipments: 'i7304C 2호기', MC: 3200, price: 5000 },
-        { equipments: 'i7304C 1호기', MC: 3200, price: 5000 },
+        { equipments: 'i7304C 4호기', MC: 3200, price: 5000 },
+        { equipments: 'i7304C 5호기', MC: 3200, price: 5000 },
+        { equipments: 'i7304C 6호기', MC: 3200, price: 5000 },
     ];
 
     // 시각화 전용 데이터 가공 (원본은 그대로)
@@ -18,23 +32,24 @@ const Bars = () => {
     }));
     const maxValue = Math.max(...barData.map(d => Math.max(d.MC, d.price))) * 1.3;
     return (
-        <div style={{ width: '100%', height: '95%', textAlign: 'center', marginTop: '20px' }}>
+        <BarsMainDivBox>
+            <div className="Unit_Container">*단위 백만원</div>
             <ResponsiveBar
                 data={adjustedData}
                 maxValue={maxValue}
                 keys={['MC', 'profit']}
                 indexBy="equipments"
-                margin={{ top: 50, right: 40, bottom: 30, left: 60 }}
+                margin={{ top: 70, right: 60, bottom: 60, left: 80 }}
                 padding={0.7}
                 groupMode="stacked"
                 colors={['skyblue', 'gray']}
                 colorBy="id"
                 theme={{
-                    labels: { text: { fontSize: 10, fill: '#000000' } },
-                    legends: { text: { fontSize: 12, fill: '#000000' } },
+                    labels: { text: { fontSize: 20, fill: '#000000' } },
+                    legends: { text: { fontSize: 23, fill: '#000000' } },
                     axis: {
-                        legend: { text: { fontSize: 10, fill: '#000000' } },
-                        ticks: { text: { fontSize: 10, fill: '#000000' } },
+                        legend: { text: { fontSize: 20, fill: '#000000' } },
+                        ticks: { text: { fontSize: 20, fill: '#000000' } },
                     },
                 }}
                 axisBottom={{
@@ -50,7 +65,10 @@ const Bars = () => {
                     tickRotation: 0,
                     legendPosition: 'middle',
                     legendOffset: -40,
+                    tickValues: Array.from({ length: Math.ceil(maxValue / 1000) }, (_, i) => (i + 1) * 1000),
+                    format: value => value.toLocaleString(),
                 }}
+                enableGridY={false}
                 enableLabel={false}
                 legends={[
                     {
@@ -58,7 +76,7 @@ const Bars = () => {
                         anchor: 'top-right',
                         direction: 'row',
                         translateX: 0,
-                        translateY: -40,
+                        translateY: -50,
                         itemWidth: 100,
                         itemHeight: 20,
                         itemsSpacing: 2,
@@ -78,7 +96,6 @@ const Bars = () => {
                     'legends',
                     // ✅ 퍼센트 텍스트 추가 layer
                     ({ bars }) => {
-                        console.log(bars);
                         return bars
                             .filter(bar => bar.data.id === 'profit')
                             .map(bar => {
@@ -96,7 +113,7 @@ const Bars = () => {
                                         textAnchor="middle"
                                         style={{
                                             fill: 'black',
-                                            fontSize: 12,
+                                            fontSize: 25,
                                             fontWeight: 'bold',
                                             pointerEvents: 'none', // 마우스 이벤트 막기
                                         }}
@@ -117,7 +134,7 @@ const Bars = () => {
                                     border: '1px solid #ccc',
                                     borderRadius: '4px',
                                     color: 'black',
-                                    fontSize: '12px',
+                                    fontSize: '20px',
                                 }}
                             >
                                 <strong>{indexValue}</strong>
@@ -134,7 +151,7 @@ const Bars = () => {
                                     border: '1px solid #ccc',
                                     borderRadius: '4px',
                                     color: 'black',
-                                    fontSize: '12px',
+                                    fontSize: '20px',
                                 }}
                             >
                                 <strong>{indexValue}</strong>
@@ -145,7 +162,7 @@ const Bars = () => {
                     }
                 }}
             />
-        </div>
+        </BarsMainDivBox>
     );
 };
 

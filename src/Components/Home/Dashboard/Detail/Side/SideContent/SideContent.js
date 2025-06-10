@@ -46,19 +46,19 @@ const SideContent = () => {
                             <td>1. </td>
                             <td>S1610</td>
                             <td>3건</td>
-                            <td>530,000,000</td>
+                            <td>{new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(530000000)}</td>
                         </tr>
                         <tr>
                             <td>2. </td>
                             <td>S3000P</td>
                             <td>3건</td>
-                            <td>530,000,000</td>
+                            <td>{new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(530000000)}</td>
                         </tr>
                         <tr>
                             <td>3. </td>
                             <td>i5120</td>
                             <td>3건</td>
-                            <td>530,000,000</td>
+                            <td>{new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(530000000)}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -70,7 +70,7 @@ const SideContent = () => {
                             <th>거래일</th>
                             <th>모델명</th>
                             <th>호기</th>
-                            <th>금액</th>
+                            <th>판가</th>
                         </tr>
                     </thead>
                     <tbody>

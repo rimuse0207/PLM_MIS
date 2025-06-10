@@ -37,11 +37,11 @@ const Donuts = () => {
         <div style={{ width: '100%', height: '100%', textAlign: 'center' }}>
             <ResponsivePie
                 data={data}
-                margin={{ top: 40, right: 0, bottom: 80, left: 0 }}
+                margin={{ top: 100, right: 0, bottom: 80, left: 0 }}
                 innerRadius={0}
                 padAngle={1}
                 cornerRadius={0}
-                colors={['skyblue', 'orange', 'gray', 'gold', 'green', 'purple']} // 커스터하여 사용할 때
+                colors={['blueviolet', 'orange', 'burlywood', 'gold', 'green', 'purple']} // 커스터하여 사용할 때
                 // colors={{ scheme: 'nivo' }} // nivo에서 제공해주는 색상 조합 사용할 때
                 borderWidth={0}
                 arcLinkLabelsSkipAngle={0}
@@ -49,18 +49,16 @@ const Donuts = () => {
                 arcLinkLabelsThickness={2}
                 arcLinkLabelsColor={{ from: 'color' }} // pad 색상에 따라감
                 arcLabelsSkipAngle={10}
-                animate={true} // 애니메이션 활성화
-                motionConfig="gentle" // 애니메이션 설정, 없으면 기본값
                 theme={{
                     labels: {
                         text: {
-                            fontSize: 14,
+                            fontSize: 25,
                             fill: '#000000',
                         },
                     },
                     legends: {
                         text: {
-                            fontSize: 12,
+                            fontSize: 20,
                             fill: '#000000',
                         },
                     },
@@ -73,11 +71,11 @@ const Donuts = () => {
                         translateX: 0, // chart와 X 간격
                         translateY: 56, // chart와 Y 간격
                         itemsSpacing: 0, // item간 간격
-                        itemWidth: 100, // item width
+                        itemWidth: 130, // item width
                         itemHeight: 18, // item height
                         itemDirection: 'left-to-right', // item 내부에 그려지는 방향
                         itemOpacity: 1, // item opacity
-                        symbolSize: 18, // symbol (색상 표기) 크기
+                        symbolSize: 20, // symbol (색상 표기) 크기
                         symbolShape: 'circle', // symbol (색상 표기) 모양
                         justify: false,
                     },
@@ -91,7 +89,7 @@ const Donuts = () => {
                         return dataWithArc.map(datum => {
                             const { startAngle, endAngle, outerRadius } = datum.arc;
 
-                            // ⭐ 중심각 보정 (시계 방향으로 -90도 회전)
+                            // 중심각 보정 (시계 방향으로 -90도 회전)
                             const angle = (startAngle + endAngle) / 2 - Math.PI / 2;
 
                             const radius = outerRadius * 0.7;
@@ -108,7 +106,7 @@ const Donuts = () => {
                                         dominantBaseline="central"
                                         style={{
                                             fill: '#000',
-                                            fontSize: 12,
+                                            fontSize: 20,
                                             fontWeight: 'bold',
                                         }}
                                     >
@@ -116,12 +114,12 @@ const Donuts = () => {
                                     </text>
                                     <text
                                         x={x}
-                                        y={y + 8}
+                                        y={y + 20}
                                         textAnchor="middle"
                                         dominantBaseline="central"
                                         style={{
                                             fill: '#fff',
-                                            fontSize: 11,
+                                            fontSize: 20,
                                         }}
                                     >
                                         {percent}%

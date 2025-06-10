@@ -30,22 +30,27 @@ const DepartTopMainPage = () => {
         {
             Department_Name: 'DC/Module',
             Department_code: 'Modules',
+            equipment_Lists: ['S810', 'S1610', 'S3000P', 'i1000', 'i1520'],
         },
         {
             Department_Name: 'MBT',
             Department_code: 'MBT',
+            equipment_Lists: ['i2122H', 'i2154H'],
         },
         {
             Department_Name: 'Storage',
             Department_code: 'Storage',
+            equipment_Lists: ['i3930KA', 'SST12KA', 'SST12KF', 'SST12KFQ THB', 'SST32KF', 'SST32KF THB', 'SST64KA'],
         },
         {
             Department_Name: 'SoC',
             Department_code: 'SoC',
+            equipment_Lists: ['I9950CP', 'EX9950C', 'EX9950D'],
         },
         {
             Department_Name: 'CLT',
             Department_code: 'CLT',
+            equipment_Lists: ['I7304C'],
         },
     ]);
     return (

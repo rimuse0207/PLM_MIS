@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { FaWonSign } from 'react-icons/fa6';
 
 const DepartListsMainDivBox = styled.div`
     border: 1px solid lightgray;
@@ -27,6 +28,11 @@ const DepartListsMainDivBox = styled.div`
             text-align: center;
         }
     }
+    .Money_Containers {
+        font-weight: bolder;
+        font-size: 1.1em;
+        text-align: end;
+    }
 `;
 
 const DepartLists = ({ list }) => {
@@ -42,15 +48,17 @@ const DepartLists = ({ list }) => {
                 <h2>{list.Department_Name}</h2>
             </div>
             <div className="Price_Container">
-                <h2 style={{ fontSize: '2em' }}>87.0%</h2>
-                <div>
-                    <div>2,300 M</div>
-                    <div>2,001 M</div>
+                <h2 style={{ fontSize: '3em' }}>87.0%</h2>
+                <div style={{ width: '40%', borderLeft: '1px solid lightgray' }}>
+                    <div className="Money_Containers">
+                        <div style={{ fontSize: '0.8em', textAlign: 'start', marginLeft: '20px' }}>판가</div>
+                        <div>&#8361; 2,300 M</div>
+                    </div>
+                    <div className="Money_Containers">
+                        <div style={{ fontSize: '0.8em', textAlign: 'start', marginLeft: '20px' }}>MC</div>
+                        <div>&#8361; 2,300 M</div>
+                    </div>
                 </div>
-            </div>
-            <div>
-                <div>최근</div>
-                <div>변동</div>
             </div>
         </DepartListsMainDivBox>
     );
