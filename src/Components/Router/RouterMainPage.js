@@ -9,6 +9,7 @@ import ExhalationMainPage from '../Home/EquimentLists/Exhalation/ExhalationMainP
 import BomListsMainPage from '../Home/BOMLists/BomListsMainPage';
 import DashboardMainPage from '../Home/Dashboard/DashboardMainpage';
 import DetailMainPage from '../Home/Dashboard/Detail/DetailMainPage';
+import StockMainPage from '../Home/Stock/StockMainPage';
 
 const RouterMainPage = () => {
     const User_Info = useSelector(state => state.Login_Info_Reducer_State.Login_Info);
@@ -40,6 +41,12 @@ const RouterMainPage = () => {
         {
             path: '/Select/BOM/Lists/:Type/:Model_Name/:FSC_CODE/:EQ_NO',
             element: <BomListsMainPage></BomListsMainPage>,
+            withAuthorization: false,
+            withAdminAuthorization: false,
+        },
+        {
+            path: '/ERP/Stock/Part',
+            element: <StockMainPage></StockMainPage>,
             withAuthorization: false,
             withAdminAuthorization: false,
         },

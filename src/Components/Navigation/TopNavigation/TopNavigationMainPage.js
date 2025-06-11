@@ -9,7 +9,7 @@ import FormControl from '@mui/material/FormControl';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import EquimentListsMainPage from '../../Home/EquimentLists/EquimentListsMainPage';
-
+import { Changed_Select_Date_Info_State_Func } from '../../../Models/SelectDateReducers/SelectDateReducer';
 import Select from '@mui/material/Select';
 import ReactSelect from 'react-select';
 
@@ -122,22 +122,10 @@ const TopNavigationMainPage = () => {
     const location = useLocation();
     const menuRef = useRef(null);
     const dispatch = useDispatch();
+    const Select_Date_State = useSelector(state => state.Select_Date_Reducer_State.Select_Date_State);
     const User_Info_State = useSelector(state => state.Login_Info_Reducer_State.Login_Info);
-    const [Nav_Select_Options_Menus, setNav_Select_Options_Menus] = useState([
-        {
-            value: '/Home',
-            label: '홈(메인)',
-        },
-        {
-            value: '/Tool',
-            label: 'Tool 대여',
-        },
-    ]);
     const [open, setOpen] = useState(false);
-    const [Select_Values, setSelect_Values] = useState({
-        value: moment().format('YYYY'),
-        label: `${moment().format('YYYY')}년`,
-    });
+
     const options = [
         { value: '2024', label: '2024년' },
         { value: '2025', label: '2025년' },
@@ -187,7 +175,11 @@ const TopNavigationMainPage = () => {
                         </FormControl>
                     </div> */}
                     <div className="Select_Containers">
-                        <ReactSelect value={Select_Values} options={options} onChange={e => setSelect_Values(e)} />
+                        <ReactSelect
+                            value={Select_Date_State}
+                            options={options}
+                            onChange={e => dispatch(Changed_Select_Date_Info_State_Func(e))}
+                        />
                     </div>
                 </div>
             </div>
