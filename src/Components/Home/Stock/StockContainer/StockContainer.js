@@ -97,6 +97,7 @@ const StockContainer = () => {
     const [Stock_Bar_State, setStock_Bar_State] = useState([]);
     const [Get_Part_List, setGet_Part_List] = useState([]);
     const [Stock_Grouping_State, setStock_Grouping_State] = useState([]);
+    const [Loading, setLoading] = useState(false);
     useEffect(() => {
         Getting_Select_Stock_Data_For_Bar_Graph();
     }, [Select_Date_State.value]);
@@ -118,6 +119,7 @@ const StockContainer = () => {
 
     const Getting_Select_Stock_Data_For_Bar_Graph = async () => {
         try {
+            setLoading(true);
             const Months = await getMonthsOfYearUntilNow(Select_Date_State.value);
             const GetMonths = await Request_Get_Axios('/PLM_Route/PLM_Dashboard/Select_Stock_Data_For_Bar_Graph', { Months });
             console.log(GetMonths);
@@ -142,8 +144,11 @@ const StockContainer = () => {
                 const sortedResult = result.sort((a, b) => b.totalPrice - a.totalPrice);
                 setStock_Grouping_State(sortedResult);
             }
+
+            setLoading(false);
         } catch (error) {
             console.log(error);
+            setLoading(false);
         }
     };
 
@@ -243,6 +248,7 @@ const StockContainer = () => {
                     </tbody>
                 </table>
             </div>
+            <Loader loading={Loading}></Loader>
         </MainStockContainerDiv>
     );
 };
