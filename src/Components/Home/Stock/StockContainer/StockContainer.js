@@ -4,6 +4,7 @@ import StockBarGraph from './StockGraph/StockBarGraph';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { Request_Get_Axios } from '../../../../API';
+import Loader from '../../../../Loader/Loader';
 
 const MainStockContainerDiv = styled.div`
     border: 1px solid lightgray;
