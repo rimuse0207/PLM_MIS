@@ -53,7 +53,7 @@ const GraphsMainPage = () => {
                         <option>SoC</option>
                         <option>CLT</option>
                     </select>
-                    <div className="Unit_Container">*단위 백만원</div>
+                    {/* <div className="Unit_Container">*단위 백만원</div> */}
                 </div>
                 <Donuts></Donuts>
             </div>
