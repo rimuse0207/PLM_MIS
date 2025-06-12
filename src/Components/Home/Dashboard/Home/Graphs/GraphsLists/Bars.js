@@ -4,13 +4,13 @@ import styled from 'styled-components';
 
 export const BarsMainDivBox = styled.div`
     width: 100%;
-    height: 90%;
+    height: 98%;
     text-align: center;
     margin-top: 20px;
     position: relative;
     .Unit_Container {
         position: absolute;
-        top: 50px;
+        top: 00px;
         right: 80px;
     }
 `;
@@ -39,17 +39,17 @@ const Bars = () => {
                 maxValue={maxValue}
                 keys={['MC', 'profit']}
                 indexBy="equipments"
-                margin={{ top: 70, right: 60, bottom: 60, left: 80 }}
+                margin={{ top: 90, right: 60, bottom: 60, left: 100 }}
                 padding={0.7}
                 groupMode="stacked"
                 colors={['skyblue', 'gray']}
                 colorBy="id"
                 theme={{
-                    labels: { text: { fontSize: 20, fill: '#000000' } },
-                    legends: { text: { fontSize: 23, fill: '#000000' } },
+                    labels: { text: { fontSize: '2vmin', fill: '#000000' } },
+                    legends: { text: { fontSize: '2vmin', fill: '#000000' } },
                     axis: {
-                        legend: { text: { fontSize: 20, fill: '#000000' } },
-                        ticks: { text: { fontSize: 20, fill: '#000000' } },
+                        legend: { text: { fontSize: '1.5vmin', fill: '#000000' } },
+                        ticks: { text: { fontSize: '2vmin', fill: '#000000' } },
                     },
                 }}
                 axisBottom={{
@@ -65,8 +65,8 @@ const Bars = () => {
                     tickRotation: 0,
                     legendPosition: 'middle',
                     legendOffset: -40,
-                    tickValues: Array.from({ length: Math.ceil(maxValue / 1000) }, (_, i) => (i + 1) * 1000),
-                    format: value => value.toLocaleString(),
+                    tickValues: Array.from({ length: Math.ceil(maxValue / 1000) }, (_, i) => `${(i + 1) * 1000} `),
+                    format: value => Number(value).toLocaleString('ko-kr') + ' M',
                 }}
                 enableGridY={false}
                 enableLabel={false}
@@ -113,7 +113,7 @@ const Bars = () => {
                                         textAnchor="middle"
                                         style={{
                                             fill: 'black',
-                                            fontSize: 25,
+                                            fontSize: '2.5vmin',
                                             fontWeight: 'bold',
                                             pointerEvents: 'none', // 마우스 이벤트 막기
                                         }}
@@ -134,7 +134,7 @@ const Bars = () => {
                                     border: '1px solid #ccc',
                                     borderRadius: '4px',
                                     color: 'black',
-                                    fontSize: '20px',
+                                    fontSize: '2.5vmin',
                                 }}
                             >
                                 <strong>{indexValue}</strong>
@@ -151,7 +151,7 @@ const Bars = () => {
                                     border: '1px solid #ccc',
                                     borderRadius: '4px',
                                     color: 'black',
-                                    fontSize: '20px',
+                                    fontSize: '2.5vmin',
                                 }}
                             >
                                 <strong>{indexValue}</strong>

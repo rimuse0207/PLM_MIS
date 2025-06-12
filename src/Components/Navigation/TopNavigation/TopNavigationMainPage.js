@@ -152,8 +152,8 @@ const TopNavigationMainPage = () => {
             <div className="NavigationMainFlexdiv">
                 <div className="Main_Logo_Container">
                     <Link to="/">
-                        {/* <img src="/EXICON.PNG" width="140px"></img> */}
-                        <h2>EXICON</h2>
+                        <img src="/01_EXICON_CYMK_FULL-COLOR.PNG" width="140px"></img>
+                        {/* <h2>EXICON</h2> */}
                     </Link>
 
                     {/* <div className="Main_Menu_Move_Container">

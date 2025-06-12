@@ -41,7 +41,7 @@ const Donuts = () => {
                 innerRadius={0}
                 padAngle={1}
                 cornerRadius={0}
-                colors={['blueviolet', 'orange', 'burlywood', 'gold', 'green', 'purple']} // 커스터하여 사용할 때
+                colors={['#12203f', '#ebf0f5', '#ff6b6b', '#ffa800', '#00b48e']} // 커스터하여 사용할 때
                 // colors={{ scheme: 'nivo' }} // nivo에서 제공해주는 색상 조합 사용할 때
                 borderWidth={0}
                 arcLinkLabelsSkipAngle={0}
@@ -52,14 +52,14 @@ const Donuts = () => {
                 theme={{
                     labels: {
                         text: {
-                            fontSize: 25,
+                            fontSize: '2vmin',
                             fill: '#000000',
                         },
                     },
                     legends: {
                         text: {
-                            fontSize: 20,
-                            fill: '#000000',
+                            fontSize: 15,
+                            // fill: '#000000',
                         },
                     },
                 }}
@@ -70,14 +70,13 @@ const Donuts = () => {
                         justify: false, // 글씨, 색상간 간격 justify 적용 여부
                         translateX: 0, // chart와 X 간격
                         translateY: 56, // chart와 Y 간격
-                        itemsSpacing: 0, // item간 간격
-                        itemWidth: 130, // item width
+                        itemsSpacing: 20, // item간 간격
+                        itemWidth: 100, // item width
                         itemHeight: 18, // item height
                         itemDirection: 'left-to-right', // item 내부에 그려지는 방향
                         itemOpacity: 1, // item opacity
-                        symbolSize: 20, // symbol (색상 표기) 크기
-                        symbolShape: 'circle', // symbol (색상 표기) 모양
-                        justify: false,
+                        symbolSize: 15, // symbol (색상 표기) 크기
+                        symbolShape: 'square', // symbol (색상 표기) 모양
                     },
                 ]}
                 layers={[
@@ -105,8 +104,8 @@ const Donuts = () => {
                                         textAnchor="middle"
                                         dominantBaseline="central"
                                         style={{
-                                            fill: '#000',
-                                            fontSize: 20,
+                                            fill: datum.id === 'MBT' ? '#000' : '#fff',
+                                            fontSize: '2vmin',
                                             fontWeight: 'bold',
                                         }}
                                     >
@@ -114,12 +113,12 @@ const Donuts = () => {
                                     </text>
                                     <text
                                         x={x}
-                                        y={y + 20}
+                                        y={y + 15}
                                         textAnchor="middle"
                                         dominantBaseline="central"
                                         style={{
-                                            fill: '#fff',
-                                            fontSize: 20,
+                                            fill: datum.id === 'MBT' ? '#000' : '#fff',
+                                            fontSize: '2vmin',
                                         }}
                                     >
                                         {percent}%

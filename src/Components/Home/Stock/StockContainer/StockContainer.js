@@ -73,7 +73,7 @@ const MainStockContainerDiv = styled.div`
     .Detail_Table {
         margin-top: 50px;
         table {
-            width: 50%;
+            width: 100%;
             border-collapse: collapse;
             font-size: 13px;
         }
@@ -98,10 +98,14 @@ const StockContainer = () => {
     const [Stock_Bar_State, setStock_Bar_State] = useState([]);
     const [Get_Part_List, setGet_Part_List] = useState([]);
     const [Stock_Grouping_State, setStock_Grouping_State] = useState([]);
+    const [Sort_Month_Table_State, setSort_Month_Table_State] = useState([]);
     const [Loading, setLoading] = useState(false);
     useEffect(() => {
         Getting_Select_Stock_Data_For_Bar_Graph();
     }, [Select_Date_State.value]);
+    useEffect(() => {
+        console.log(Sort_Month_Table_State);
+    }, [Sort_Month_Table_State]);
     const getMonthsOfYearUntilNow = async year => {
         const current = moment();
         const currentYear = current.year();
@@ -123,27 +127,36 @@ const StockContainer = () => {
             setLoading(true);
             const Months = await getMonthsOfYearUntilNow(Select_Date_State.value);
             const GetMonths = await Request_Get_Axios('/PLM_Route/PLM_Dashboard/Select_Stock_Data_For_Bar_Graph', { Months });
-            console.log(GetMonths);
+
             if (GetMonths.status) {
                 setStock_Bar_State(GetMonths.data.Getting_Graph_Data);
                 setGet_Part_List(GetMonths.data.Getting_Now_Stock_Data_List);
-                const grouped = GetMonths.data.Getting_Now_Stock_Data_List.reduce((acc, item) => {
-                    const key = item.ItemSName;
-                    if (!acc[key]) {
-                        acc[key] = {
-                            category: key,
-                            totalPrice: 0,
-                            items: [],
-                        };
-                    }
-                    acc[key].totalPrice += item.Price;
-                    acc[key].items.push(item);
-                    return acc;
-                }, {});
+                // const grouped = GetMonths.data.Getting_Now_Stock_Data_List.reduce((acc, item) => {
+                //     const key = item.ItemSName;
+                //     if (!acc[key]) {
+                //         acc[key] = {
+                //             category: key,
+                //             totalPrice: 0,
+                //             items: [],
+                //         };
+                //     }
+                //     acc[key].totalPrice += item.Price;
+                //     acc[key].items.push(item);
+                //     return acc;
+                // }, {});
 
-                const result = Object.values(grouped);
-                const sortedResult = result.sort((a, b) => b.totalPrice - a.totalPrice);
-                setStock_Grouping_State(sortedResult);
+                // const result = Object.values(grouped);
+                // const sortedResult = result.sort((a, b) => b.totalPrice - a.totalPrice);
+                setStock_Grouping_State(Change_Grouping_Price(GetMonths.data.Getting_Now_Stock_Data_List));
+
+                setSort_Month_Table_State(
+                    GetMonths.data.Getting_Graph_Data.map(list => {
+                        return {
+                            dates: list.dates,
+                            lists: Change_Grouping_Price(list.Lists),
+                        };
+                    })
+                );
             }
 
             setLoading(false);
@@ -151,6 +164,27 @@ const StockContainer = () => {
             console.log(error);
             setLoading(false);
         }
+    };
+
+    const Change_Grouping_Price = GetData => {
+        const grouped = GetData.reduce((acc, item) => {
+            const key = item.ItemSName;
+            if (!acc[key]) {
+                acc[key] = {
+                    category: key,
+                    totalPrice: 0,
+                    items: [],
+                };
+            }
+            acc[key].totalPrice += item.Price;
+            acc[key].items.push(item);
+            return acc;
+        }, {});
+
+        const result = Object.values(grouped);
+        const sortedResult = result.sort((a, b) => b.totalPrice - a.totalPrice);
+
+        return sortedResult;
     };
 
     function numberToKorean(number) {
@@ -202,8 +236,25 @@ const StockContainer = () => {
                                     <div className="Price_Desc">
                                         {numberToKorean(
                                             Get_Part_List.filter(
-                                                item => item.ItemSName.startsWith('ANALOG') || item.ItemSName.startsWith('Analog')
+                                                item =>
+                                                    item.ItemSName.startsWith('ANALOG') ||
+                                                    item.ItemSName.startsWith('Analog') ||
+                                                    item.ItemSName.startsWith('ADI')
                                             ).reduce((pre, next) => pre + next.Price, 0)
+                                        )}{' '}
+                                        원
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div className="Price_Showing_Container">
+                                    <div className="Price_Title">XILINX</div>
+                                    <div className="Price_Desc">
+                                        {numberToKorean(
+                                            Get_Part_List.filter(item => item.ItemSName.startsWith('XILINX')).reduce(
+                                                (pre, next) => pre + next.Price,
+                                                0
+                                            )
                                         )}{' '}
                                         원
                                     </div>
@@ -234,15 +285,28 @@ const StockContainer = () => {
                             <th>NO.</th>
                             <th>메이커명</th>
                             <th>총 금액</th>
+                            {Sort_Month_Table_State.map(list => {
+                                return <th key={list.dates}>{moment(list.dates).format('YYYY년 MM월')}</th>;
+                            })}
                         </tr>
                     </thead>
                     <tbody>
                         {Stock_Grouping_State.map((list, j) => {
                             return (
-                                <tr>
+                                <tr key={list.category}>
                                     <td>{j + 1}</td>
                                     <td>{list.category}</td>
-                                    <td>{numberToKorean(list.totalPrice)} 원</td>
+                                    <td>{list.totalPrice ? numberToKorean(list.totalPrice) + '원' : ''}</td>
+
+                                    {Sort_Month_Table_State.map(item => {
+                                        return item.lists.map(pre =>
+                                            pre.category === list.category ? (
+                                                <td>{pre.totalPrice ? numberToKorean(pre.totalPrice) + '원' : ''} </td>
+                                            ) : (
+                                                ''
+                                            )
+                                        );
+                                    })}
                                 </tr>
                             );
                         })}
