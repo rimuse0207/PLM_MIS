@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { Request_Get_Axios } from '../../../../API';
 import Loader from '../../../../Loader/Loader';
 import { Change_Grouping_Price, getMonthsOfYearUntilNow, numberToKorean } from '../CommonFunc/CommonFunc';
+import { useNavigate } from 'react-router-dom';
 
 const MainStockContainerDiv = styled.div`
     height: calc(100vh - 100px);
@@ -180,6 +181,7 @@ const MainStockContainerDiv = styled.div`
 `;
 
 const StockContainer = () => {
+    const Navigation = useNavigate();
     const Select_Date_State = useSelector(state => state.Select_Date_Reducer_State.Select_Date_State);
     const [Stock_Bar_State, setStock_Bar_State] = useState([]);
     const [Get_Part_List, setGet_Part_List] = useState([]);
@@ -232,7 +234,7 @@ const StockContainer = () => {
                 <div className="Custom_By_Sotcks_Container">
                     <div className="Select_Line">
                         <div className="Line_Title">주요 구매처 별 재고 금액</div>
-                        <div className="Button_Container" onClick={() => window.alert('개발중에 있습니다.')}>
+                        <div className="Button_Container" onClick={() => Navigation('/ERP/Stock/Part/Detail/Table')}>
                             상세 내역
                         </div>
                     </div>
