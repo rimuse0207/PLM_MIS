@@ -5,6 +5,7 @@ import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { Request_Get_Axios } from '../../../../API';
 import Loader from '../../../../Loader/Loader';
+import { Change_Grouping_Price, getMonthsOfYearUntilNow, numberToKorean } from '../CommonFunc/CommonFunc';
 
 const MainStockContainerDiv = styled.div`
     height: calc(100vh - 100px);
@@ -182,28 +183,10 @@ const StockContainer = () => {
     const Select_Date_State = useSelector(state => state.Select_Date_Reducer_State.Select_Date_State);
     const [Stock_Bar_State, setStock_Bar_State] = useState([]);
     const [Get_Part_List, setGet_Part_List] = useState([]);
-    const [Stock_Grouping_State, setStock_Grouping_State] = useState([]);
-    const [Sort_Month_Table_State, setSort_Month_Table_State] = useState([]);
     const [Loading, setLoading] = useState(false);
     useEffect(() => {
         Getting_Select_Stock_Data_For_Bar_Graph();
     }, [Select_Date_State.value]);
-
-    const getMonthsOfYearUntilNow = async year => {
-        const current = moment();
-        const currentYear = current.year();
-        let monthCount;
-
-        if (year < currentYear) {
-            monthCount = 12; // 과거: 전체 월
-        } else if (Number(year) === currentYear) {
-            monthCount = current.month() + 1; // 현재 연도: 현재 월까지 (0-indexed)
-        } else {
-            monthCount = 0; // 미래 연도: 없음
-        }
-
-        return Array.from({ length: monthCount }, (_, i) => moment(`${year}-${i + 1}`, 'YYYY-M').format('YYYYMM'));
-    };
 
     const Getting_Select_Stock_Data_For_Bar_Graph = async () => {
         try {
@@ -214,32 +197,6 @@ const StockContainer = () => {
             if (GetMonths.status) {
                 setStock_Bar_State(GetMonths.data.Getting_Graph_Data);
                 setGet_Part_List(GetMonths.data.Getting_Now_Stock_Data_List);
-                // const grouped = GetMonths.data.Getting_Now_Stock_Data_List.reduce((acc, item) => {
-                //     const key = item.ItemSName;
-                //     if (!acc[key]) {
-                //         acc[key] = {
-                //             category: key,
-                //             totalPrice: 0,
-                //             items: [],
-                //         };
-                //     }
-                //     acc[key].totalPrice += item.Price;
-                //     acc[key].items.push(item);
-                //     return acc;
-                // }, {});
-
-                // const result = Object.values(grouped);
-                // const sortedResult = result.sort((a, b) => b.totalPrice - a.totalPrice);
-                setStock_Grouping_State(Change_Grouping_Price(GetMonths.data.Getting_Now_Stock_Data_List));
-
-                setSort_Month_Table_State(
-                    GetMonths.data.Getting_Graph_Data.map(list => {
-                        return {
-                            dates: list.dates,
-                            lists: Change_Grouping_Price(list.Lists),
-                        };
-                    })
-                );
             }
 
             setLoading(false);
@@ -248,51 +205,6 @@ const StockContainer = () => {
             setLoading(false);
         }
     };
-
-    const Change_Grouping_Price = GetData => {
-        const grouped = GetData.reduce((acc, item) => {
-            const key = item.ItemSName;
-            if (!acc[key]) {
-                acc[key] = {
-                    category: key,
-                    totalPrice: 0,
-                    items: [],
-                };
-            }
-            acc[key].totalPrice += item.Price;
-            acc[key].items.push(item);
-            return acc;
-        }, {});
-
-        const result = Object.values(grouped);
-        const sortedResult = result.sort((a, b) => b.totalPrice - a.totalPrice);
-
-        return sortedResult;
-    };
-
-    function numberToKorean(number) {
-        var inputNumber = number < 0 ? false : number;
-        var unitWords = ['', '만', '억', '조', '경'];
-        var splitUnit = 10000;
-        var splitCount = unitWords.length;
-        var resultArray = [];
-        var resultString = '';
-
-        for (var i = 0; i < splitCount; i++) {
-            var unitResult = (inputNumber % Math.pow(splitUnit, i + 1)) / Math.pow(splitUnit, i);
-            unitResult = Math.floor(unitResult);
-            if (unitResult > 0) {
-                resultArray[i] = unitResult;
-            }
-        }
-
-        for (var i = 0; i < resultArray.length; i++) {
-            if (!resultArray[i]) continue;
-            resultString = String(resultArray[i]) + unitWords[i] + ' ' + resultString;
-        }
-
-        return resultString;
-    }
 
     return (
         <MainStockContainerDiv>
@@ -376,41 +288,7 @@ const StockContainer = () => {
                     </div>
                 </div>
             </div>
-            {/* <div className="Detail_Table">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>NO.</th>
-                            <th>메이커명</th>
-                            <th>총 금액</th>
-                            {Sort_Month_Table_State.map(list => {
-                                return <th key={list.dates}>{moment(list.dates).format('YYYY년 MM월')}</th>;
-                            })}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {Stock_Grouping_State.map((list, j) => {
-                            return (
-                                <tr key={list.category}>
-                                    <td>{j + 1}</td>
-                                    <td>{list.category}</td>
-                                    <td>{list.totalPrice ? numberToKorean(list.totalPrice) + '원' : ''}</td>
 
-                                    {Sort_Month_Table_State.map(item => {
-                                        return item.lists.map(pre =>
-                                            pre.category === list.category ? (
-                                                <td>{pre.totalPrice ? numberToKorean(pre.totalPrice) + '원' : ''} </td>
-                                            ) : (
-                                                ''
-                                            )
-                                        );
-                                    })}
-                                </tr>
-                            );
-                        })}
-                    </tbody>
-                </table>
-            </div> */}
             <Loader loading={Loading}></Loader>
         </MainStockContainerDiv>
     );

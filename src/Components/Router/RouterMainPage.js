@@ -10,6 +10,7 @@ import BomListsMainPage from '../Home/BOMLists/BomListsMainPage';
 import DashboardMainPage from '../Home/Dashboard/DashboardMainpage';
 import DetailMainPage from '../Home/Dashboard/Detail/DetailMainPage';
 import StockMainPage from '../Home/Stock/StockMainPage';
+import StockDetailMainPage from '../Home/Stock/SotckDetail/StockDetailMainPage';
 
 const RouterMainPage = () => {
     const User_Info = useSelector(state => state.Login_Info_Reducer_State.Login_Info);
@@ -47,6 +48,12 @@ const RouterMainPage = () => {
         {
             path: '/ERP/Stock/Part',
             element: <StockMainPage></StockMainPage>,
+            withAuthorization: false,
+            withAdminAuthorization: false,
+        },
+        {
+            path: '/ERP/Stock/Part/Detail/Table',
+            element: <StockDetailMainPage></StockDetailMainPage>,
             withAuthorization: false,
             withAdminAuthorization: false,
         },
