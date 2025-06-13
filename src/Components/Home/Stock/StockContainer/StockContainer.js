@@ -76,7 +76,7 @@ const MainStockContainerDiv = styled.div`
             align-items: end;
         }
         .Price_Desc {
-            font-size: 4vmin;
+            font-size: 5vmin;
             font-weight: bolder;
             text-align: center;
             padding: 10px;
@@ -100,10 +100,12 @@ const MainStockContainerDiv = styled.div`
             min-width: 500px;
             height: 150px;
             width: 33%;
+            border-left: 2px solid rgb(0, 202, 255);
             .Price_Title {
                 text-align: center;
                 padding: 10px;
                 height: 50%;
+                font-size: 4vmin;
             }
             .Price_Desc {
                 font-size: 1.8em;
@@ -306,7 +308,7 @@ const StockContainer = () => {
                     <div className="Price_Showing_Container">
                         <div className="Graph_Box_Container">
                             <div className="title">
-                                월별 재고금액
+                                월별 재고 금액
                                 <span className="Unit_Container">(단위: 억원)</span>
                             </div>
                         </div>

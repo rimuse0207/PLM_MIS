@@ -21,7 +21,7 @@ const StockBarGraph = ({ Stock_Bar_State }) => {
                 margin={{ top: 50, right: 0, bottom: 60, left: 0 }}
                 padding={0.7}
                 groupMode="stacked"
-                colors={['skyblue', 'gray']}
+                colors={['rgb(0,202,255)', 'gray']}
                 colorBy="id"
                 theme={{
                     labels: { text: { fontSize: '2vmin', fill: '#000000' } },
@@ -49,24 +49,24 @@ const StockBarGraph = ({ Stock_Bar_State }) => {
                 ]}
                 enableGridY={false}
                 enableLabel={false}
-                legends={[
-                    {
-                        dataFrom: 'keys',
-                        anchor: 'top-right',
-                        direction: 'row',
-                        translateX: 0,
-                        translateY: -50,
-                        itemWidth: 100,
-                        itemHeight: 20,
-                        itemsSpacing: 2,
-                        symbolSize: 20,
-                        itemDirection: 'left-to-right',
-                        data: [
-                            // { id: 'MC', label: 'MC', color: 'skyblue' },
-                            { id: 'profit', label: '단가', color: 'skyblue' },
-                        ],
-                    },
-                ]}
+                // legends={[
+                //     {
+                //         dataFrom: 'keys',
+                //         anchor: 'top-right',
+                //         direction: 'row',
+                //         translateX: 0,
+                //         translateY: -50,
+                //         itemWidth: 100,
+                //         itemHeight: 20,
+                //         itemsSpacing: 2,
+                //         symbolSize: 20,
+                //         itemDirection: 'left-to-right',
+                //         data: [
+                //             // { id: 'MC', label: 'MC', color: 'skyblue' },
+                //             { id: 'profit', label: '단가', color: 'skyblue' },
+                //         ],
+                //     },
+                // ]}
                 layers={[
                     'grid',
                     'axes',
