@@ -125,7 +125,6 @@ const TopNavigationMainPage = () => {
     const Select_Date_State = useSelector(state => state.Select_Date_Reducer_State.Select_Date_State);
     const User_Info_State = useSelector(state => state.Login_Info_Reducer_State.Login_Info);
     const [open, setOpen] = useState(false);
-
     const options = [
         { value: '2024', label: '2024년' },
         { value: '2025', label: '2025년' },
@@ -151,29 +150,10 @@ const TopNavigationMainPage = () => {
         <NavigationMainPageMainDivBox>
             <div className="NavigationMainFlexdiv">
                 <div className="Main_Logo_Container">
-                    <Link to="/">
+                    <Link to={`${location.pathname.startsWith('/ERP/Stock/Part') ? '/ERP/Stock/Part' : '/'}`}>
                         <img src="/01_EXICON_CYMK_FULL-COLOR.PNG" width="140px"></img>
-                        {/* <h2>EXICON</h2> */}
                     </Link>
 
-                    {/* <div className="Main_Menu_Move_Container">
-                        <FormControl sx={{ m: 1, minWidth: 100, margin: 0, width: '100%' }} size="small">
-                            <Select
-                                labelId="demo-select-small"
-                                id="demo-select-small"
-                                value={'/' + location.pathname.split('/')[1]}
-                                onChange={event => Handle_Change_Move_To_Go(event)}
-                            >
-                                {Nav_Select_Options_Menus.map(list => {
-                                    return (
-                                        <MenuItem value={list.value} key={list.value}>
-                                            {list.label}
-                                        </MenuItem>
-                                    );
-                                })}
-                            </Select>
-                        </FormControl>
-                    </div> */}
                     <div className="Select_Containers">
                         <ReactSelect
                             value={Select_Date_State}
