@@ -12,43 +12,42 @@ const StockBarGraph = ({ Stock_Bar_State }) => {
     }));
     const maxValue = Math.max(...Stock_Bar_State.map(d => Math.max(d.price))) * 1.3;
     return (
-        <BarsMainDivBox>
-            <div className="Unit_Container">*단위 억원</div>
+        <BarsMainDivBox style={{ height: '90%' }}>
             <ResponsiveBar
                 data={adjustedData}
                 maxValue={maxValue}
                 keys={['profit']}
                 indexBy="dates"
-                margin={{ top: 50, right: 60, bottom: 60, left: 80 }}
+                margin={{ top: 50, right: 0, bottom: 60, left: 0 }}
                 padding={0.7}
                 groupMode="stacked"
                 colors={['skyblue', 'gray']}
                 colorBy="id"
                 theme={{
-                    labels: { text: { fontSize: 20, fill: '#000000' } },
-                    legends: { text: { fontSize: 23, fill: '#000000' } },
+                    labels: { text: { fontSize: '2vmin', fill: '#000000' } },
+                    legends: { text: { fontSize: '2vmin', fill: '#000000' } },
                     axis: {
-                        legend: { text: { fontSize: 20, fill: '#000000' } },
-                        ticks: { text: { fontSize: 20, fill: '#000000' } },
+                        legend: { text: { fontSize: '1.5vmin', fill: '#000000' } },
+                        ticks: { text: { fontSize: '1.5vmin', fill: '#000000' } },
                     },
                 }}
                 axisBottom={{
-                    tickSize: 5,
+                    tickSize: 0,
                     tickPadding: 5,
                     tickRotation: 0,
                     legendPosition: 'middle',
                     legendOffset: 20,
+                    format: value => `${moment(value.toLocaleString()).format('MM월')}`,
                 }}
-                axisLeft={{
-                    tickSize: 1,
-                    tickPadding: 20,
-                    tickRotation: 0,
-                    legendPosition: 'middle',
-                    legendOffset: -40,
-                    tickValues: Array.from({ length: Math.ceil(maxValue / 50) }, (_, i) => (i + 1) * 50),
-                    format: value => value.toLocaleString(),
-                }}
-                enableGridY={true}
+                axisLeft={null}
+                markers={[
+                    {
+                        axis: 'y',
+                        value: 0,
+                        lineStyle: { stroke: 'lightgray', strokeWidth: 1 }, // 실선 스타일
+                    },
+                ]}
+                enableGridY={false}
                 enableLabel={false}
                 legends={[
                     {
@@ -91,7 +90,7 @@ const StockBarGraph = ({ Stock_Bar_State }) => {
                                         textAnchor="middle"
                                         style={{
                                             fill: 'black',
-                                            fontSize: 25,
+                                            fontSize: '2vmin',
                                             fontWeight: 'bold',
                                             pointerEvents: 'none', // 마우스 이벤트 막기
                                         }}
@@ -111,7 +110,7 @@ const StockBarGraph = ({ Stock_Bar_State }) => {
                                 border: '1px solid #ccc',
                                 borderRadius: '4px',
                                 color: 'black',
-                                fontSize: '20px',
+                                fontSize: '2vmin',
                             }}
                         >
                             <strong>{moment(indexValue).format('YYYY년 MM월')}</strong>
