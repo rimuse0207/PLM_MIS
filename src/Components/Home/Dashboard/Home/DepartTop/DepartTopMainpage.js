@@ -32,7 +32,7 @@ const DepartTopMainPage = () => {
     const Select_Date_State = useSelector(state => state.Select_Date_Reducer_State.Select_Date_State);
     const DepartMentLists_State = useSelector(state => state.McAverage_ThunkReducers_State);
     useEffect(() => {
-        // dispatch(Getting_MC_average_compared_to_sales_price_by_sector(Select_Date_State.value));
+        dispatch(Getting_MC_average_compared_to_sales_price_by_sector(Select_Date_State.value));
     }, [Select_Date_State.value]);
 
     return (

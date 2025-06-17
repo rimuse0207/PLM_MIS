@@ -5,31 +5,26 @@ const data = [
         id: 'DC/Module',
         label: 'DC/Module',
         value: 200,
-        color: 'hsl(149, 70%, 50%)',
     },
     {
         id: 'MBT',
         label: 'MBT',
         value: 200,
-        color: 'hsl(338, 70%, 50%)',
     },
     {
         id: 'Storage',
         label: 'Storage',
         value: 200,
-        color: 'hsl(116, 70%, 50%)',
     },
     {
         id: 'SoC',
         label: 'SoC',
         value: 200,
-        color: 'hsl(55, 70%, 50%)',
     },
     {
         id: 'CLT',
         label: 'CLT',
         value: 200,
-        color: 'hsl(84, 70%, 50%)',
     },
 ];
 const Donuts = () => {
