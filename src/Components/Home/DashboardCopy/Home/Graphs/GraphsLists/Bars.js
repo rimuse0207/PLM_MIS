@@ -15,25 +15,25 @@ export const BarsMainDivBox = styled.div`
     }
 `;
 
-const Bars = ({ Bar_State }) => {
-    // const barData = [
-    //     { equipments: 'i7304C 1호기', MC: 1200, price: 2000 },
-    //     { equipments: 'i7304C 2호기', MC: 2200, price: 3000 },
-    //     { equipments: 'i7304C 3호기', MC: 3200, price: 5000 },
-    //     { equipments: 'i7304C 4호기', MC: 3200, price: 5000 },
-    //     { equipments: 'i7304C 5호기', MC: 3200, price: 5000 },
-    //     { equipments: 'i7304C 6호기', MC: 3200, price: 5000 },
-    // ];
+const Bars = () => {
+    const barData = [
+        { equipments: 'i7304C 1호기', MC: 1200, price: 2000 },
+        { equipments: 'i7304C 2호기', MC: 2200, price: 3000 },
+        { equipments: 'i7304C 3호기', MC: 3200, price: 5000 },
+        { equipments: 'i7304C 4호기', MC: 3200, price: 5000 },
+        { equipments: 'i7304C 5호기', MC: 3200, price: 5000 },
+        { equipments: 'i7304C 6호기', MC: 3200, price: 5000 },
+    ];
 
     // 시각화 전용 데이터 가공 (원본은 그대로)
-    const adjustedData = Bar_State.map(item => ({
+    const adjustedData = barData.map(item => ({
         ...item,
         profit: item.price - item.MC,
     }));
-    const maxValue = Math.max(...Bar_State.map(d => Math.max(d.MC, d.price))) * 1.3;
+    const maxValue = Math.max(...barData.map(d => Math.max(d.MC, d.price))) * 1.3;
     return (
         <BarsMainDivBox>
-            {/* <div className="Unit_Container">*단위 백만원</div> */}
+            <div className="Unit_Container">*단위 백만원</div>
             <ResponsiveBar
                 data={adjustedData}
                 maxValue={maxValue}
@@ -139,7 +139,7 @@ const Bars = ({ Bar_State }) => {
                             >
                                 <strong>{indexValue}</strong>
                                 <br />
-                                단가: {data.price.toLocaleString('ko-kr')} M
+                                단가: {data.price}
                             </div>
                         );
                     } else {
@@ -156,7 +156,7 @@ const Bars = ({ Bar_State }) => {
                             >
                                 <strong>{indexValue}</strong>
                                 <br />
-                                MC: {data.MC.toLocaleString('ko-kr')} M
+                                MC: {data.MC}
                             </div>
                         );
                     }

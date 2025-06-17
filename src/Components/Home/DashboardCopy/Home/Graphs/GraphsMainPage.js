@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import Donuts from './GraphsLists/Donuts';
 import Bars from './GraphsLists/Bars';
 
 import styled from 'styled-components';
-import { Request_Get_Axios } from '../../../../../API';
-import { Getting_Top6_Recent_Sell_Equipments_Lists } from '../../../../../Models/ReduxThunks/EISDashbaord/Graphs/RecentEquipmentsThunkReducers';
-import { useDispatch, useSelector } from 'react-redux';
 
 const GraphsMainPageMainDivBox = styled.div`
     margin-top: 20px;
@@ -43,13 +40,6 @@ const GraphsMainPageMainDivBox = styled.div`
 `;
 
 const GraphsMainPage = () => {
-    const dispatch = useDispatch();
-    const Select_Date_State = useSelector(state => state.Select_Date_Reducer_State.Select_Date_State);
-    const Bar_State = useSelector(state => state.Recent_Equipments_ThunkReducers_State);
-    useEffect(() => {
-        dispatch(Getting_Top6_Recent_Sell_Equipments_Lists(Select_Date_State.value));
-    }, [Select_Date_State.value]);
-
     return (
         <GraphsMainPageMainDivBox>
             <div className="Graph_Container_GR" style={{ width: '38%' }}>
@@ -71,7 +61,7 @@ const GraphsMainPage = () => {
                 <div className="Select_Group">
                     <h3>최근 판매 제품 판가 및 MC</h3>
                 </div>
-                <Bars Bar_State={Bar_State.BarData}></Bars>
+                <Bars></Bars>
             </div>
         </GraphsMainPageMainDivBox>
     );

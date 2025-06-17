@@ -49,17 +49,15 @@ const DepartLists = ({ list }) => {
                 <h2>{list.Department_Name}</h2>
             </div>
             <div className="Price_Container">
-                <h2 style={{ fontSize: '6vmin' }}>
-                    {list.MC_Price ? Math.ceil((list.MC_Price / list.Total_unit_price_amount) * 100) : 0} %
-                </h2>
+                <h2 style={{ fontSize: '6vmin' }}>87.0%</h2>
                 <div style={{ width: '40%', borderLeft: '1px solid lightgray' }}>
                     <div className="Money_Containers">
                         <div style={{ fontSize: '0.8em', textAlign: 'start', marginLeft: '20px' }}>MC</div>
-                        <div>&#8361; {(list.MC_Price / 1000000).toLocaleString('ko-KR')} M</div>
+                        <div>&#8361; 2,300 M</div>
                     </div>
                     <div className="Money_Containers" style={{ marginTop: '20px' }}>
                         <div style={{ fontSize: '0.8em', textAlign: 'start', marginLeft: '20px' }}>판가</div>
-                        <div>&#8361;{(list.Total_unit_price_amount / 1000000).toLocaleString('ko-KR')} M</div>
+                        <div>&#8361; 2,300 M</div>
                     </div>
                 </div>
             </div>

@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import DepartLists from './DepartLists/DepartLists';
 import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
-import { Getting_MC_average_compared_to_sales_price_by_sector } from '../../../../../Models/ReduxThunks/EISDashbaord/McAverageThunkReducers';
 
 const DepartTopMainPageMainDivBox = styled.div`
     .Select_Line {
@@ -28,20 +26,40 @@ const DepartTopMainPageMainDivBox = styled.div`
 `;
 
 const DepartTopMainPage = () => {
-    const dispatch = useDispatch();
-    const Select_Date_State = useSelector(state => state.Select_Date_Reducer_State.Select_Date_State);
-    const DepartMentLists_State = useSelector(state => state.McAverage_ThunkReducers_State);
-    useEffect(() => {
-        // dispatch(Getting_MC_average_compared_to_sales_price_by_sector(Select_Date_State.value));
-    }, [Select_Date_State.value]);
-
+    const [DepartMentLists, setDepartMentLists] = useState([
+        {
+            Department_Name: 'DC/Module',
+            Department_code: 'Modules',
+            equipment_Lists: ['S810', 'S1610', 'S3000P', 'i1000', 'i1520'],
+        },
+        {
+            Department_Name: 'MBT',
+            Department_code: 'MBT',
+            equipment_Lists: ['i2122H', 'i2154H'],
+        },
+        {
+            Department_Name: 'Storage',
+            Department_code: 'Storage',
+            equipment_Lists: ['i3930KA', 'SST12KA', 'SST12KF', 'SST12KFQ THB', 'SST32KF', 'SST32KF THB', 'SST64KA'],
+        },
+        {
+            Department_Name: 'SoC',
+            Department_code: 'SoC',
+            equipment_Lists: ['I9950CP', 'EX9950C', 'EX9950D'],
+        },
+        {
+            Department_Name: 'CLT',
+            Department_code: 'CLT',
+            equipment_Lists: ['I7304C'],
+        },
+    ]);
     return (
         <DepartTopMainPageMainDivBox>
             <div className="Select_Line">
                 <div className="Line_Title">부문별 판가 대비 MC 평균</div>
             </div>
             <ul className="Top_Depart_Lists_GR">
-                {DepartMentLists_State.DepartMentLists.map(list => {
+                {DepartMentLists.map(list => {
                     return <DepartLists key={list.Department_Name} list={list}></DepartLists>;
                 })}
             </ul>

@@ -1,11 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import NavigationMainPage from '../../Navigation/NavigationMainPage';
 import styled from 'styled-components';
 import DepartTopMainPage from './Home/DepartTop/DepartTopMainpage';
 import GraphsMainPage from './Home/Graphs/GraphsMainPage';
-import { Request_Get_Axios } from '../../../API';
-import { useSelector } from 'react-redux';
-import Loader from '../../../Loader/Loader';
 
 const DashboardMainPageMainStyled = styled.div`
     background-color: #efefef;
@@ -13,7 +10,6 @@ const DashboardMainPageMainStyled = styled.div`
 `;
 
 const DashboardMainPage = () => {
-    const DepartMentLists_State = useSelector(state => state.McAverage_ThunkReducers_State);
     return (
         <DashboardMainPageMainStyled>
             <NavigationMainPage></NavigationMainPage>
@@ -23,7 +19,6 @@ const DashboardMainPage = () => {
             <div>
                 <GraphsMainPage></GraphsMainPage>
             </div>
-            <Loader loading={DepartMentLists_State.loading}></Loader>
         </DashboardMainPageMainStyled>
     );
 };

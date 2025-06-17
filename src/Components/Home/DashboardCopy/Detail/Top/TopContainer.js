@@ -6,7 +6,7 @@ const TopContainer = () => {
     return (
         <div style={{ height: '100%' }}>
             <InfoContainer></InfoContainer>
-            {/* <BarContainer></BarContainer> */}
+            <BarContainer></BarContainer>
         </div>
     );
 };

@@ -11,6 +11,7 @@ import DashboardMainPage from '../Home/Dashboard/DashboardMainpage';
 import DetailMainPage from '../Home/Dashboard/Detail/DetailMainPage';
 import StockMainPage from '../Home/Stock/StockMainPage';
 import StockDetailMainPage from '../Home/Stock/SotckDetail/StockDetailMainPage';
+import DashboardMainPageSub from '../../Components/Home/DashboardCopy/DashboardMainpage';
 
 const RouterMainPage = () => {
     const User_Info = useSelector(state => state.Login_Info_Reducer_State.Login_Info);
@@ -54,6 +55,12 @@ const RouterMainPage = () => {
         {
             path: '/ERP/Stock/Part/Detail/Table',
             element: <StockDetailMainPage></StockDetailMainPage>,
+            withAuthorization: false,
+            withAdminAuthorization: false,
+        },
+        {
+            path: '/Sub/EIS',
+            element: <DashboardMainPageSub></DashboardMainPageSub>,
             withAuthorization: false,
             withAdminAuthorization: false,
         },
