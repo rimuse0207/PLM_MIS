@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
-const SideContentMainDivBox = styled.div`
+export const SideContentMainDivBox = styled.div`
     padding: 10px;
 
     .summation_Table {
@@ -33,9 +33,30 @@ const SideContentMainDivBox = styled.div`
             color: black;
         }
     }
+    .Part_Detail_Table {
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        th,
+        td {
+            /* border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd; */
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            color: black;
+        }
+    }
 `;
 
-const SideContent = ({ Detail_Department_Lists, DepartMentLists }) => {
+const SideContent = ({ Detail_Department_Lists, DepartMentLists, Selector_Value }) => {
     const { Groups_Code } = useParams();
     const [GetSorting_Data, setGetSoring_Data] = useState([]);
     useEffect(() => {

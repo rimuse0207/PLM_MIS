@@ -6,6 +6,7 @@ import SideContainer from './Side/SideContainer';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Request_Get_Axios } from '../../../../API';
+import Loader from '../../../../Loader/Loader';
 
 const DetailMainPageMainDivBox = styled.div`
     .Detail_Group {
@@ -37,7 +38,7 @@ const DetailMainPage = () => {
     const [DepartMentLists, setDepartMentLists] = useState([
         {
             Department_Name: 'DC/Module',
-            Department_code: 'Modules',
+            Department_code: 'Module',
             equipment_Lists: ['S810', 'S1610', 'S3000P', 'i1000', 'i1520'],
         },
         {
@@ -64,7 +65,9 @@ const DetailMainPage = () => {
     const { Groups_Code } = useParams();
     const Select_Date_State = useSelector(state => state.Select_Date_Reducer_State.Select_Date_State);
     const [Detail_Department_Lists, setDetail_Department_Lists] = useState([]);
+    const [loading, setloading] = useState(false);
     useEffect(() => {
+        setloading(true);
         Getting_History_Datas();
     }, [Groups_Code, Select_Date_State.value]);
 
@@ -75,8 +78,8 @@ const DetailMainPage = () => {
         });
         if (Getting_History_Datas_Axios.status) {
             setDetail_Department_Lists(Getting_History_Datas_Axios.data);
-            console.log(Getting_History_Datas_Axios);
         }
+        setloading(false);
     };
     return (
         <DetailMainPageMainDivBox>
@@ -91,9 +94,14 @@ const DetailMainPage = () => {
                     ></TopContainer>
                 </div>
                 <div className="Detail_Right">
-                    <SideContainer Detail_Department_Lists={Detail_Department_Lists} DepartMentLists={DepartMentLists}></SideContainer>
+                    <SideContainer
+                        Detail_Department_Lists={Detail_Department_Lists}
+                        DepartMentLists={DepartMentLists}
+                        Selector_Value={Selector_Value}
+                    ></SideContainer>
                 </div>
             </div>
+            <Loader loading={loading}></Loader>
         </DetailMainPageMainDivBox>
     );
 };

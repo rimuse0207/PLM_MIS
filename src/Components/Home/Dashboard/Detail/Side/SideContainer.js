@@ -1,6 +1,7 @@
 import React from 'react';
 import SideContent from './SideContent/SideContent';
 import styled from 'styled-components';
+import SideContentPartListsTable from './SideContent/SideContentPartListsTable';
 
 const SideContainerMainDivBox = styled.div`
     border: 1px solid lightgray;
@@ -15,11 +16,23 @@ const SideContainerMainDivBox = styled.div`
     }
 `;
 
-const SideContainer = ({ Detail_Department_Lists, DepartMentLists }) => {
+const SideContainer = ({ Detail_Department_Lists, DepartMentLists, Selector_Value }) => {
     return (
         <SideContainerMainDivBox>
             <div className="Select_Line"></div>
-            <SideContent Detail_Department_Lists={Detail_Department_Lists} DepartMentLists={DepartMentLists}></SideContent>
+            {Selector_Value === 'ALL' ? (
+                <SideContent
+                    Detail_Department_Lists={Detail_Department_Lists}
+                    DepartMentLists={DepartMentLists}
+                    Selector_Value={Selector_Value}
+                ></SideContent>
+            ) : (
+                <SideContentPartListsTable
+                    Detail_Department_Lists={Detail_Department_Lists}
+                    DepartMentLists={DepartMentLists}
+                    Selector_Value={Selector_Value}
+                ></SideContentPartListsTable>
+            )}
         </SideContainerMainDivBox>
     );
 };

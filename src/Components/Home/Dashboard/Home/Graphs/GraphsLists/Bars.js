@@ -23,7 +23,7 @@ const Bars = ({ Bar_State }) => {
     //     { equipments: 'i7304C 5호기', MC: 3200, price: 5000 },
     //     { equipments: 'i7304C 6호기', MC: 3200, price: 5000 },
     // ];
-
+    console.log('BARAR', Bar_State);
     // 시각화 전용 데이터 가공 (원본은 그대로)
     const adjustedData = Bar_State.map(item => ({
         ...item,
@@ -38,7 +38,7 @@ const Bars = ({ Bar_State }) => {
                 maxValue={maxValue}
                 keys={['MC', 'profit']}
                 indexBy="equipments"
-                margin={{ top: 120, right: 0, bottom: 60, left: 150 }}
+                margin={{ top: 120, right: 0, bottom: 60, left: 100 }}
                 padding={0.9}
                 groupMode="stacked"
                 colors={['skyblue', 'gray']}

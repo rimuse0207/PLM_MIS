@@ -115,7 +115,8 @@ const InfoContainer = ({ DepartMentLists, Detail_Department_Lists, Selector_Valu
             <div className="Select_Line"></div>
             <div className="Info_Container">
                 <div className="Info_Container_Left">
-                    <h2>{Groups_Code === 'Modules' ? 'DC/Module' : Groups_Code}</h2>
+                    {/* <h2>{Groups_Code === 'Modules' ? 'DC/Module' : Groups_Code}</h2> */}
+                    <h2>{Selector_Value === 'ALL' ? (Groups_Code === 'Modules' ? 'DC/Module' : Groups_Code) : Selector_Value}</h2>
                     <div class="select-container">
                         <select value={Selector_Value} onChange={e => setSelector_Value(e.target.value)}>
                             <option value="ALL">전체</option>

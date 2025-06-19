@@ -17,11 +17,20 @@ const BarContainerMainDivBox = styled.div`
     }
 `;
 
-const BarContainer = () => {
+const BarContainer = ({ Detail_Bar_Data }) => {
+    // const barData = [
+    //     { equipments: 'i7304C 1호기', MC: 1200, price: 2000 },
+    //     { equipments: 'i7304C 2호기', MC: 2200, price: 3000 },
+    //     { equipments: 'i7304C 3호기', MC: 3200, price: 5000 },
+    //     { equipments: 'i7304C 4호기', MC: 3200, price: 5000 },
+    //     { equipments: 'i7304C 5호기', MC: 3200, price: 5000 },
+    //     { equipments: 'i7304C 6호기', MC: 3200, price: 5000 },
+    // ];
+
     return (
         <BarContainerMainDivBox>
             <div className="Select_Line"></div>
-            <Bars></Bars>
+            <Bars Bar_State={Detail_Bar_Data}></Bars>
         </BarContainerMainDivBox>
     );
 };
