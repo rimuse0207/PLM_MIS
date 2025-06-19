@@ -6,6 +6,7 @@ import AllEquipmentsReducers_State from './ReduxThunks/AllEquipmentsReducers/All
 import Select_Date_Reducer_State from './SelectDateReducers/SelectDateReducer';
 import McAverage_ThunkReducers_State from './ReduxThunks/EISDashbaord/McAverageThunkReducers';
 import Recent_Equipments_ThunkReducers_State from './ReduxThunks/EISDashbaord/Graphs/RecentEquipmentsThunkReducers';
+import Pie_Equipments_Sell_Thunk_Reducers_State from './ReduxThunks/EISDashbaord/Graphs/PieEquipmentsSellThunkReducers';
 const rootReducer = combineReducers({
     Login_Info_Reducer_State,
     Now_Path_Reducer_State,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
     Select_Date_Reducer_State,
     McAverage_ThunkReducers_State,
     Recent_Equipments_ThunkReducers_State,
+    Pie_Equipments_Sell_Thunk_Reducers_State,
 });
 
 export default rootReducer;

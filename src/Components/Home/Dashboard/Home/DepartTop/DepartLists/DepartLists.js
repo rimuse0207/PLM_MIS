@@ -59,7 +59,7 @@ const DepartLists = ({ list }) => {
                     </div>
                     <div className="Money_Containers" style={{ marginTop: '20px' }}>
                         <div style={{ fontSize: '0.8em', textAlign: 'start', marginLeft: '20px' }}>판가</div>
-                        <div>&#8361;{(list.Total_unit_price_amount / 1000000).toLocaleString('ko-KR')} M</div>
+                        <div>&#8361; {(list.Total_unit_price_amount / 1000000).toLocaleString('ko-KR')} M</div>
                     </div>
                 </div>
             </div>

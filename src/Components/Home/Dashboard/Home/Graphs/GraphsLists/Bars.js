@@ -4,9 +4,8 @@ import styled from 'styled-components';
 
 export const BarsMainDivBox = styled.div`
     width: 100%;
-    height: 98%;
+    height: 100%;
     text-align: center;
-    margin-top: 20px;
     position: relative;
     .Unit_Container {
         position: absolute;
@@ -39,8 +38,8 @@ const Bars = ({ Bar_State }) => {
                 maxValue={maxValue}
                 keys={['MC', 'profit']}
                 indexBy="equipments"
-                margin={{ top: 90, right: 60, bottom: 60, left: 100 }}
-                padding={0.7}
+                margin={{ top: 120, right: 0, bottom: 60, left: 150 }}
+                padding={0.9}
                 groupMode="stacked"
                 colors={['skyblue', 'gray']}
                 colorBy="id"
@@ -75,8 +74,8 @@ const Bars = ({ Bar_State }) => {
                         dataFrom: 'keys',
                         anchor: 'top-right',
                         direction: 'row',
-                        translateX: 0,
-                        translateY: -50,
+                        translateX: 30,
+                        translateY: -110,
                         itemWidth: 100,
                         itemHeight: 20,
                         itemsSpacing: 2,

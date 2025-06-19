@@ -15,11 +15,11 @@ const SideContainerMainDivBox = styled.div`
     }
 `;
 
-const SideContainer = () => {
+const SideContainer = ({ Detail_Department_Lists, DepartMentLists }) => {
     return (
         <SideContainerMainDivBox>
             <div className="Select_Line"></div>
-            <SideContent></SideContent>
+            <SideContent Detail_Department_Lists={Detail_Department_Lists} DepartMentLists={DepartMentLists}></SideContent>
         </SideContainerMainDivBox>
     );
 };

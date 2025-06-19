@@ -92,35 +92,24 @@ const InfoContainerMainDivBox = styled.div`
     }
 `;
 
-const InfoContainer = () => {
+const InfoContainer = ({ DepartMentLists, Detail_Department_Lists, Selector_Value, setSelector_Value }) => {
     const { Groups_Code } = useParams();
-    const [DepartMentLists, setDepartMentLists] = useState([
-        {
-            Department_Name: 'DC/Module',
-            Department_code: 'Modules',
-            equipment_Lists: ['S810', 'S1610', 'S3000P', 'i1000', 'i1520'],
+
+    // 고객사 별 개수 세기
+    const nameCounts = Detail_Department_Lists.filter(item => (Selector_Value === 'ALL' ? item : item.Models === Selector_Value)).reduce(
+        (acc, curr) => {
+            acc[curr.Custom] = (acc[curr.Custom] || 0) + 1;
+            return acc;
         },
-        {
-            Department_Name: 'MBT',
-            Department_code: 'MBT',
-            equipment_Lists: ['i2122H', 'i2154H'],
-        },
-        {
-            Department_Name: 'Storage',
-            Department_code: 'Storage',
-            equipment_Lists: ['i3930KA', 'SST12KA', 'SST12KF', 'SST12KFQ THB', 'SST32KF', 'SST32KF THB', 'SST64KA'],
-        },
-        {
-            Department_Name: 'SoC',
-            Department_code: 'SoC',
-            equipment_Lists: ['I9950CP', 'EX9950C', 'EX9950D'],
-        },
-        {
-            Department_Name: 'CLT',
-            Department_code: 'CLT',
-            equipment_Lists: ['i7304C'],
-        },
-    ]);
+        {}
+    );
+
+    // 고객사를 개수 기준으로 내림차순 정렬 후 상위 3개 추출
+    const topNames = Object.entries(nameCounts)
+        .sort((a, b) => b[1] - a[1]) // [name, count] 형태
+        .slice(0, 3)
+        .map(([name]) => name);
+
     return (
         <InfoContainerMainDivBox>
             <div className="Select_Line"></div>
@@ -128,8 +117,8 @@ const InfoContainer = () => {
                 <div className="Info_Container_Left">
                     <h2>{Groups_Code === 'Modules' ? 'DC/Module' : Groups_Code}</h2>
                     <div class="select-container">
-                        <select>
-                            <option value="All">전체</option>
+                        <select value={Selector_Value} onChange={e => setSelector_Value(e.target.value)}>
+                            <option value="ALL">전체</option>
                             {DepartMentLists.filter(item => item.Department_code === Groups_Code).map(lists => {
                                 return lists.equipment_Lists.map(list => {
                                     return <option value={list}>{list}</option>;
@@ -143,12 +132,33 @@ const InfoContainer = () => {
                 </div>
                 <div className="Info_Container_Right">
                     <ul>
-                        <li>당해 매출액 : 1,640,000,000 원</li>
-                        <li>평균 MC 율 : 55.5%</li>
+                        <li>
+                            당해 매출액 :{' '}
+                            {Detail_Department_Lists.length > 0
+                                ? Detail_Department_Lists.filter(item => (Selector_Value === 'ALL' ? item : item.Models === Selector_Value))
+                                      .reduce((pre, acc) => pre + acc.Price, 0)
+                                      .toLocaleString('ko-kr')
+                                : 0}
+                            원
+                        </li>
+                        <li>
+                            평균 MC 율 :{' '}
+                            {Detail_Department_Lists.length > 0
+                                ? Math.ceil(
+                                      (Detail_Department_Lists.filter(item =>
+                                          Selector_Value === 'ALL' ? item : item.Models === Selector_Value
+                                      ).reduce((pre, acc) => pre + acc.All_Price, 0) /
+                                          Detail_Department_Lists.filter(item =>
+                                              Selector_Value === 'ALL' ? item : item.Models === Selector_Value
+                                          ).reduce((pre, acc) => pre + acc.Price, 0)) *
+                                          100
+                                  )
+                                : 0}
+                            %
+                        </li>
                         <li>
                             <div>
-                                주요 거래처 :{' '}
-                                <span style={{ fontSize: '0.8em', fontWeight: '300' }}>삼성전자(주), SK하이닉스(주), SIB</span>
+                                주요 거래처 : <span style={{ fontSize: '0.8em', fontWeight: '300' }}>{topNames.join(', ')}</span>
                             </div>
                         </li>
                     </ul>

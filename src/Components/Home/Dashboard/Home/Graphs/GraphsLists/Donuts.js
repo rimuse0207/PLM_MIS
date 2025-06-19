@@ -1,37 +1,11 @@
 import React from 'react';
 import { ResponsivePie } from '@nivo/pie';
-const data = [
-    {
-        id: 'DC/Module',
-        label: 'DC/Module',
-        value: 200,
-    },
-    {
-        id: 'MBT',
-        label: 'MBT',
-        value: 200,
-    },
-    {
-        id: 'Storage',
-        label: 'Storage',
-        value: 200,
-    },
-    {
-        id: 'SoC',
-        label: 'SoC',
-        value: 200,
-    },
-    {
-        id: 'CLT',
-        label: 'CLT',
-        value: 200,
-    },
-];
-const Donuts = () => {
+
+const Donuts = ({ Pie_State }) => {
     return (
         <div style={{ width: '100%', height: '100%', textAlign: 'center' }}>
             <ResponsivePie
-                data={data}
+                data={Pie_State}
                 margin={{ top: 100, right: 0, bottom: 80, left: 0 }}
                 innerRadius={0}
                 padAngle={1}
@@ -79,7 +53,7 @@ const Donuts = () => {
                     'arcLinkLabels',
                     'legends',
                     ({ centerX, centerY, dataWithArc }) => {
-                        const total = data.reduce((sum, d) => sum + d.value, 0);
+                        const total = Pie_State.reduce((sum, d) => sum + d.value, 0);
                         return dataWithArc.map(datum => {
                             const { startAngle, endAngle, outerRadius } = datum.arc;
 
@@ -104,7 +78,7 @@ const Donuts = () => {
                                             fontWeight: 'bold',
                                         }}
                                     >
-                                        {datum.value}
+                                        {datum.value.toLocaleString('ko-kr')} M
                                     </text>
                                     <text
                                         x={x}
@@ -124,7 +98,7 @@ const Donuts = () => {
                     },
                 ]}
                 tooltip={({ datum }) => {
-                    const total = data.reduce((sum, d) => sum + d.value, 0);
+                    const total = Pie_State.reduce((sum, d) => sum + d.value, 0);
                     const percent = ((datum.value / total) * 100).toFixed(1);
                     return (
                         <div
@@ -137,7 +111,7 @@ const Donuts = () => {
                         >
                             <strong>{datum.label}</strong>
                             <br />
-                            매출: {datum.value}
+                            매출: {datum.value.toLocaleString('ko-kr')} M
                             <br />
                             비율: {percent}%
                         </div>

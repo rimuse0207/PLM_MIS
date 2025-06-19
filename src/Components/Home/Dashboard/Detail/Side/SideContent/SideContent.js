@@ -1,4 +1,6 @@
-import React from 'react';
+import moment from 'moment';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 const SideContentMainDivBox = styled.div`
@@ -33,7 +35,26 @@ const SideContentMainDivBox = styled.div`
     }
 `;
 
-const SideContent = () => {
+const SideContent = ({ Detail_Department_Lists, DepartMentLists }) => {
+    const { Groups_Code } = useParams();
+    const [GetSorting_Data, setGetSoring_Data] = useState([]);
+    useEffect(() => {
+        Sorting_Data();
+    }, [Detail_Department_Lists]);
+    const Sorting_Data = () => {
+        const [Getting_Data] = DepartMentLists.filter(item => item.Department_code === Groups_Code);
+
+        const Sortings = Getting_Data.equipment_Lists.map(list => {
+            return {
+                eq_name: list,
+                counts: Detail_Department_Lists.filter(item => item.Models === list).length,
+                sum_price: Detail_Department_Lists.filter(item => item.Models === list).reduce((pre, acc) => pre + acc.Price * acc.QTY, 0),
+                Lists: Detail_Department_Lists.filter(item => item.Models === list),
+            };
+        });
+        setGetSoring_Data(Sortings.sort((a, b) => b.counts - a.counts));
+    };
+
     return (
         <SideContentMainDivBox>
             <div>
@@ -42,24 +63,16 @@ const SideContent = () => {
             <div className="summation_Table">
                 <table>
                     <tbody>
-                        <tr>
-                            <td>1. </td>
-                            <td>S1610</td>
-                            <td>3건</td>
-                            <td>{new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(530000000)}</td>
-                        </tr>
-                        <tr>
-                            <td>2. </td>
-                            <td>S3000P</td>
-                            <td>3건</td>
-                            <td>{new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(530000000)}</td>
-                        </tr>
-                        <tr>
-                            <td>3. </td>
-                            <td>i5120</td>
-                            <td>3건</td>
-                            <td>{new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(530000000)}</td>
-                        </tr>
+                        {GetSorting_Data.map((list, j) => {
+                            return (
+                                <tr key={list.eq_name}>
+                                    <td>{j + 1}. </td>
+                                    <td>{list.eq_name} </td>
+                                    <td>{list.counts}건</td>
+                                    <td>{list.sum_price.toLocaleString('ko-kr')} 원</td>
+                                </tr>
+                            );
+                        })}
                     </tbody>
                 </table>
             </div>
@@ -74,12 +87,16 @@ const SideContent = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>5.27</td>
-                            <td>S1610</td>
-                            <td>3</td>
-                            <td>200,000,000</td>
-                        </tr>
+                        {Detail_Department_Lists.sort((a, b) => b.DVReqDate - a.DVReqDate).map(list => {
+                            return (
+                                <tr>
+                                    <td>{moment(list.DVReqDate).format('M.DD')}</td>
+                                    <td>{list.Models}</td>
+                                    <td>{list.Unit_Rank}호기</td>
+                                    <td>{list.Price.toLocaleString('ko-kr')}</td>
+                                </tr>
+                            );
+                        })}
                     </tbody>
                 </table>
             </div>
