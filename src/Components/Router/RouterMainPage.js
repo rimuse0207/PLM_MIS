@@ -72,9 +72,9 @@ const RouterMainPage = () => {
             withAdminAuthorization: false,
         },
     ]);
-    useEffect(() => {
-        dispatch(Getting_Top6_Recent_Sell_Equipments_Lists(Select_Date_State.value));
-    }, []);
+    // useEffect(() => {
+    //     dispatch(Getting_Top6_Recent_Sell_Equipments_Lists(Select_Date_State.value));
+    // }, []);
     useEffect(() => {
         dispatch(PieDataReset());
         dispatch(Getting_MC_average_compared_to_sales_price_by_sector(Select_Date_State.value));
