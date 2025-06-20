@@ -68,3 +68,19 @@ export const Change_Grouping_Price = async GetData => {
 
     return sortedResult;
 };
+
+// 단위 기준으로 원화 한글 표시를 위한 함수
+export function formatCurrency(value) {
+    if (value >= 100000000) {
+        // 억 단위 (소수 첫째 자리까지)
+        return `${(value / 100000000).toFixed(1)}억`;
+    } else if (value >= 10000000) {
+        // 천만원 단위
+        return `${(value / 10000).toFixed(1)}만`;
+    } else if (value === 0) {
+        return '';
+    } else {
+        // 기본 만원 단위 이하
+        return `${value.toLocaleString()}원`;
+    }
+}

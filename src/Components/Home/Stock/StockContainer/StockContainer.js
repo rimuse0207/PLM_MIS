@@ -5,7 +5,7 @@ import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { Request_Get_Axios } from '../../../../API';
 import Loader from '../../../../Loader/Loader';
-import { Change_Grouping_Price, getMonthsOfYearUntilNow, numberToKorean } from '../CommonFunc/CommonFunc';
+import { Change_Grouping_Price, formatCurrency, getMonthsOfYearUntilNow, numberToKorean } from '../CommonFunc/CommonFunc';
 import { useNavigate } from 'react-router-dom';
 
 const MainStockContainerDiv = styled.div`
@@ -215,7 +215,7 @@ const StockContainer = () => {
                     <div className="Select_Line"></div>
                     <div className="Price_Showing_Container">
                         <div className="Price_Title">총 재고 금액</div>
-                        <div className="Price_Desc">{numberToKorean(Get_Part_List.reduce((pre, next) => pre + next.Price, 0))} 원</div>
+                        <div className="Price_Desc">{formatCurrency(Get_Part_List.reduce((pre, next) => pre + next.Price, 0))} 원</div>
                     </div>
                 </div>
                 <div className="Right_Container">
@@ -245,7 +245,7 @@ const StockContainer = () => {
                                     <div className="Price_Showing_Container">
                                         <div className="Price_Title">Analog Device</div>
                                         <div className="Price_Desc">
-                                            {numberToKorean(
+                                            {formatCurrency(
                                                 Get_Part_List.filter(
                                                     item =>
                                                         item.ItemSName.startsWith('ANALOG') ||
@@ -261,7 +261,7 @@ const StockContainer = () => {
                                     <div className="Price_Showing_Container">
                                         <div className="Price_Title">XILINX</div>
                                         <div className="Price_Desc">
-                                            {numberToKorean(
+                                            {formatCurrency(
                                                 Get_Part_List.filter(item => item.ItemSName.startsWith('XILINX')).reduce(
                                                     (pre, next) => pre + next.Price,
                                                     0
@@ -275,7 +275,7 @@ const StockContainer = () => {
                                     <div className="Price_Showing_Container">
                                         <div className="Price_Title">INTEL</div>
                                         <div className="Price_Desc">
-                                            {numberToKorean(
+                                            {formatCurrency(
                                                 Get_Part_List.filter(item => item.ItemSName.startsWith('INTEL')).reduce(
                                                     (pre, next) => pre + next.Price,
                                                     0

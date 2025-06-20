@@ -1,6 +1,6 @@
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { getMonthsOfYearUntilNow, numberToKorean } from '../../CommonFunc/CommonFunc';
+import { formatCurrency, getMonthsOfYearUntilNow, numberToKorean } from '../../CommonFunc/CommonFunc';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { IoSearchOutline } from 'react-icons/io5';
@@ -192,11 +192,11 @@ const TableContainer = ({ Table_Select_List_State }) => {
                                     <td>{j + 1}</td>
                                     <td>{list.ItemSName}</td>
                                     <td style={{ textAlign: 'end' }}>
-                                        {numberToKorean(list.Price) ? `${numberToKorean(list.Price)} 원` : ''}
+                                        {formatCurrency(list.Price) ? `${formatCurrency(list.Price)} 원` : ''}
                                     </td>
                                     {list?.lists.map((item, i) => (
                                         <td style={{ textAlign: 'end' }} key={i}>
-                                            {numberToKorean(item.Price) ? `${numberToKorean(item.Price)} 원` : ' '}
+                                            {formatCurrency(item.Price) ? `${formatCurrency(item.Price)} 원` : ' '}
                                         </td>
                                     ))}
                                 </tr>
