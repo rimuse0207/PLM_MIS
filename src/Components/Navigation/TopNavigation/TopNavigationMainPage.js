@@ -12,6 +12,7 @@ import EquimentListsMainPage from '../../Home/EquimentLists/EquimentListsMainPag
 import { Changed_Select_Date_Info_State_Func } from '../../../Models/SelectDateReducers/SelectDateReducer';
 import Select from '@mui/material/Select';
 import ReactSelect from 'react-select';
+import { Request_Get_Axios } from '../../../API';
 
 const NavigationMainPageMainDivBox = styled.div`
     position: sticky;
@@ -125,6 +126,7 @@ const TopNavigationMainPage = () => {
     const Select_Date_State = useSelector(state => state.Select_Date_Reducer_State.Select_Date_State);
     const User_Info_State = useSelector(state => state.Login_Info_Reducer_State.Login_Info);
     const [open, setOpen] = useState(false);
+    const [CalculDate, setCalCulDate] = useState('');
     const options = [
         { value: '2024', label: '2024년' },
         { value: '2025', label: '2025년' },
@@ -134,7 +136,16 @@ const TopNavigationMainPage = () => {
         Navigate(e.target.value);
     };
 
+    const Getting_CalculDate = async () => {
+        const Getting_CalculDate_Axios = await Request_Get_Axios('/PLM_Route/PLM_Dashboard/Getting_CalculDate');
+        if (Getting_CalculDate_Axios.status) {
+            console.log(Getting_CalculDate_Axios);
+            setCalCulDate(Getting_CalculDate_Axios.data);
+        }
+    };
+
     useEffect(() => {
+        Getting_CalculDate();
         function handleClickOutside(event) {
             if (menuRef.current && !menuRef.current.contains(event.target)) {
                 setOpen(false);
@@ -162,6 +173,13 @@ const TopNavigationMainPage = () => {
                         />
                     </div>
                 </div>
+                {CalculDate ? (
+                    <div style={{ marginRight: '50px', color: 'rgb(0,202,255)' }}>
+                        기준일시: {moment(CalculDate).format('YYYY.MM.DD')} 09:06:00{' '}
+                    </div>
+                ) : (
+                    <></>
+                )}
             </div>
         </NavigationMainPageMainDivBox>
     );

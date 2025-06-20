@@ -84,7 +84,7 @@ const SideContent = ({ Detail_Department_Lists, DepartMentLists, Selector_Value 
             <div className="summation_Table">
                 <table>
                     <tbody>
-                        {GetSorting_Data.map((list, j) => {
+                        {GetSorting_Data.filter(item => item.counts > 0).map((list, j) => {
                             return (
                                 <tr key={list.eq_name}>
                                     <td>{j + 1}. </td>

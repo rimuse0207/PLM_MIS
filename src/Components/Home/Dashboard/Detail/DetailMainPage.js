@@ -94,6 +94,7 @@ const DetailMainPage = () => {
                     ></TopContainer>
                 </div>
                 <div className="Detail_Right">
+                    
                     <SideContainer
                         Detail_Department_Lists={Detail_Department_Lists}
                         DepartMentLists={DepartMentLists}

@@ -15,15 +15,6 @@ export const BarsMainDivBox = styled.div`
 `;
 
 const Bars = ({ Bar_State }) => {
-    // const barData = [
-    //     { equipments: 'i7304C 1호기', MC: 1200, price: 2000 },
-    //     { equipments: 'i7304C 2호기', MC: 2200, price: 3000 },
-    //     { equipments: 'i7304C 3호기', MC: 3200, price: 5000 },
-    //     { equipments: 'i7304C 4호기', MC: 3200, price: 5000 },
-    //     { equipments: 'i7304C 5호기', MC: 3200, price: 5000 },
-    //     { equipments: 'i7304C 6호기', MC: 3200, price: 5000 },
-    // ];
-    console.log('BARAR', Bar_State);
     // 시각화 전용 데이터 가공 (원본은 그대로)
     const adjustedData = Bar_State.map(item => ({
         ...item,
@@ -98,7 +89,6 @@ const Bars = ({ Bar_State }) => {
                         return bars
                             .filter(bar => bar.data.id === 'profit')
                             .map(bar => {
-                                console.log(bar);
                                 const price = bar.data.data.price;
                                 const MC = bar.data.data.MC;
                                 if (!price || price === 0) return null;
@@ -138,7 +128,7 @@ const Bars = ({ Bar_State }) => {
                             >
                                 <strong>{indexValue}</strong>
                                 <br />
-                                단가: {data.price.toLocaleString('ko-kr')} M
+                                단가: {data.price.toLocaleString('ko-kr')}
                             </div>
                         );
                     } else {
