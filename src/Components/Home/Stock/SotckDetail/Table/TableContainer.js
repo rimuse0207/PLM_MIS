@@ -170,7 +170,11 @@ const TableContainer = ({ Table_Select_List_State }) => {
                                     : null}
                             </th>
                             <th className="Hover_Setting" onClick={() => handleSort('Price')} style={{ userSelect: 'none' }}>
-                                연 누적액
+                                재고자산 ({' '}
+                                {Select_Date_State.value === moment().format('YYYY')
+                                    ? moment().format('~YY.MM')
+                                    : moment(Select_Date_State.value).format('~YY.12')}{' '}
+                                )
                                 {sortConfig.key === 'Price'
                                     ? sortConfig.direction === 'asc'
                                         ? ' ▲'

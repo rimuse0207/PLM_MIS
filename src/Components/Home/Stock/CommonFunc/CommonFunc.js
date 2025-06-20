@@ -81,6 +81,6 @@ export function formatCurrency(value) {
         return '';
     } else {
         // 기본 만원 단위 이하
-        return `${value.toLocaleString()}원`;
+        return `${value.toLocaleString()}`;
     }
 }
