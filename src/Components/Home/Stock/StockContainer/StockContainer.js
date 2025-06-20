@@ -243,7 +243,7 @@ const StockContainer = () => {
                             <ul style={{ height: '100%' }}>
                                 <li>
                                     <div className="Price_Showing_Container">
-                                        <div className="Price_Title">Analog Device</div>
+                                        <div className="Price_Title">Analog Devices</div>
                                         <div className="Price_Desc">
                                             {formatCurrency(
                                                 Get_Part_List.filter(
