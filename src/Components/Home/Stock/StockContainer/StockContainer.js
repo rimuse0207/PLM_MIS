@@ -78,7 +78,7 @@ const MainStockContainerDiv = styled.div`
             align-items: end;
         }
         .Price_Desc {
-            font-size: 5vmin;
+            font-size: 7vmin;
             font-weight: bolder;
             text-align: center;
             padding: 10px;
