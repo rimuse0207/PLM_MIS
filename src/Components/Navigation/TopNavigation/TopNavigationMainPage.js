@@ -130,13 +130,6 @@ const TopNavigationMainPage = () => {
         { value: '2025', label: '2025년' },
     ];
 
-    // const Getting_CalculDate = async () => {
-    //     const Getting_CalculDate_Axios = await Request_Get_Axios('/PLM_Route/PLM_Dashboard/Getting_CalculDate');
-    //     if (Getting_CalculDate_Axios.status) {
-    //         setCalCulDate(Getting_CalculDate_Axios.data);
-    //     }
-    // };
-
     useEffect(() => {
         function handleClickOutside(event) {
             if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -165,13 +158,6 @@ const TopNavigationMainPage = () => {
                         />
                     </div>
                 </div>
-                {CalculDate ? (
-                    <div style={{ marginRight: '50px', color: 'rgb(0,202,255)' }}>
-                        기준일시: {moment(CalculDate).format('YYYY.MM.DD')} 09:06:00{' '}
-                    </div>
-                ) : (
-                    <></>
-                )}
             </div>
         </NavigationMainPageMainDivBox>
     );
