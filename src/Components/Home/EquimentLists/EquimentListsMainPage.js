@@ -199,9 +199,10 @@ const EquimentListsMainPage = () => {
         },
     ]);
     useEffect(() => {
-        if (EquimentLists_State?.data?.length === 0) {
-            dispatch(AllEquipmentsfetchData());
-        }
+        // if (EquimentLists_State?.data?.length === 0) {
+        //     dispatch(AllEquipmentsfetchData());
+        // }
+        dispatch(AllEquipmentsfetchData());
     }, []);
 
     return (

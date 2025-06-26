@@ -110,7 +110,7 @@ const SideContent = ({ Detail_Department_Lists, DepartMentLists, Selector_Value 
                     <tbody>
                         {Detail_Department_Lists.sort((a, b) => b.DVReqDate - a.DVReqDate).map(list => {
                             return (
-                                <tr>
+                                <tr key={list.Unit_Rank}>
                                     <td>{moment(list.DVReqDate).format('M.DD')}</td>
                                     <td>{list.Models}</td>
                                     <td>{list.Unit_Rank}호기</td>

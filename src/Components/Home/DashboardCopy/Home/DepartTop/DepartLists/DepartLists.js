@@ -40,7 +40,7 @@ const DepartLists = ({ list }) => {
     const Navigation = useNavigate();
 
     const HandleClick_GoTo_DetailPage = Select_Data => {
-        Navigation(`/Detail/${Select_Data.Department_code}`);
+        Navigation(`/Sub/Detail/${Select_Data.Department_code}`);
     };
 
     return (

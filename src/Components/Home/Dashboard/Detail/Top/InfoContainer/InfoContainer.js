@@ -117,12 +117,16 @@ const InfoContainer = ({ DepartMentLists, Detail_Department_Lists, Selector_Valu
                 <div className="Info_Container_Left">
                     {/* <h2>{Groups_Code === 'Modules' ? 'DC/Module' : Groups_Code}</h2> */}
                     <h2>{Selector_Value === 'ALL' ? (Groups_Code === 'Modules' ? 'DC/Module' : Groups_Code) : Selector_Value}</h2>
-                    <div class="select-container">
+                    <div className="select-container">
                         <select value={Selector_Value} onChange={e => setSelector_Value(e.target.value)}>
                             <option value="ALL">전체</option>
                             {DepartMentLists.filter(item => item.Department_code === Groups_Code).map(lists => {
                                 return lists.equipment_Lists.map(list => {
-                                    return <option value={list}>{list}</option>;
+                                    return (
+                                        <option key={list} value={list}>
+                                            {list}
+                                        </option>
+                                    );
                                 });
                             })}
                         </select>

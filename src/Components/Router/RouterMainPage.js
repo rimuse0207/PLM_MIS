@@ -12,12 +12,14 @@ import DetailMainPage from '../Home/Dashboard/Detail/DetailMainPage';
 import StockMainPage from '../Home/Stock/StockMainPage';
 import StockDetailMainPage from '../Home/Stock/SotckDetail/StockDetailMainPage';
 import DashboardMainPageSub from '../../Components/Home/DashboardCopy/DashboardMainpage';
+import DetailMainPageSub from '../Home/DashboardCopy/Detail/DetailMainPage';
 import { Getting_Top6_Recent_Sell_Equipments_Lists } from '../../Models/ReduxThunks/EISDashbaord/Graphs/RecentEquipmentsThunkReducers';
 import { Getting_MC_average_compared_to_sales_price_by_sector } from '../../Models/ReduxThunks/EISDashbaord/McAverageThunkReducers';
 import {
     Getting_DepartMents_Sell_Equipments_Lists,
     PieDataReset,
 } from '../../Models/ReduxThunks/EISDashbaord/Graphs/PieEquipmentsSellThunkReducers';
+
 const RouterMainPage = () => {
     const dispatch = useDispatch();
     const Select_Date_State = useSelector(state => state.Select_Date_Reducer_State.Select_Date_State);
@@ -68,6 +70,12 @@ const RouterMainPage = () => {
         {
             path: '/Sub/EIS',
             element: <DashboardMainPageSub></DashboardMainPageSub>,
+            withAuthorization: false,
+            withAdminAuthorization: false,
+        },
+        {
+            path: '/Sub/Detail/:Groups_Code',
+            element: <DetailMainPageSub></DetailMainPageSub>,
             withAuthorization: false,
             withAdminAuthorization: false,
         },

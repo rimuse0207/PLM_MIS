@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { SideContentMainDivBox } from './SideContent';
 import { useParams } from 'react-router-dom';
 import moment from 'moment';
@@ -9,7 +9,6 @@ const SideContentPartListsTable = ({ Detail_Department_Lists, DepartMentLists, S
     const [Part_Lists, setPart_Lists] = useState(['IC', 'CHAMBER', 'RESISTOR', 'CAPACITOR']);
     useEffect(() => {
         Sorting_Data();
-        console.log(Detail_Department_Lists);
     }, [Detail_Department_Lists]);
     const Sorting_Data = () => {
         const Sorting_Data = Detail_Department_Lists.filter(item => item.Models === Selector_Value);
@@ -35,7 +34,7 @@ const SideContentPartListsTable = ({ Detail_Department_Lists, DepartMentLists, S
                     <tbody>
                         {GetSorting_Data.map(list => {
                             return (
-                                <>
+                                <Fragment key={list.WO_NO}>
                                     {Part_Lists.map((partss, j) => {
                                         return (
                                             <tr key={partss}>
@@ -78,7 +77,7 @@ const SideContentPartListsTable = ({ Detail_Department_Lists, DepartMentLists, S
                                             ).toLocaleString('ko-kr')}
                                         </td>
                                     </tr>
-                                </>
+                                </Fragment>
                             );
                         })}
                     </tbody>
