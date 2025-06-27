@@ -2,6 +2,8 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { SideContentMainDivBox } from './SideContent';
 import { useParams } from 'react-router-dom';
 import moment from 'moment';
+import { BsInfoSquare } from 'react-icons/bs';
+import * as XLSX from 'xlsx/xlsx.mjs';
 
 const SideContentPartListsTable = ({ Detail_Department_Lists, DepartMentLists, Selector_Value }) => {
     const { Groups_Code } = useParams();
@@ -15,10 +17,32 @@ const SideContentPartListsTable = ({ Detail_Department_Lists, DepartMentLists, S
         setGetSoring_Data(Sorting_Data.sort((a, b) => Number(b.Unit_Rank) - Number(a.Unit_Rank)));
     };
 
+    const HandleClicks = () => {
+        exportToExcel();
+    };
+
+    const exportToExcel = () => {
+        const workbook = XLSX.utils.book_new();
+
+        Detail_Department_Lists.forEach(data => {
+            const filteredParts = data.Bom_Lists.filter(part => part.ERP_PART.startsWith('R'));
+
+            if (filteredParts.length > 0) {
+                const worksheet = XLSX.utils.json_to_sheet(filteredParts);
+                XLSX.utils.book_append_sheet(workbook, worksheet, `${data.Models} ${data.Unit_Rank}호기`);
+            }
+        });
+
+        XLSX.writeFile(workbook, `${Selector_Value}.xlsx`);
+    };
+
     return (
         <SideContentMainDivBox>
-            <div>
+            <div className="Part_Containers">
                 <h2>구성품</h2>
+                <span className="Excel_Download_Container" onClick={() => HandleClicks()}>
+                    <BsInfoSquare />
+                </span>
             </div>
 
             <div className="Part_Detail_Table" style={{ marginTop: '30px' }}>

@@ -6,6 +6,17 @@ import styled from 'styled-components';
 export const SideContentMainDivBox = styled.div`
     padding: 10px;
 
+    .Part_Containers {
+        display: flex;
+        .Excel_Download_Container {
+            margin-left: 10px;
+            color: green;
+            &:hover {
+                cursor: pointer;
+                color: gray;
+            }
+        }
+    }
     .summation_Table {
         margin-top: 20px;
         margin-bottom: 20px;
