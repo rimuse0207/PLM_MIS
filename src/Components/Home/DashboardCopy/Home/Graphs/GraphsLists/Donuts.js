@@ -4,31 +4,31 @@ const data = [
     {
         id: 'DC/Module',
         label: 'DC/Module',
-        value: 200,
+        value: 52,
         color: 'hsl(149, 70%, 50%)',
     },
     {
         id: 'MBT',
         label: 'MBT',
-        value: 200,
+        value: 1093.4,
         color: 'hsl(338, 70%, 50%)',
     },
     {
         id: 'Storage',
         label: 'Storage',
-        value: 200,
+        value: 157.5,
         color: 'hsl(116, 70%, 50%)',
     },
+    // {
+    //     id: 'SoC',
+    //     label: 'SoC',
+    //     value: 0,
+    //     color: 'hsl(55, 70%, 50%)',
+    // },
     {
-        id: 'SoC',
-        label: 'SoC',
-        value: 200,
-        color: 'hsl(55, 70%, 50%)',
-    },
-    {
-        id: 'CLT',
-        label: 'CLT',
-        value: 200,
+        id: '기타',
+        label: '기타',
+        value: 1272,
         color: 'hsl(84, 70%, 50%)',
     },
 ];
@@ -109,7 +109,7 @@ const Donuts = () => {
                                             fontWeight: 'bold',
                                         }}
                                     >
-                                        {datum.value}
+                                        {datum.value.toLocaleString('ko-kr')} M
                                     </text>
                                     <text
                                         x={x}
@@ -142,7 +142,7 @@ const Donuts = () => {
                         >
                             <strong>{datum.label}</strong>
                             <br />
-                            매출: {datum.value}
+                            매출: {datum.value.toLocaleString('ko-kr')} M
                             <br />
                             비율: {percent}%
                         </div>

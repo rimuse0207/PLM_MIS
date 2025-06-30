@@ -4,9 +4,8 @@ import styled from 'styled-components';
 
 export const BarsMainDivBox = styled.div`
     width: 100%;
-    height: 98%;
+    height: 100%;
     text-align: center;
-    margin-top: 20px;
     position: relative;
     .Unit_Container {
         position: absolute;
@@ -17,12 +16,8 @@ export const BarsMainDivBox = styled.div`
 
 const Bars = () => {
     const barData = [
-        { equipments: 'i7304C 1호기', MC: 1200, price: 2000 },
-        { equipments: 'i7304C 2호기', MC: 2200, price: 3000 },
-        { equipments: 'i7304C 3호기', MC: 3200, price: 5000 },
-        { equipments: 'i7304C 4호기', MC: 3200, price: 5000 },
-        { equipments: 'i7304C 5호기', MC: 3200, price: 5000 },
-        { equipments: 'i7304C 6호기', MC: 3200, price: 5000 },
+        { equipments: 'i7304C 2호기', MC: 3013, price: 4120 },
+        { equipments: 'i7304C 1호기', MC: 3106, price: 4120 },
     ];
 
     // 시각화 전용 데이터 가공 (원본은 그대로)
@@ -33,13 +28,12 @@ const Bars = () => {
     const maxValue = Math.max(...barData.map(d => Math.max(d.MC, d.price))) * 1.3;
     return (
         <BarsMainDivBox>
-            <div className="Unit_Container">*단위 백만원</div>
             <ResponsiveBar
                 data={adjustedData}
                 maxValue={maxValue}
                 keys={['MC', 'profit']}
                 indexBy="equipments"
-                margin={{ top: 90, right: 60, bottom: 60, left: 100 }}
+                margin={{ top: 120, right: 0, bottom: 60, left: 100 }}
                 padding={0.7}
                 groupMode="stacked"
                 colors={['skyblue', 'gray']}
@@ -75,8 +69,8 @@ const Bars = () => {
                         dataFrom: 'keys',
                         anchor: 'top-right',
                         direction: 'row',
-                        translateX: 0,
-                        translateY: -50,
+                        translateX: 30,
+                        translateY: -110,
                         itemWidth: 100,
                         itemHeight: 20,
                         itemsSpacing: 2,
@@ -99,7 +93,6 @@ const Bars = () => {
                         return bars
                             .filter(bar => bar.data.id === 'profit')
                             .map(bar => {
-                                console.log(bar);
                                 const price = bar.data.data.price;
                                 const MC = bar.data.data.MC;
                                 if (!price || price === 0) return null;
@@ -139,7 +132,7 @@ const Bars = () => {
                             >
                                 <strong>{indexValue}</strong>
                                 <br />
-                                단가: {data.price}
+                                단가: {data.price.toLocaleString('ko-kr')}
                             </div>
                         );
                     } else {
@@ -156,7 +149,7 @@ const Bars = () => {
                             >
                                 <strong>{indexValue}</strong>
                                 <br />
-                                MC: {data.MC}
+                                MC: {data.MC.toLocaleString('ko-kr')} M
                             </div>
                         );
                     }

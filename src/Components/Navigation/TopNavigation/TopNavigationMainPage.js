@@ -131,6 +131,7 @@ const TopNavigationMainPage = () => {
     ];
 
     useEffect(() => {
+        console.log(location.pathname);
         function handleClickOutside(event) {
             if (menuRef.current && !menuRef.current.contains(event.target)) {
                 setOpen(false);
@@ -149,14 +150,17 @@ const TopNavigationMainPage = () => {
                     <Link to={`${location.pathname.startsWith('/ERP/Stock/Part') ? '/ERP/Stock/Part' : '/'}`}>
                         <img src="/01_EXICON_CYMK_FULL-COLOR.PNG" width="140px"></img>
                     </Link>
-
-                    <div className="Select_Containers">
-                        <ReactSelect
-                            value={Select_Date_State}
-                            options={options}
-                            onChange={e => dispatch(Changed_Select_Date_Info_State_Func(e))}
-                        />
-                    </div>
+                    {location.pathname === '/' || location.pathname === '/Detail/CLT' ? (
+                        <></>
+                    ) : (
+                        <div className="Select_Containers">
+                            <ReactSelect
+                                value={Select_Date_State}
+                                options={options}
+                                onChange={e => dispatch(Changed_Select_Date_Info_State_Func(e))}
+                            />
+                        </div>
+                    )}
                 </div>
             </div>
         </NavigationMainPageMainDivBox>

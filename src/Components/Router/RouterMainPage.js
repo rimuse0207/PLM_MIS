@@ -26,13 +26,13 @@ const RouterMainPage = () => {
     const User_Info = useSelector(state => state.Login_Info_Reducer_State.Login_Info);
     const [RouterInfo, setRouterInfo] = useState([
         {
-            path: '/',
+            path: '/Sub/EIS',
             element: <DashboardMainPage></DashboardMainPage>,
             withAuthorization: false,
             withAdminAuthorization: false,
         },
         {
-            path: '/Detail/:Groups_Code',
+            path: '/Sub/Detail/:Groups_Code',
             element: <DetailMainPage></DetailMainPage>,
             withAuthorization: false,
             withAdminAuthorization: false,
@@ -68,13 +68,13 @@ const RouterMainPage = () => {
             withAdminAuthorization: false,
         },
         {
-            path: '/Sub/EIS',
+            path: '',
             element: <DashboardMainPageSub></DashboardMainPageSub>,
             withAuthorization: false,
             withAdminAuthorization: false,
         },
         {
-            path: '/Sub/Detail/:Groups_Code',
+            path: '/Detail/:Groups_Code',
             element: <DetailMainPageSub></DetailMainPageSub>,
             withAuthorization: false,
             withAdminAuthorization: false,

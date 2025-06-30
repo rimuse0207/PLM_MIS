@@ -44,21 +44,9 @@ const SideContent = () => {
                     <tbody>
                         <tr>
                             <td>1. </td>
-                            <td>S1610</td>
-                            <td>3건</td>
-                            <td>{new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(530000000)}</td>
-                        </tr>
-                        <tr>
-                            <td>2. </td>
-                            <td>S3000P</td>
-                            <td>3건</td>
-                            <td>{new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(530000000)}</td>
-                        </tr>
-                        <tr>
-                            <td>3. </td>
-                            <td>i5120</td>
-                            <td>3건</td>
-                            <td>{new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(530000000)}</td>
+                            <td>S7304C</td>
+                            <td>2건</td>
+                            <td>{new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(8240000000)}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -75,10 +63,16 @@ const SideContent = () => {
                     </thead>
                     <tbody>
                         <tr>
-                            <td>5.27</td>
-                            <td>S1610</td>
-                            <td>3</td>
-                            <td>200,000,000</td>
+                            <td>25.05.15</td>
+                            <td>i7304C</td>
+                            <td>2</td>
+                            <td>4,120,000,000</td>
+                        </tr>
+                        <tr>
+                            <td>24.12.24</td>
+                            <td>i7304C</td>
+                            <td>1</td>
+                            <td>4,120,000,000</td>
                         </tr>
                     </tbody>
                 </table>

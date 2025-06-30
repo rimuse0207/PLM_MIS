@@ -44,15 +44,15 @@ const GraphsMainPage = () => {
         <GraphsMainPageMainDivBox>
             <div className="Graph_Container_GR" style={{ width: '38%' }}>
                 <div className="Select_Group">
-                    <h3>매출액</h3>
-                    <select>
+                    <h3>25년 매출액</h3>
+                    {/* <select>
                         <option>전체</option>
                         <option>DC/Module</option>
                         <option>MBT</option>
                         <option>Storage</option>
                         <option>SoC</option>
                         <option>CLT</option>
-                    </select>
+                    </select> */}
                     {/* <div className="Unit_Container">*단위 백만원</div> */}
                 </div>
                 <Donuts></Donuts>
