@@ -132,7 +132,7 @@ const Bars = () => {
                             >
                                 <strong>{indexValue}</strong>
                                 <br />
-                                단가: {data.price.toLocaleString('ko-kr')}
+                                단가: {data.price.toLocaleString('ko-kr')} M
                             </div>
                         );
                     } else {

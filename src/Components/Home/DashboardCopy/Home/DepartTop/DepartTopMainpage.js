@@ -64,13 +64,6 @@ const DepartTopMainPage = () => {
             sell_price: 8240,
         },
     ]);
-    // useEffect(() => {
-    //     Getting_CLT_MC_Cacul();
-    // }, []);
-    // const Getting_CLT_MC_Cacul = async () => {
-    //     const aa = await Request_Get_Axios('/PLM_Route/PLM_Dashboard/specific_Equipment_Mc_Calculate');
-    //     console.log(aa);
-    // };
 
     return (
         <DepartTopMainPageMainDivBox>

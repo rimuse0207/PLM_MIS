@@ -134,10 +134,7 @@ const InfoContainer = () => {
             custom: ['삼성전자 (주)'],
         },
     ]);
-    useEffect(() => {
-        console.log(Groups_Code);
-        console.log(DepartMentLists.filter(item => item.Department_code === Groups_Code));
-    }, []);
+
     return (
         <InfoContainerMainDivBox>
             <div className="Select_Line"></div>

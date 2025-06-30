@@ -19,12 +19,12 @@ const data = [
         value: 157.5,
         color: 'hsl(116, 70%, 50%)',
     },
-    // {
-    //     id: 'SoC',
-    //     label: 'SoC',
-    //     value: 0,
-    //     color: 'hsl(55, 70%, 50%)',
-    // },
+    {
+        id: 'CLT',
+        label: 'CLT',
+        value: 1565,
+        color: 'hsl(55, 70%, 50%)',
+    },
     {
         id: '기타',
         label: '기타',
