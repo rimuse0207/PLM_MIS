@@ -50,7 +50,7 @@ const DepartLists = ({ list }) => {
             </div>
             <div className="Price_Container">
                 <h2 style={{ fontSize: '6vmin' }}>
-                    {list.MC_Price ? Math.ceil((list.MC_Price / list.Total_unit_price_amount) * 100) : 0} %
+                    {list.MC_Price ? ((list.MC_Price / list.Total_unit_price_amount) * 100).toFixed(1) : 0}%
                 </h2>
                 <div style={{ width: '40%', borderLeft: '1px solid lightgray' }}>
                     <div className="Money_Containers">

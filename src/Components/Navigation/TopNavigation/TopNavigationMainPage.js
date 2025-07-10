@@ -147,9 +147,18 @@ const TopNavigationMainPage = () => {
         <NavigationMainPageMainDivBox>
             <div className="NavigationMainFlexdiv">
                 <div className="Main_Logo_Container">
-                    <Link to={`${location.pathname.startsWith('/ERP/Stock/Part') ? '/ERP/Stock/Part' : '/'}`}>
+                    <Link
+                        to={`${
+                            location.pathname.startsWith('/ERP/Stock/Part')
+                                ? '/ERP/Stock/Part'
+                                : location.pathname.startsWith('/Sub')
+                                ? '/Sub/EIS'
+                                : '/'
+                        }`}
+                    >
                         <img src="/01_EXICON_CYMK_FULL-COLOR.PNG" width="140px"></img>
                     </Link>
+
                     {location.pathname === '/' || location.pathname === '/Detail/CLT' ? (
                         <></>
                     ) : (
