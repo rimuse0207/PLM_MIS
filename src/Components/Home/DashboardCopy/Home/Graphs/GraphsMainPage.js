@@ -44,7 +44,9 @@ const GraphsMainPage = () => {
         <GraphsMainPageMainDivBox>
             <div className="Graph_Container_GR" style={{ width: '38%' }}>
                 <div className="Select_Group">
-                    <h3>25년 매출액</h3>
+                    <h3>
+                        25년 매출액 <span style={{ color: 'blue', fontSize: '0.8em' }}> : 10,364 M</span>
+                    </h3>
                     <div>6월 기준</div>
                 </div>
                 <Donuts></Donuts>
