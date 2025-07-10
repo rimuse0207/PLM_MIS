@@ -16,8 +16,8 @@ export const BarsMainDivBox = styled.div`
 
 const Bars = () => {
     const barData = [
-        { equipments: 'i7304C 2호기', MC: 3013, price: 4120 },
-        { equipments: 'i7304C 1호기', MC: 3106, price: 4120 },
+        { equipments: 'i7304C 1호기 (24.12)', MC: 3357, price: 4120 },
+        { equipments: 'i7304C 2호기 (25.06)', MC: 3259, price: 4000 },
     ];
 
     // 시각화 전용 데이터 가공 (원본은 그대로)

@@ -16,6 +16,13 @@ const DepartListsMainDivBox = styled.div`
     padding-left: 10px;
     padding-right: 10px;
     min-width: 260px;
+    position: relative;
+    .Apper_Container {
+        position: absolute;
+        right: 10px;
+        top: 5px;
+        font-weight: bolder;
+    }
     &:hover {
         cursor: pointer;
         background-color: #efefef;
@@ -48,6 +55,7 @@ const DepartLists = ({ list }) => {
             <div style={{ marginTop: '10px' }}>
                 <h2>{list.Department_Name}</h2>
             </div>
+            <div className="Apper_Container">모델명: {list.appear_equipment}</div>
             <div className="Price_Container">
                 <h2 style={{ fontSize: '6vmin' }}>{((list.price / list.sell_price) * 100).toFixed(1)}%</h2>
                 <div style={{ width: '40%', borderLeft: '1px solid lightgray' }}>

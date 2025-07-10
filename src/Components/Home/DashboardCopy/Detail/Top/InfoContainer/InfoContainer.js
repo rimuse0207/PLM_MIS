@@ -99,8 +99,8 @@ const InfoContainer = () => {
             Department_Name: 'DC/Module',
             Department_code: 'Modules',
             equipment_Lists: ['S810', 'S1610', 'S3000P', 'i1000', 'i1520'],
-            sales_price: 38000000,
-            mc_price: 14200000,
+            sales_price: 36000000,
+            mc_price: 56000000,
             custom: [],
         },
         {
@@ -129,8 +129,8 @@ const InfoContainer = () => {
             Department_Name: 'CLT',
             Department_code: 'CLT',
             equipment_Lists: ['i7304C'],
-            sales_price: 8240000000,
-            mc_price: 6119000000,
+            sales_price: 8120000000,
+            mc_price: 6616000000,
             custom: ['삼성전자 (주)'],
         },
     ]);
@@ -141,19 +141,6 @@ const InfoContainer = () => {
             <div className="Info_Container">
                 <div className="Info_Container_Left">
                     <h2>{Groups_Code === 'Modules' ? 'DC/Module' : Groups_Code}</h2>
-                    {/* <div class="select-container">
-                        <select>
-                            <option value="All">전체</option>
-                            {DepartMentLists.filter(item => item.Department_code === Groups_Code).map(lists => {
-                                return lists.equipment_Lists.map(list => {
-                                    return <option value={list}>{list}</option>;
-                                });
-                            })}
-                        </select>
-                        <div className="Select_Arrow">
-                            <FaAngleDown />
-                        </div>
-                    </div> */}
                 </div>
                 <div className="Info_Container_Right">
                     <ul>

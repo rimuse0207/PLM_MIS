@@ -46,7 +46,7 @@ const SideContent = () => {
                             <td>1. </td>
                             <td>S7304C</td>
                             <td>2건</td>
-                            <td>{new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(8240000000)}</td>
+                            <td>{new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(8120000000)}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -63,10 +63,10 @@ const SideContent = () => {
                     </thead>
                     <tbody>
                         <tr>
-                            <td>25.05.15</td>
+                            <td>25.06.30</td>
                             <td>i7304C</td>
                             <td>2</td>
-                            <td>4,120,000,000</td>
+                            <td>4,000,000,000</td>
                         </tr>
                         <tr>
                             <td>24.12.24</td>

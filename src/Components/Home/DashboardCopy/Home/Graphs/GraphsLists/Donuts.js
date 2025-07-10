@@ -4,31 +4,31 @@ const data = [
     {
         id: 'DC/Module',
         label: 'DC/Module',
-        value: 52,
+        value: 343,
         color: 'hsl(149, 70%, 50%)',
     },
     {
         id: 'MBT',
-        label: 'MBT',
-        value: 1093.4,
+        label: 'MBT (BIB포함)',
+        value: 1093,
         color: 'hsl(338, 70%, 50%)',
     },
     {
         id: 'Storage',
         label: 'Storage',
-        value: 157.5,
+        value: 171,
         color: 'hsl(116, 70%, 50%)',
     },
     {
         id: 'CLT',
-        label: 'CLT',
-        value: 1565,
+        label: 'CLT (CIB 포함)',
+        value: 7450,
         color: 'hsl(55, 70%, 50%)',
     },
     {
         id: '기타',
         label: '기타',
-        value: 1272,
+        value: 1307,
         color: 'hsl(84, 70%, 50%)',
     },
 ];
@@ -52,13 +52,13 @@ const Donuts = () => {
                 theme={{
                     labels: {
                         text: {
-                            fontSize: '2vmin',
+                            fontSize: '1.5vmin',
                             fill: '#000000',
                         },
                     },
                     legends: {
                         text: {
-                            fontSize: 15,
+                            fontSize: '1.3vmin',
                             // fill: '#000000',
                         },
                     },
