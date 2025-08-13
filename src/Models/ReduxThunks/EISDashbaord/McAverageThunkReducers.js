@@ -15,6 +15,7 @@ export const Getting_MC_average_compared_to_sales_price_by_sector = Select_Date_
             const response = await Request_Get_Axios('/PLM_Route/PLM_Dashboard/EIS_Calculate_For_Data', {
                 Select_Date_State,
             }); // Axios API 호출
+            console.log(response);
             if (response.data) dispatch(fetchDataSuccess(response.data)); // 성공 시 데이터 저장
             else dispatch(fetchDataFailure('error'));
         } catch (error) {

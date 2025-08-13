@@ -8,9 +8,9 @@ const Donuts = ({ Pie_State }) => {
                 data={Pie_State}
                 margin={{ top: 100, right: 0, bottom: 80, left: 0 }}
                 innerRadius={0}
-                padAngle={1}
+                padAngle={5}
                 cornerRadius={0}
-                colors={['#12203f', '#ebf0f5', '#ff6b6b', '#ffa800', '#00b48e']} // 커스터하여 사용할 때
+                colors={['#ebf0f5', '#ff6b6b', '#00b48e', '#ffa800', '#12203f']} // 커스터하여 사용할 때
                 // colors={{ scheme: 'nivo' }} // nivo에서 제공해주는 색상 조합 사용할 때
                 borderWidth={0}
                 arcLinkLabelsSkipAngle={0}
@@ -21,13 +21,13 @@ const Donuts = ({ Pie_State }) => {
                 theme={{
                     labels: {
                         text: {
-                            fontSize: '2vmin',
+                            fontSize: '1.5vmin',
                             fill: '#000000',
                         },
                     },
                     legends: {
                         text: {
-                            fontSize: 15,
+                            fontSize: '1.3vmin',
                             // fill: '#000000',
                         },
                     },
@@ -73,12 +73,12 @@ const Donuts = ({ Pie_State }) => {
                                         textAnchor="middle"
                                         dominantBaseline="central"
                                         style={{
-                                            fill: datum.id === 'MBT' ? '#000' : '#fff',
+                                            fill: '#000',
                                             fontSize: '2vmin',
                                             fontWeight: 'bold',
                                         }}
                                     >
-                                        {datum.value.toLocaleString('ko-kr')} M
+                                        {percent > 2 ? `${datum.value.toLocaleString('ko-kr')} M` : ''}
                                     </text>
                                     <text
                                         x={x}
@@ -86,11 +86,11 @@ const Donuts = ({ Pie_State }) => {
                                         textAnchor="middle"
                                         dominantBaseline="central"
                                         style={{
-                                            fill: datum.id === 'MBT' ? '#000' : '#fff',
+                                            fill: '#000',
                                             fontSize: '2vmin',
                                         }}
                                     >
-                                        {percent}%
+                                        {percent > 2 ? `${percent}%` : ''}
                                     </text>
                                 </g>
                             );

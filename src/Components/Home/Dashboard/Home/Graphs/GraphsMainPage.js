@@ -107,7 +107,7 @@ const GraphsMainPage = () => {
                 id: list,
                 label: list,
                 code: list,
-                value: abc.Lists.filter(items => items.Models === list).reduce((pre, acc) => pre + (acc.Price * acc.QTY) / 1000000, 0),
+                value: abc.Lists.filter(items => items.Models === list).reduce((pre, acc) => pre + acc.EXPC_SEL_PRICE / 1000000, 0),
             };
         });
         setPie_State_By_Selector(Pies_data);
@@ -116,9 +116,16 @@ const GraphsMainPage = () => {
     return (
         <GraphsMainPageMainDivBox>
             <div className="Graph_Container_GR" style={{ width: '38%' }}>
+                {/* <h3>매출액({Pie_State_By_Selector.reduce((pre, acc) => pre + acc.value, 0).toLocaleString('ko-kr')} M)</h3> */}
                 <div className="Select_Group">
-                    <h3>매출액</h3>
-                    <select onChange={e => HandleChangeOptions(e)} value={Select_Value}>
+                    <h3>
+                        25년 매출액{' '}
+                        <span style={{ color: 'blue', fontSize: '0.8em' }}>
+                            {' '}
+                            : {Pie_State_By_Selector.reduce((pre, acc) => pre + acc.value, 0).toLocaleString('ko-kr')} M
+                        </span>
+                    </h3>
+                    <select className="Select_Container" onChange={e => HandleChangeOptions(e)} value={Select_Value}>
                         {Pie_Selector_List.map(list => {
                             return (
                                 <option key={list.value} value={list.value}>
@@ -128,6 +135,7 @@ const GraphsMainPage = () => {
                         })}
                     </select>
                 </div>
+
                 {Pie_State.loading ? (
                     <ClipLoaders loading={Pie_State.loading}></ClipLoaders>
                 ) : (

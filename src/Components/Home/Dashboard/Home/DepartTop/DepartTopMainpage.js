@@ -20,6 +20,20 @@ const DepartTopMainPageMainDivBox = styled.div`
             padding-right: 15px;
             left: 35px;
         }
+        .Button_Containers {
+            position: absolute;
+            top: -15px;
+            right: 70px;
+            button {
+                padding: 7px 10px;
+                background-color: #fff;
+                border: 1px solid lightgray;
+                border-radius: 5px;
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
     }
     .Top_Depart_Lists_GR {
         display: flex;
@@ -29,14 +43,31 @@ const DepartTopMainPageMainDivBox = styled.div`
 
 const DepartTopMainPage = () => {
     const DepartMentLists_State = useSelector(state => state.McAverage_ThunkReducers_State);
-
+    const [EaChecking, setEachecking] = useState(DepartMentLists_State.DepartMentLists.length);
+    useEffect(() => {
+        setEachecking(DepartMentLists_State.DepartMentLists.length);
+    }, [DepartMentLists_State]);
     return (
         <DepartTopMainPageMainDivBox>
             <div className="Select_Line">
-                <div className="Line_Title">부문별 판가 대비 MC 평균</div>
+                <div className="Line_Title">최근 판매 된 장비 및 Board MC율</div>
+                <div className="Button_Containers">
+                    {EaChecking - 5 !== 0 ? (
+                        <button onClick={() => setEachecking(EaChecking - 1)}>이전</button>
+                    ) : (
+                        <button style={{ background: 'lightgray' }}>이전</button>
+                    )}
+
+                    {EaChecking === DepartMentLists_State.DepartMentLists.length ? (
+                        <button style={{ background: 'lightgray' }}>이후</button>
+                    ) : (
+                        <button onClick={() => setEachecking(EaChecking + 1)}>이후</button>
+                    )}
+                </div>
             </div>
+
             <ul className="Top_Depart_Lists_GR">
-                {DepartMentLists_State.DepartMentLists.map(list => {
+                {DepartMentLists_State.DepartMentLists.slice(EaChecking - 5, EaChecking).map(list => {
                     return <DepartLists key={list.Department_Name} list={list}></DepartLists>;
                 })}
             </ul>
