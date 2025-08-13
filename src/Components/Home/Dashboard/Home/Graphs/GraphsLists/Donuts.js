@@ -1,7 +1,7 @@
 import React from 'react';
 import { ResponsivePie } from '@nivo/pie';
 
-const Donuts = ({ Pie_State }) => {
+const Donuts = ({ Pie_State, setClickData }) => {
     return (
         <div style={{ width: '100%', height: '100%', textAlign: 'center' }}>
             <ResponsivePie
@@ -18,6 +18,10 @@ const Donuts = ({ Pie_State }) => {
                 arcLinkLabelsThickness={2}
                 arcLinkLabelsColor={{ from: 'color' }} // pad 색상에 따라감
                 arcLabelsSkipAngle={10}
+                onClick={e => {
+                    if (e.id === 'DC/Module') setClickData('Module');
+                    else setClickData(e.id);
+                }}
                 theme={{
                     labels: {
                         text: {

@@ -8,6 +8,7 @@ import { Request_Get_Axios } from '../../../../../API';
 import { Getting_Top6_Recent_Sell_Equipments_Lists } from '../../../../../Models/ReduxThunks/EISDashbaord/Graphs/RecentEquipmentsThunkReducers';
 import { useDispatch, useSelector } from 'react-redux';
 import ClipLoaders from '../../../../../Loader/ClipLoader';
+import moment from 'moment';
 
 const GraphsMainPageMainDivBox = styled.div`
     margin-top: 20px;
@@ -45,8 +46,11 @@ const GraphsMainPageMainDivBox = styled.div`
 
 const GraphsMainPage = () => {
     const Pie_State = useSelector(state => state.Pie_Equipments_Sell_Thunk_Reducers_State);
-    const Bar_State = useSelector(state => state.Recent_Equipments_ThunkReducers_State);
+    const DepartMentLists_State = useSelector(state => state.McAverage_ThunkReducers_State);
+    // const Bar_State = useSelector(state => state.Recent_Equipments_ThunkReducers_State);
     const Select_Date_State = useSelector(state => state.Select_Date_Reducer_State.Select_Date_State);
+    const [ClickData, setClickData] = useState(null);
+    const [Bar_State, setBar_State] = useState([]);
     const [Pie_State_By_Selector, setPie_State_By_Selector] = useState([]);
 
     const [Select_Value, setSelect_Value] = useState('ALL');
@@ -90,6 +94,34 @@ const GraphsMainPage = () => {
         }
     }, [Select_Value, Select_Date_State.value, Pie_State.PieData]);
 
+    useEffect(() => {
+        setClickData(null);
+    }, [Select_Date_State.value]);
+
+    useEffect(() => {
+        if (DepartMentLists_State) {
+            if (DepartMentLists_State?.DepartMentLists.length > 0) {
+                setBar_State(
+                    DepartMentLists_State?.DepartMentLists.filter(item => item.Segment === ClickData || item.Models === ClickData).map(
+                        list => {
+                            return {
+                                id: list.WO_NO,
+                                equipments: `${list.Models}`,
+                                MC: list.MC_Price / 1000000,
+                                price: list.EXPC_SEL_PRICE / 1000000,
+                                dueDate: list.DUE_DT,
+                            };
+                        }
+                    )
+                );
+            } else {
+                setBar_State([]);
+            }
+        } else {
+            setBar_State([]);
+        }
+    }, [DepartMentLists_State.DepartMentLists, ClickData]);
+
     const Grouping_Data = () => {
         const Grouping_Models = [];
         const datas = Pie_State.PieData.map(list => {
@@ -119,7 +151,7 @@ const GraphsMainPage = () => {
                 {/* <h3>매출액({Pie_State_By_Selector.reduce((pre, acc) => pre + acc.value, 0).toLocaleString('ko-kr')} M)</h3> */}
                 <div className="Select_Group">
                     <h3>
-                        25년 매출액{' '}
+                        {moment(Select_Date_State.value).format('YY')}년 매출액{' '}
                         <span style={{ color: 'blue', fontSize: '0.8em' }}>
                             {' '}
                             : {Pie_State_By_Selector.reduce((pre, acc) => pre + acc.value, 0).toLocaleString('ko-kr')} M
@@ -139,7 +171,10 @@ const GraphsMainPage = () => {
                 {Pie_State.loading ? (
                     <ClipLoaders loading={Pie_State.loading}></ClipLoaders>
                 ) : (
-                    <Donuts Pie_State={Pie_State_By_Selector.filter(item => item.value > 0)}></Donuts>
+                    <Donuts
+                        Pie_State={Pie_State_By_Selector.filter(item => item.value > 0)}
+                        setClickData={data => setClickData(data)}
+                    ></Donuts>
                 )}
 
                 {/* {Pie_State_By_Selector.length > 0 ? (
@@ -150,9 +185,9 @@ const GraphsMainPage = () => {
             </div>
             <div className="Graph_Container_GR" style={{ width: '58%' }}>
                 <div className="Select_Group">
-                    <h3>최근 판매 제품 판가 및 MC</h3>
+                    <h3>{ClickData} 최근 판매 제품 판가 및 MC</h3>
                 </div>
-                {Bar_State.loading ? <ClipLoaders loading={Bar_State.loading}></ClipLoaders> : <Bars Bar_State={Bar_State.BarData}></Bars>}
+                {Bar_State.loading ? <ClipLoaders loading={Bar_State.loading}></ClipLoaders> : <Bars Bar_State={Bar_State}></Bars>}
             </div>
         </GraphsMainPageMainDivBox>
     );

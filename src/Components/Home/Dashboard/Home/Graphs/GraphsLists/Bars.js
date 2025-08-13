@@ -28,18 +28,18 @@ const Bars = ({ Bar_State }) => {
                 data={adjustedData}
                 maxValue={maxValue}
                 keys={['MC', 'profit']}
-                indexBy="equipments"
+                indexBy="id"
                 margin={{ top: 120, right: 0, bottom: 60, left: 100 }}
-                padding={0.9}
+                padding={0.6}
                 groupMode="stacked"
                 colors={['skyblue', 'gray']}
                 colorBy="id"
                 theme={{
-                    labels: { text: { fontSize: '2vmin', fill: '#000000' } },
-                    legends: { text: { fontSize: '2vmin', fill: '#000000' } },
+                    labels: { text: { fontSize: '1.5vmin', fill: '#000000' } },
+                    legends: { text: { fontSize: '1.5vmin', fill: '#000000' } },
                     axis: {
-                        legend: { text: { fontSize: '1.5vmin', fill: '#000000' } },
-                        ticks: { text: { fontSize: '2vmin', fill: '#000000' } },
+                        legend: { text: { fontSize: '1.2vmin', fill: '#000000' } },
+                        ticks: { text: { fontSize: '1.5vmin', fill: '#000000' } },
                     },
                 }}
                 axisBottom={{
@@ -48,6 +48,10 @@ const Bars = ({ Bar_State }) => {
                     tickRotation: 0,
                     legendPosition: 'middle',
                     legendOffset: 20,
+                    format: value => {
+                        const targets = Bar_State.find(e => e.id === value);
+                        return targets?.equipments;
+                    },
                 }}
                 axisLeft={{
                     tickSize: 1,
@@ -126,9 +130,9 @@ const Bars = ({ Bar_State }) => {
                                     fontSize: '2.5vmin',
                                 }}
                             >
-                                <strong>{indexValue}</strong>
+                                <strong>{Bar_State.find(e => e.id === indexValue)?.equipments}</strong>
                                 <br />
-                                단가: {data.price.toLocaleString('ko-kr')}
+                                단가: {data.price.toLocaleString('ko-kr')} M
                             </div>
                         );
                     } else {
@@ -143,9 +147,9 @@ const Bars = ({ Bar_State }) => {
                                     fontSize: '2.5vmin',
                                 }}
                             >
-                                <strong>{indexValue}</strong>
+                                <strong>{Bar_State.find(e => e.id === indexValue)?.equipments}</strong>
                                 <br />
-                                MC: {data.MC.toLocaleString('ko-kr')} M
+                                MC: {Number(data.MC.toFixed(1)).toLocaleString('ko-kr')} M
                             </div>
                         );
                     }

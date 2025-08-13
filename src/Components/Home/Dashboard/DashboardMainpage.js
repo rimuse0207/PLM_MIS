@@ -10,6 +10,8 @@ import Loader from '../../../Loader/Loader';
 const DashboardMainPageMainStyled = styled.div`
     background-color: #efefef;
     min-height: 100vh;
+    width: 100%;
+    overflow: hidden;
 `;
 
 const DashboardMainPage = () => {
