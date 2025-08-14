@@ -3,6 +3,7 @@ import DepartLists from './DepartLists/DepartLists';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { Getting_MC_average_compared_to_sales_price_by_sector } from '../../../../../Models/ReduxThunks/EISDashbaord/McAverageThunkReducers';
+import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
 
 const DepartTopMainPageMainDivBox = styled.div`
     .Select_Line {
@@ -53,15 +54,23 @@ const DepartTopMainPage = () => {
                 <div className="Line_Title">최근 판매 된 장비 및 Board MC율</div>
                 <div className="Button_Containers">
                     {EaChecking - 5 !== 0 ? (
-                        <button onClick={() => setEachecking(EaChecking - 1)}>이전</button>
+                        <button onClick={() => setEachecking(EaChecking - 1)}>
+                            <IoIosArrowBack />
+                        </button>
                     ) : (
-                        <button style={{ background: 'lightgray' }}>이전</button>
+                        <button style={{ background: 'lightgray' }}>
+                            <IoIosArrowBack />
+                        </button>
                     )}
 
                     {EaChecking === DepartMentLists_State.DepartMentLists.length ? (
-                        <button style={{ background: 'lightgray' }}>이후</button>
+                        <button style={{ background: 'lightgray' }}>
+                            <IoIosArrowForward />
+                        </button>
                     ) : (
-                        <button onClick={() => setEachecking(EaChecking + 1)}>이후</button>
+                        <button onClick={() => setEachecking(EaChecking + 1)}>
+                            <IoIosArrowForward />
+                        </button>
                     )}
                 </div>
             </div>

@@ -21,6 +21,8 @@ const Bars = ({ Bar_State }) => {
         profit: item.price - item.MC,
     }));
     const maxValue = Math.max(...Bar_State.map(d => Math.max(d.MC, d.price))) * 1.3;
+    const DicideTicks = maxValue > 5000 ? 1000 : maxValue > 1000 ? 500 : maxValue > 500 ? 200 : maxValue > 100 ? 100 : 5;
+    console.log(DicideTicks);
     return (
         <BarsMainDivBox>
             {/* <div className="Unit_Container">*단위 백만원</div> */}
@@ -29,7 +31,7 @@ const Bars = ({ Bar_State }) => {
                 maxValue={maxValue}
                 keys={['MC', 'profit']}
                 indexBy="id"
-                margin={{ top: 120, right: 0, bottom: 60, left: 100 }}
+                margin={{ top: 150, right: 0, bottom: 60, left: 100 }}
                 padding={0.6}
                 groupMode="stacked"
                 colors={['skyblue', 'gray']}
@@ -59,7 +61,7 @@ const Bars = ({ Bar_State }) => {
                     tickRotation: 0,
                     legendPosition: 'middle',
                     legendOffset: -40,
-                    tickValues: Array.from({ length: Math.ceil(maxValue / 1000) }, (_, i) => `${(i + 1) * 1000} `),
+                    tickValues: Array.from({ length: Math.ceil(maxValue / DicideTicks) }, (_, i) => `${(i + 1) * DicideTicks} `),
                     format: value => Number(value).toLocaleString('ko-kr') + ' M',
                 }}
                 enableGridY={false}

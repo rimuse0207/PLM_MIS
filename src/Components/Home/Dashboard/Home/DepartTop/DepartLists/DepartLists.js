@@ -76,7 +76,7 @@ const DepartLists = ({ list }) => {
             </div>
             <div className="Apper_Container">
                 모델명: {list.Models} ( {list.QTY}
-                {list.WO_TYPE === 'B' ? '개' : '대'} )
+                {list.WO_TYPE === 'B' ? '매' : '대'} )
             </div>
             <div className="Price_Container">
                 <h2 style={{ fontSize: '6vmin' }}>{list.MC_Price ? ((list.MC_Price / list.EXPC_SEL_PRICE) * 100).toFixed(1) : 0}%</h2>
