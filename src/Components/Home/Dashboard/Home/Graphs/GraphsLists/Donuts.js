@@ -13,11 +13,12 @@ const Donuts = ({ Pie_State, setClickData }) => {
                 colors={['#ebf0f5', '#ff6b6b', '#00b48e', '#ffa800', '#12203f']} // 커스터하여 사용할 때
                 // colors={{ scheme: 'nivo' }} // nivo에서 제공해주는 색상 조합 사용할 때
                 borderWidth={0}
-                arcLinkLabelsSkipAngle={0}
                 arcLinkLabelsTextColor="#000000"
                 arcLinkLabelsThickness={2}
                 arcLinkLabelsColor={{ from: 'color' }} // pad 색상에 따라감
-                arcLabelsSkipAngle={10}
+                arcLabelsSkipAngle={30}
+                arcLinkLabelsDiagonalLength={10}
+                arcLinkLabelsSkipAngle={6}
                 onClick={e => {
                     if (e.id === 'DC/Module') setClickData('Module');
                     else setClickData(e.id);

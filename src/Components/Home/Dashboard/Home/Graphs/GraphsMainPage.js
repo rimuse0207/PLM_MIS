@@ -16,7 +16,7 @@ const GraphsMainPageMainDivBox = styled.div`
     justify-content: space-around;
     .Graph_Container_GR {
         border: 1px solid lightgray;
-        height: calc(100vh - 330px);
+        height: calc(100vh - 350px);
         background-color: #fff;
         box-shadow: -8px 8px 3px -5px lightgray;
         border-top: 4px solid rgb(0, 202, 255);

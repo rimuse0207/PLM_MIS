@@ -22,7 +22,7 @@ const Bars = ({ Bar_State }) => {
     }));
     const maxValue = Math.max(...Bar_State.map(d => Math.max(d.MC, d.price))) * 1.3;
     const DicideTicks = maxValue > 5000 ? 1000 : maxValue > 1000 ? 500 : maxValue > 500 ? 200 : maxValue > 100 ? 100 : 5;
-    console.log(DicideTicks);
+
     return (
         <BarsMainDivBox>
             {/* <div className="Unit_Container">*단위 백만원</div> */}

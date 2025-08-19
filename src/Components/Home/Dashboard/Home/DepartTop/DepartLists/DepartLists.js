@@ -8,7 +8,7 @@ const DepartListsMainDivBox = styled.div`
     border: 1px solid lightgray;
     border-left: 1px solid rgb(0, 202, 255);
     width: 18%;
-    height: 150px;
+    height: 170px;
     background-color: #fff;
     box-shadow: -8px 8px 3px -5px lightgray;
     border-radius: 5px;
@@ -70,7 +70,7 @@ const DepartLists = ({ list }) => {
 
     return (
         <DepartListsMainDivBox onDoubleClick={() => HandleClicks()}>
-            <div style={{ marginTop: '10px' }}>
+            <div style={{ marginTop: '30px' }}>
                 <h2 style={{ display: 'inline' }}>{list.Segment}</h2>
                 <span>({list.WO_TYPE === 'B' ? 'Board' : '장비'})</span>
             </div>
