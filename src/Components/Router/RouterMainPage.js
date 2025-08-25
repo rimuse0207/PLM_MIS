@@ -19,6 +19,7 @@ import {
     Getting_DepartMents_Sell_Equipments_Lists,
     PieDataReset,
 } from '../../Models/ReduxThunks/EISDashbaord/Graphs/PieEquipmentsSellThunkReducers';
+import LoginMainPage from '../LoginPage/LoginMainPage';
 
 const RouterMainPage = () => {
     const dispatch = useDispatch();
@@ -76,6 +77,12 @@ const RouterMainPage = () => {
         {
             path: '/Detail/:Groups_Code',
             element: <DetailMainPageSub></DetailMainPageSub>,
+            withAuthorization: false,
+            withAdminAuthorization: false,
+        },
+        {
+            path: '/Login',
+            element: <LoginMainPage></LoginMainPage>,
             withAuthorization: false,
             withAdminAuthorization: false,
         },

@@ -18,7 +18,7 @@ const LoginRoute = ({ withAdminAuthorization, withAuthorization, component, User
             duration: 6000,
         });
         dispatch(Now_Path_Insert_Reducer_State_Func(pathname));
-        return Navigate('/');
+        return Navigate('/Login');
     };
 
     useEffect(() => {

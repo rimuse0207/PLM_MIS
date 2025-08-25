@@ -31,7 +31,7 @@ const Bars = ({ Bar_State }) => {
                 maxValue={maxValue}
                 keys={['MC', 'profit']}
                 indexBy="id"
-                margin={{ top: 150, right: 0, bottom: 60, left: 100 }}
+                margin={{ top: 150, right: 0, bottom: 70, left: 100 }}
                 padding={0.6}
                 groupMode="stacked"
                 colors={['skyblue', 'gray']}
@@ -44,15 +44,35 @@ const Bars = ({ Bar_State }) => {
                         ticks: { text: { fontSize: '1.5vmin', fill: '#000000' } },
                     },
                 }}
+                // axisBottom={{
+                //     tickSize: 5,
+                //     tickPadding: 5,
+                //     tickRotation: 0,
+                //     legendPosition: 'middle',
+                //     legendOffset: 20,
+                //     format: value => {
+                //         const targets = Bar_State.find(e => e.id === value);
+                //         return targets?.equipments;
+                //     },
+                // }}
                 axisBottom={{
-                    tickSize: 5,
-                    tickPadding: 5,
-                    tickRotation: 0,
-                    legendPosition: 'middle',
-                    legendOffset: 20,
-                    format: value => {
-                        const targets = Bar_State.find(e => e.id === value);
-                        return targets?.equipments;
+                    renderTick: tick => {
+                        const target = Bar_State.find(e => e.id === tick.value);
+                        return (
+                            <g transform={`translate(${tick.x},${tick.y + 20})`}>
+                                <text textAnchor="middle" dominantBaseline="hanging" style={{ fontSize: '1.3vmin', fill: '#000' }}>
+                                    {target?.equipments}
+                                </text>
+                                <text
+                                    textAnchor="middle"
+                                    dominantBaseline="hanging"
+                                    y={15} // 두 번째 줄 내려쓰기
+                                    style={{ fontSize: '1.2vmin', fill: '#666' }}
+                                >
+                                    {target?.WO_TYPE === 'E' ? '장비' : 'Board'}
+                                </text>
+                            </g>
+                        );
                     },
                 }}
                 axisLeft={{
@@ -108,7 +128,7 @@ const Bars = ({ Bar_State }) => {
                                         textAnchor="middle"
                                         style={{
                                             fill: 'black',
-                                            fontSize: '2.5vmin',
+                                            fontSize: '1.5vmin',
                                             fontWeight: 'bold',
                                             pointerEvents: 'none', // 마우스 이벤트 막기
                                         }}
@@ -129,7 +149,7 @@ const Bars = ({ Bar_State }) => {
                                     border: '1px solid #ccc',
                                     borderRadius: '4px',
                                     color: 'black',
-                                    fontSize: '2.5vmin',
+                                    fontSize: '2.0vmin',
                                 }}
                             >
                                 <strong>{Bar_State.find(e => e.id === indexValue)?.equipments}</strong>
@@ -146,7 +166,7 @@ const Bars = ({ Bar_State }) => {
                                     border: '1px solid #ccc',
                                     borderRadius: '4px',
                                     color: 'black',
-                                    fontSize: '2.5vmin',
+                                    fontSize: '2.0vmin',
                                 }}
                             >
                                 <strong>{Bar_State.find(e => e.id === indexValue)?.equipments}</strong>

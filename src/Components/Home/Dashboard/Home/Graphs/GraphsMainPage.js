@@ -39,6 +39,7 @@ const GraphsMainPageMainDivBox = styled.div`
                 position: absolute;
                 top: 40px;
                 right: 0px;
+                font-weight: bolder;
             }
         }
     }
@@ -110,6 +111,7 @@ const GraphsMainPage = () => {
                                 MC: list.MC_Price / 1000000,
                                 price: list.EXPC_SEL_PRICE / 1000000,
                                 dueDate: list.DUE_DT,
+                                WO_TYPE: list.WO_TYPE,
                             };
                         }
                     )
@@ -166,6 +168,7 @@ const GraphsMainPage = () => {
                             );
                         })}
                     </select>
+                    <div className="Unit_Container">단위 : 원(&#8361;)</div>
                 </div>
 
                 {Pie_State.loading ? (
