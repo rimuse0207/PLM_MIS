@@ -16,7 +16,7 @@ const Donuts = ({ Pie_State, setClickData }) => {
                 arcLinkLabelsTextColor="#000000"
                 arcLinkLabelsThickness={2}
                 arcLinkLabelsColor={{ from: 'color' }} // pad 색상에 따라감
-                arcLabelsSkipAngle={30}
+                arcLabelsSkipAngle={40}
                 arcLinkLabelsDiagonalLength={10}
                 arcLinkLabelsSkipAngle={6}
                 onClick={e => {
@@ -83,7 +83,7 @@ const Donuts = ({ Pie_State, setClickData }) => {
                                             fontWeight: 'bold',
                                         }}
                                     >
-                                        {percent > 2 ? `${datum.value.toLocaleString('ko-kr')} M` : ''}
+                                        {percent > 10 ? `${datum.value.toLocaleString('ko-kr')} M` : ''}
                                     </text>
                                     <text
                                         x={x}
@@ -95,11 +95,33 @@ const Donuts = ({ Pie_State, setClickData }) => {
                                             fontSize: '2vmin',
                                         }}
                                     >
-                                        {percent > 2 ? `${percent}%` : ''}
+                                        {percent > 10 ? `${percent}%` : ''}
                                     </text>
                                 </g>
                             );
                         });
+                    },
+                    ({ centerX, centerY, dataWithArc }) => {
+                        const total = Pie_State.reduce((sum, d) => sum + d.value, 0);
+
+                        return (
+                            <g transform={`translate(${centerX - 350}, ${centerY - 230})`}>
+                                {Pie_State.map((legend, i) => {
+                                    const datum = dataWithArc.find(d => d.id === legend.id);
+                                    const value = datum ? datum.value : 0;
+                                    const percent = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
+
+                                    return (
+                                        <g key={legend.id} transform={`translate(0, ${i * 25})`}>
+                                            <rect width={14} height={14} fill={datum.color} />
+                                            <text x={20} y={12} fontSize="12" fill="#000">
+                                                {legend.label} : {value.toLocaleString('ko-KR')}M ({percent}%)
+                                            </text>
+                                        </g>
+                                    );
+                                })}
+                            </g>
+                        );
                     },
                 ]}
                 tooltip={({ datum }) => {

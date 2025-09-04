@@ -67,9 +67,17 @@ const Bars = ({ Bar_State }) => {
                                     textAnchor="middle"
                                     dominantBaseline="hanging"
                                     y={15} // 두 번째 줄 내려쓰기
-                                    style={{ fontSize: '1.2vmin', fill: '#666' }}
+                                    style={{ fontSize: '1.1vmin', fill: '#666' }}
                                 >
                                     {target?.WO_TYPE === 'E' ? '장비' : 'Board'}
+                                </text>
+                                <text
+                                    textAnchor="middle"
+                                    dominantBaseline="hanging"
+                                    y={30} // 세 번째 줄 내려쓰기
+                                    style={{ fontSize: '1.1vmin', fill: '#666' }}
+                                >
+                                    {target?.WO_TYPE === 'E' ? `#${target?.CHNG_CONT.split('#')[1]}` : `${target?.QTY}매`}
                                 </text>
                             </g>
                         );

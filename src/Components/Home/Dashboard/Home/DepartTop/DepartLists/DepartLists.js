@@ -75,14 +75,30 @@ const DepartLists = ({ list }) => {
                 <span>({list.WO_TYPE === 'B' ? 'Board' : '장비'})</span>
             </div>
             <div className="Apper_Container">
-                모델명: {list.Models} {list.WO_TYPE === 'B' ? `(${list.QTY}매)` : `#${list.Unit_Rank}호기`}
+                모델명: {list.Models} {list.WO_TYPE === 'B' ? `(${list.QTY}매)` : `#${list.CHNG_CONT.split('#')[1]}`}
             </div>
             <div className="Price_Container">
-                <h2 style={{ fontSize: '6vmin' }}>{list.MC_Price ? ((list.MC_Price / list.EXPC_SEL_PRICE) * 100).toFixed(1) : 0}%</h2>
+                <h2 style={{ fontSize: '6vmin' }}>
+                    {list.MC_Price
+                        ? ((list.MC_Price / list.EXPC_SEL_PRICE) * list.QTY * 100 > 100
+                              ? (list.MC_Price / list.EXPC_SEL_PRICE) * 100
+                              : (list.MC_Price / list.EXPC_SEL_PRICE) * list.QTY * 100
+                          ).toFixed(1)
+                        : 0}
+                    %
+                </h2>
                 <div style={{ width: '40%', borderLeft: '1px solid lightgray' }}>
                     <div className="Money_Containers">
                         <div style={{ fontSize: '0.8em', textAlign: 'start', marginLeft: '20px' }}>MC</div>
-                        <div>&#8361; {Number((list.MC_Price / 1000000).toFixed(1)).toLocaleString('ko-KR')} M</div>
+                        <div>
+                            &#8361;{' '}
+                            {Number(
+                                (list.MC_Price / list.EXPC_SEL_PRICE) * list.QTY * 100 > 100
+                                    ? list.MC_Price / 1000000
+                                    : ((list.MC_Price / 1000000) * list.QTY).toFixed(1)
+                            ).toLocaleString('ko-KR')}{' '}
+                            M
+                        </div>
                     </div>
                     <div className="Money_Containers" style={{ marginTop: '20px' }}>
                         <div style={{ fontSize: '0.8em', textAlign: 'start', marginLeft: '20px' }}>판가</div>

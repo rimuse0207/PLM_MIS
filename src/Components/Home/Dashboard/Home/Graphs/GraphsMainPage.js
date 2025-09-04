@@ -83,7 +83,7 @@ const GraphsMainPage = () => {
     ]);
     const HandleChangeOptions = e => {
         e.preventDefault();
-        console.log(e);
+
         setSelect_Value(e.target.value);
     };
 
@@ -108,10 +108,16 @@ const GraphsMainPage = () => {
                             return {
                                 id: list.WO_NO,
                                 equipments: `${list.Models}`,
-                                MC: list.MC_Price / 1000000,
+                                MC: Number(
+                                    (list.MC_Price / list.EXPC_SEL_PRICE) * list.QTY * 100 > 100
+                                        ? list.MC_Price / 1000000
+                                        : (list.MC_Price / 1000000) * list.QTY
+                                ),
                                 price: list.EXPC_SEL_PRICE / 1000000,
                                 dueDate: list.DUE_DT,
                                 WO_TYPE: list.WO_TYPE,
+                                QTY: list.QTY,
+                                CHNG_CONT: list.CHNG_CONT,
                             };
                         }
                     )

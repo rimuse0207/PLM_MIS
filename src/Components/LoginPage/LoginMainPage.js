@@ -178,61 +178,6 @@ const LoginMainPage = () => {
         }
     };
 
-    // 비밀번호 변경 API
-    const HandleChangePassword = async e => {
-        e.preventDefault();
-        if (Change_password.password.split('').length < 4) {
-            setChange_password({
-                ...Change_password,
-                password: '',
-                passwordCheck: '',
-            });
-            toast.show({
-                title: `비밀번호는 4자리 이상으로 설정 해 주세요.`,
-                successCheck: false,
-                duration: 3000,
-            });
-            return;
-        } else if (Change_password.password !== Change_password.passwordCheck) {
-            toast.show({
-                title: `비밀번호가 서로 다릅니다.`,
-                successCheck: false,
-                duration: 3000,
-            });
-            return;
-        } else if (!isValidPassword(Change_password.password)) {
-            toast.show({
-                title: `비밀번호에 ' , { , } 또는 \`는 사용할 수 없습니다.`,
-                successCheck: false,
-                duration: 3000,
-            });
-            return;
-        } else {
-            const Change_Password_Axios = await Request_Post_Axios('/API/PLM/Change_Password', Change_password);
-            if (Change_Password_Axios.status) {
-                // 비밀번호 변경 성공
-                setLoginDataInfo({ ...LoginDataInfo, password: '' });
-                setPasswordChangeStatus(false);
-                setChange_password({
-                    email: '',
-                    password: '',
-                    passwordCheck: '',
-                });
-                toast.show({
-                    title: `비밀번호가 변경되었습니다.`,
-                    successCheck: true,
-                    duration: 3000,
-                });
-            } else {
-                toast.show({
-                    title: `오류발생. DHKS_IT팀에 문의바랍니다.`,
-                    successCheck: false,
-                    duration: 3000,
-                });
-            }
-        }
-    };
-
     function isValidPassword(password) {
         // 작은따옴표('), 백틱(`)이 포함되어 있으면 false 반환
         return !/['`{}]/.test(password);
