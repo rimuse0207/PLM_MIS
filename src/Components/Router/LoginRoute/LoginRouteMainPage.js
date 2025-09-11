@@ -19,13 +19,13 @@ const LoginRoute = ({ withAdminAuthorization, withAuthorization, component, User
             duration: 6000,
         });
 
-        return Navigate(-1);
+        return Navigate('/Login');
     };
 
-    // useEffect(() => {
-    //     //전에 로그인 했는지 확인 있으면 Home으로 이동
-    //     if (withAuthorization) before_Login_Checkig();
-    // }, []);
+    useEffect(() => {
+        //전에 로그인 했는지 확인 있으면 Home으로 이동
+        if (withAuthorization) before_Login_Checkig();
+    }, []);
 
     useEffect(() => {
         setTimeout(() => {
@@ -33,20 +33,20 @@ const LoginRoute = ({ withAdminAuthorization, withAuthorization, component, User
         }, 1000);
     }, [BlockContent]);
 
-    // const before_Login_Checkig = async () => {
-    //     try {
-    //         const Login_Checking = await Request_Get_Axios('/PLM_Route/PLM_Dashboard/Token_Checking');
+    const before_Login_Checkig = async () => {
+        try {
+            const Login_Checking = await Request_Get_Axios('/PLM_Route/PLM_Dashboard/Token_Checking');
 
-    //         if (Login_Checking.status) {
-    //             setBlockContent(true);
-    //         } else {
-    //             dispatch(Now_Path_Insert_Reducer_State_Func(pathname));
-    //             Alert_Go_To_Main_Home();
-    //         }
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // };
+            if (Login_Checking.status) {
+                setBlockContent(true);
+            } else {
+                dispatch(Now_Path_Insert_Reducer_State_Func(pathname));
+                Alert_Go_To_Main_Home();
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return withAuthorization ? (
         withAdminAuthorization ? (
