@@ -24,7 +24,7 @@ const LoginRoute = ({ withAdminAuthorization, withAuthorization, component, User
 
     useEffect(() => {
         //전에 로그인 했는지 확인 있으면 Home으로 이동
-        if (withAuthorization) before_Login_Checkig();
+        // if (withAuthorization) before_Login_Checkig();
     }, []);
 
     useEffect(() => {
