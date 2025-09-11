@@ -19,7 +19,7 @@ const LoginRoute = ({ withAdminAuthorization, withAuthorization, component, User
             duration: 6000,
         });
 
-        return Navigate('/Login');
+        if (pathname !== '/Login' || pathname !== 'Login') return Navigate('/Login');
     };
 
     useEffect(() => {
