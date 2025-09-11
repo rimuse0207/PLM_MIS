@@ -63,9 +63,8 @@ const RouterMainPage = () => {
         },
         {
             path: '/',
-            // element: <DashboardMainPageSub></DashboardMainPageSub>,
-            element: <div>Nothing</div>,
-            withAuthorization: true,
+            element: <LoginMainPage></LoginMainPage>,
+            withAuthorization: false,
             withAdminAuthorization: false,
         },
         {
