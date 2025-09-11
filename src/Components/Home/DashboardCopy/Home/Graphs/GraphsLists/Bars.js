@@ -16,16 +16,28 @@ export const BarsMainDivBox = styled.div`
 
 const Bars = () => {
     const barData = [
-        { equipments: 'i7304C 1호기 (24.12)', MC: 3357, price: 4120 },
-        { equipments: 'i7304C 2호기 (25.06)', MC: 3259, price: 4000 },
+        { equipments: 'DICER', MC: 3357, price: 4120 },
+        { equipments: 'GRINDER', MC: 3259, price: 2100 },
+        { equipments: 'LASER', MC: 3259, price: 4500 },
+        { equipments: 'OTHERS', MC: 3259, price: 4900 },
     ];
 
     // 시각화 전용 데이터 가공 (원본은 그대로)
-    const adjustedData = barData.map(item => ({
-        ...item,
-        profit: item.price - item.MC,
-    }));
-    const maxValue = Math.max(...barData.map(d => Math.max(d.MC, d.price))) * 1.3;
+    // const adjustedData = barData.map(item => ({
+    //     ...item,
+    //     profit: item.price - item.MC,
+    // }));
+    const adjustedData = barData.map(item => {
+        const profit = item.price - item.MC;
+        return {
+            ...item,
+            profit: profit > 0 ? profit : 0, // ✅ 음수면 0으로
+        };
+    });
+    const maxValue =
+        Math.max(
+            ...barData.map(d => Math.max(d.price, d.MC)) // 둘 중 더 큰 값
+        ) * 1.3;
     return (
         <BarsMainDivBox>
             <ResponsiveBar
@@ -33,7 +45,7 @@ const Bars = () => {
                 maxValue={maxValue}
                 keys={['MC', 'profit']}
                 indexBy="equipments"
-                margin={{ top: 120, right: 0, bottom: 60, left: 100 }}
+                margin={{ top: 120, right: 0, bottom: 60, left: 150 }}
                 padding={0.7}
                 groupMode="stacked"
                 colors={['skyblue', 'gray']}
@@ -62,7 +74,7 @@ const Bars = () => {
                     tickValues: Array.from({ length: Math.ceil(maxValue / 1000) }, (_, i) => `${(i + 1) * 1000} `),
                     format: value => Number(value).toLocaleString('ko-kr') + ' M',
                 }}
-                enableGridY={false}
+                enableGridY={true}
                 enableLabel={false}
                 legends={[
                     {
@@ -77,8 +89,8 @@ const Bars = () => {
                         symbolSize: 20,
                         itemDirection: 'left-to-right',
                         data: [
-                            { id: 'MC', label: 'MC', color: 'skyblue' },
-                            { id: 'profit', label: '단가', color: 'gray' },
+                            { id: 'MC', label: '매출', color: 'skyblue' },
+                            { id: 'profit', label: '계획', color: 'gray' },
                         ],
                     },
                 ]}
@@ -96,7 +108,8 @@ const Bars = () => {
                                 const price = bar.data.data.price;
                                 const MC = bar.data.data.MC;
                                 if (!price || price === 0) return null;
-                                const percent = (MC / price) * 100;
+                                // const percent = (MC / price) * 100;
+                                const percent = (MC / price) * 100 >= 100 ? (MC / price) * 100 : (MC / price) * 100;
 
                                 return (
                                     <text
@@ -132,7 +145,7 @@ const Bars = () => {
                             >
                                 <strong>{indexValue}</strong>
                                 <br />
-                                단가: {data.price.toLocaleString('ko-kr')} M
+                                계획: {data.price.toLocaleString('ko-kr')} M
                             </div>
                         );
                     } else {
@@ -149,7 +162,7 @@ const Bars = () => {
                             >
                                 <strong>{indexValue}</strong>
                                 <br />
-                                MC: {data.MC.toLocaleString('ko-kr')} M
+                                매출: {data.MC.toLocaleString('ko-kr')} M
                             </div>
                         );
                     }

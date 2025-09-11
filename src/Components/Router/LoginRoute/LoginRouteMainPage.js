@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 
 import RestrictRoute from '../RestrictRoute/RestrictRoute';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Now_Path_Insert_Reducer_State_Func } from '../../../Models/NowPathReducer/NowPathReduce';
 import { toast } from '../../ToastMessage/ToastManager';
 import { Request_Get_Axios } from '../../../API';
 const LoginRoute = ({ withAdminAuthorization, withAuthorization, component, User_Info }) => {
     const Navigate = useNavigate();
     const dispatch = useDispatch();
+
     const { pathname } = useLocation();
     const [BlockContent, setBlockContent] = useState(false);
     const Alert_Go_To_Main_Home = () => {
@@ -17,14 +18,14 @@ const LoginRoute = ({ withAdminAuthorization, withAuthorization, component, User
             successCheck: false,
             duration: 6000,
         });
-        dispatch(Now_Path_Insert_Reducer_State_Func(pathname));
-        return Navigate('/Login');
+
+        return Navigate(-1);
     };
 
-    useEffect(() => {
-        //전에 로그인 했는지 확인 있으면 Home으로 이동
-        if (withAuthorization) before_Login_Checkig();
-    }, []);
+    // useEffect(() => {
+    //     //전에 로그인 했는지 확인 있으면 Home으로 이동
+    //     if (withAuthorization) before_Login_Checkig();
+    // }, []);
 
     useEffect(() => {
         setTimeout(() => {
@@ -32,19 +33,20 @@ const LoginRoute = ({ withAdminAuthorization, withAuthorization, component, User
         }, 1000);
     }, [BlockContent]);
 
-    const before_Login_Checkig = async () => {
-        try {
-            const Login_Checking = await Request_Get_Axios('/Ce_Route/Login/Token_Checking');
+    // const before_Login_Checkig = async () => {
+    //     try {
+    //         const Login_Checking = await Request_Get_Axios('/PLM_Route/PLM_Dashboard/Token_Checking');
 
-            if (Login_Checking.status && Login_Checking.data.token === 'Validable') {
-                setBlockContent(true);
-            } else {
-                Alert_Go_To_Main_Home();
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    };
+    //         if (Login_Checking.status) {
+    //             setBlockContent(true);
+    //         } else {
+    //             dispatch(Now_Path_Insert_Reducer_State_Func(pathname));
+    //             Alert_Go_To_Main_Home();
+    //         }
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // };
 
     return withAuthorization ? (
         withAdminAuthorization ? (

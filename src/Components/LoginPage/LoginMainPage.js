@@ -154,7 +154,7 @@ const LoginMainPage = () => {
 
     useEffect(() => {
         //전에 로그인 했는지 확인 있으면 Home으로 이동
-        before_Login_Checkig();
+        if (localStorage.getItem('Token')) before_Login_Checkig();
         setPasswordChangeStatus(false);
         setChange_password({
             email: '',
@@ -164,24 +164,20 @@ const LoginMainPage = () => {
     }, []);
     const before_Login_Checkig = async () => {
         try {
-            const Login_Checking = await Request_Get_Axios('/Ce_Route/Login/Token_Checking');
+            const Login_Checking = await Request_Get_Axios('/PLM_Route/PLM_Dashboard/Token_Checking');
 
-            if (Login_Checking.status && Login_Checking.data.token === 'Validable') {
+            if (Login_Checking.status) {
                 // Token이 살아 있어, Home으로 이동
-                Navigate('/Home');
+                return Navigate(-1);
             } else {
                 // Token이 없음
-                localStorage.removeItem('Token');
+                // localStorage.removeItem('Token');
             }
         } catch (error) {
             console.log(error);
         }
     };
 
-    function isValidPassword(password) {
-        // 작은따옴표('), 백틱(`)이 포함되어 있으면 false 반환
-        return !/['`{}]/.test(password);
-    }
     // 로그인 API
     const handleClicksLogin = async e => {
         e.preventDefault();
@@ -196,35 +192,14 @@ const LoginMainPage = () => {
             setLoginDataInfo({ ...LoginDataInfo, password: '' });
             return;
         }
-        const Login_Check = await Request_Post_Axios('/API/PLM/Login', LoginDataInfo);
-        if (Login_Check.status) {
-            if (Login_Check.data) {
-                if (Login_Check.data.passwordChange) {
-                    toast.show({
-                        title: `비밀번호 변경 이후의 사용 가능합니다.`,
-                        successCheck: false,
-                        duration: 6000,
-                    });
-                    setPasswordChangeStatus(true);
-                    setChange_password({ ...Change_password, email: LoginDataInfo.email });
-                } else {
-                    localStorage.setItem('Token', Login_Check.data.CreateJWTToken.token);
-                    localStorage.setItem('userId', Login_Check.data.Select_User_Info_Data_SQL.email);
-                    // dispatch(
-                    //     Login_Info_Apply_State_Func({
-                    //         id: Login_Check.data.Select_User_Info_Data_SQL.email,
-                    //         team: Login_Check.data.Select_User_Info_Data_SQL.department,
-                    //         name: Login_Check.data.Select_User_Info_Data_SQL.name,
-                    //         company: Login_Check.data.Select_User_Info_Data_SQL.company,
-                    //         position: Login_Check.data.Select_User_Info_Data_SQL.position,
-                    //         user_access: Login_Check.data.User_Access_Lists,
-                    //         admin_access: Login_Check.data.Admin_Access_Lists,
-                    //     })
-                    // );
-                    // dispatch(Now_Path_Initial_Reducer_State_Func());
+        const Login_Check = await Request_Post_Axios('/PLM_Route/PLM_Dashboard/Login', LoginDataInfo);
 
-                    return Navigate('/Home');
-                }
+        if (Login_Check.status) {
+            if (Login_Check.data.LoginChecking) {
+                localStorage.setItem('Token', Login_Check.data.CreateJWTToken.token);
+                localStorage.setItem('userId', Login_Check.data.email);
+
+                return Navigate(-1);
             } else {
                 setLoginDataInfo({ ...LoginDataInfo, password: '' });
                 alert('아이디 또는 비밀번호가 틀립니다.');
