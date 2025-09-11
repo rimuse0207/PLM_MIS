@@ -154,7 +154,11 @@ const LoginMainPage = () => {
 
     useEffect(() => {
         //전에 로그인 했는지 확인 있으면 Home으로 이동
-        if (localStorage.getItem('Token')) before_Login_Checkig();
+        if (localStorage.getItem('Token')) {
+            before_Login_Checkig();
+        } else {
+            alert('토큰 없음');
+        }
         setPasswordChangeStatus(false);
         setChange_password({
             email: '',
