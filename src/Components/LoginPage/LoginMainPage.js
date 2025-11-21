@@ -172,7 +172,7 @@ const LoginMainPage = () => {
 
             if (Login_Checking.status) {
                 // Token이 살아 있어, Home으로 이동
-                return Navigate(-1);
+                return Navigate('/Sub/EIS');
             } else {
                 // Token이 없음
                 // localStorage.removeItem('Token');
@@ -203,7 +203,7 @@ const LoginMainPage = () => {
                 localStorage.setItem('Token', Login_Check.data.CreateJWTToken.token);
                 localStorage.setItem('userId', Login_Check.data.email);
 
-                return Navigate(-1);
+                return Navigate('/Sub/EIS');
             } else {
                 setLoginDataInfo({ ...LoginDataInfo, password: '' });
                 alert('아이디 또는 비밀번호가 틀립니다.');

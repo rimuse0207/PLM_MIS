@@ -43,6 +43,29 @@ const GraphsMainPageMainDivBox = styled.div`
             }
         }
     }
+
+    .Select_Buttons {
+        position: absolute;
+        top: 40px;
+        left: 0px;
+        .NowSelected {
+            opacity: 1;
+        }
+        button {
+            width: 60px;
+            height: 40px;
+            border: 1px solid lightgray;
+            border-radius: 10px;
+            margin-right: 10px;
+            background-color: #fff;
+            font-size: 14px;
+            font-weight: bolder;
+            opacity: 0.5;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
 `;
 
 const GraphsMainPage = () => {
@@ -53,6 +76,7 @@ const GraphsMainPage = () => {
     const [ClickData, setClickData] = useState(null);
     const [Bar_State, setBar_State] = useState([]);
     const [Pie_State_By_Selector, setPie_State_By_Selector] = useState([]);
+    const [NowSelectGraphButton, setNowSelectGraphButton] = useState('Equipment');
 
     const [Select_Value, setSelect_Value] = useState('ALL');
     const [Pie_Selector_List, setPie_Selector_List] = useState([
@@ -159,7 +183,7 @@ const GraphsMainPage = () => {
                 {/* <h3>매출액({Pie_State_By_Selector.reduce((pre, acc) => pre + acc.value, 0).toLocaleString('ko-kr')} M)</h3> */}
                 <div className="Select_Group">
                     <h3>
-                        {moment(Select_Date_State.value).format('YY')}년 매출액{' '}
+                        {moment(Select_Date_State.value).format('YY')}년 수주액{' '}
                         <span style={{ color: 'blue', fontSize: '0.8em' }}>
                             {' '}
                             : {Pie_State_By_Selector.reduce((pre, acc) => pre + acc.value, 0).toLocaleString('ko-kr')} M
@@ -195,8 +219,28 @@ const GraphsMainPage = () => {
             <div className="Graph_Container_GR" style={{ width: '58%' }}>
                 <div className="Select_Group">
                     <h3>{ClickData} 최근 판매 제품 판가 및 MC</h3>
+                    <div className="Select_Buttons">
+                        <button
+                            className={NowSelectGraphButton === 'Equipment' ? 'NowSelected' : ''}
+                            onClick={() => setNowSelectGraphButton('Equipment')}
+                        >
+                            {' '}
+                            장 비{' '}
+                        </button>
+                        <button
+                            className={NowSelectGraphButton === 'Board' ? 'NowSelected' : ''}
+                            onClick={() => setNowSelectGraphButton('Board')}
+                        >
+                            {' '}
+                            보 드{' '}
+                        </button>
+                    </div>
                 </div>
-                {Bar_State.loading ? <ClipLoaders loading={Bar_State.loading}></ClipLoaders> : <Bars Bar_State={Bar_State}></Bars>}
+                {Bar_State.loading ? (
+                    <ClipLoaders loading={Bar_State.loading}></ClipLoaders>
+                ) : (
+                    <Bars Bar_State={Bar_State} NowSelectGraphButton={NowSelectGraphButton}></Bars>
+                )}
             </div>
         </GraphsMainPageMainDivBox>
     );

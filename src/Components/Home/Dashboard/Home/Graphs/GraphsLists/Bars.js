@@ -14,9 +14,19 @@ export const BarsMainDivBox = styled.div`
     }
 `;
 
-const Bars = ({ Bar_State }) => {
+const Bars = ({ Bar_State, NowSelectGraphButton }) => {
     // 시각화 전용 데이터 가공 (원본은 그대로)
-    const adjustedData = Bar_State.map(item => ({
+    const adjustedData = Bar_State.filter(item => {
+        if (NowSelectGraphButton === 'Equipment') {
+            if (item.WO_TYPE === 'E') {
+                return item;
+            }
+        } else if (NowSelectGraphButton === 'Board') {
+            if (item.WO_TYPE !== 'E') {
+                return item;
+            }
+        }
+    }).map(item => ({
         ...item,
         profit: item.price - item.MC,
     }));
