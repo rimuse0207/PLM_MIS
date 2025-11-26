@@ -35,8 +35,8 @@ const ExcelDownload = ({ list }) => {
         if (list.Bom_Lists.length) {
             const Nothing_Info_Part_Lists = list.Bom_Lists.filter(item => item.ERP_PART.startsWith('R') && item.Purchase_price === 0);
             const Has_Info_Part_Lists = list.Bom_Lists.filter(item => item.ERP_PART.startsWith('R') && item.Purchase_price > 0);
-            console.log('Nothing_Info_Part_Lists', Nothing_Info_Part_Lists);
-            console.log('Has_Info_Part_Lists', Has_Info_Part_Lists);
+            // console.log('Nothing_Info_Part_Lists', Nothing_Info_Part_Lists);
+            // console.log('Has_Info_Part_Lists', Has_Info_Part_Lists);
             const All_Part_Info_Lists = Nothing_Info_Part_Lists.concat(Has_Info_Part_Lists);
             return All_Part_Info_Lists;
         } else {

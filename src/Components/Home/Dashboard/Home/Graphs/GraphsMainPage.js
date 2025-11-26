@@ -50,6 +50,7 @@ const GraphsMainPageMainDivBox = styled.div`
         left: 0px;
         .NowSelected {
             opacity: 1;
+            border: 2px solid blue;
         }
         button {
             width: 60px;
@@ -58,7 +59,7 @@ const GraphsMainPageMainDivBox = styled.div`
             border-radius: 10px;
             margin-right: 10px;
             background-color: #fff;
-            font-size: 14px;
+            font-size: 16px;
             font-weight: bolder;
             opacity: 0.5;
             &:hover {
@@ -71,7 +72,6 @@ const GraphsMainPageMainDivBox = styled.div`
 const GraphsMainPage = () => {
     const Pie_State = useSelector(state => state.Pie_Equipments_Sell_Thunk_Reducers_State);
     const DepartMentLists_State = useSelector(state => state.McAverage_ThunkReducers_State);
-    // const Bar_State = useSelector(state => state.Recent_Equipments_ThunkReducers_State);
     const Select_Date_State = useSelector(state => state.Select_Date_Reducer_State.Select_Date_State);
     const [ClickData, setClickData] = useState(null);
     const [Bar_State, setBar_State] = useState([]);
@@ -221,14 +221,14 @@ const GraphsMainPage = () => {
                     <h3>{ClickData} 최근 판매 제품 판가 및 MC</h3>
                     <div className="Select_Buttons">
                         <button
-                            className={NowSelectGraphButton === 'Equipment' ? 'NowSelected' : ''}
+                            className={NowSelectGraphButton === 'Equipment' && ClickData ? 'NowSelected' : ''}
                             onClick={() => setNowSelectGraphButton('Equipment')}
                         >
                             {' '}
                             장 비{' '}
                         </button>
                         <button
-                            className={NowSelectGraphButton === 'Board' ? 'NowSelected' : ''}
+                            className={NowSelectGraphButton === 'Board' && ClickData ? 'NowSelected' : ''}
                             onClick={() => setNowSelectGraphButton('Board')}
                         >
                             {' '}

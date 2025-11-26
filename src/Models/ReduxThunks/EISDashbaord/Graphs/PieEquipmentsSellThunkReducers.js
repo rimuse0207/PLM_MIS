@@ -1,4 +1,4 @@
-import { Request_Get_Axios } from '../../../../API';
+import { API_Request_Get_Axios, Request_Get_Axios } from '../../../../API';
 
 export const PIE_DATA_FETCH_DATA_REQUEST = 'PIE_DATA_FETCH_DATA_REQUEST';
 export const PIE_DATA_FETCH_DATA_SUCCESS = 'PIE_DATA_FETCH_DATA_SUCCESS';
@@ -13,7 +13,8 @@ export const Getting_DepartMents_Sell_Equipments_Lists = Select_Date_State => {
     return async dispatch => {
         dispatch(fetchDataRequest()); // 요청 시작
         try {
-            const response = await Request_Get_Axios('/PLM_Route/PLM_Dashboard/EIS_Calculate_For_Pie_Graph_Data', {
+            // const response = await Request_Get_Axios('/PLM_Route/PLM_Dashboard/EIS_Calculate_For_Pie_Graph_Data', {
+            const response = await API_Request_Get_Axios('/Dashboard/EIS_Calculate_For_Pie_Graph_Data', {
                 Select_Date_State,
             }); // Axios API 호출
             if (response.status) dispatch(fetchDataSuccess(response.data)); // 성공 시 데이터 저장

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import TopNavigationMainPage from '../../../Navigation/TopNavigation/TopNavigationMainPage';
 import TableContainer from './Table/TableContainer';
 import { useSelector } from 'react-redux';
-import { Request_Get_Axios } from '../../../../API';
+import { API_Request_Get_Axios, API_Request_Post_Axios, Request_Get_Axios } from '../../../../API';
 import { getMonthsOfYearUntilNow } from '../CommonFunc/CommonFunc';
 import Loader from '../../../../Loader/Loader';
 
@@ -18,8 +18,8 @@ const StockDetailMainPage = () => {
     const Get_Stock_Maker_Company_Lists_From_Exicon_ERP_Stock_Func = async () => {
         setLoading(true);
         const Months = await getMonthsOfYearUntilNow(Select_Date_State.value);
-        const Get_Stock_Maker_Company_Lists_From_Exicon_ERP_Stock_Axios = await Request_Get_Axios(
-            '/PLM_Route/PLM_Dashboard/Get_Stock_Maker_Company_Lists_From_Exicon_ERP_Stock',
+        const Get_Stock_Maker_Company_Lists_From_Exicon_ERP_Stock_Axios = await API_Request_Post_Axios(
+            '/ERPStock/Get_Stock_Maker_Company_Lists_From_Exicon_ERP_Stock',
             {
                 Months,
             }

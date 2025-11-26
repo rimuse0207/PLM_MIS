@@ -7,7 +7,7 @@ const Charts = ({ Model_Name, Graph_Data, Rate_Check }) => {
         const maxValue = Math.max(...Graph_Data.flatMap(series => series.data.map(point => point.y)));
         const yAxisMax = Math.ceil(maxValue * 2); // 10% 여유
         setyAxisMax(yAxisMax);
-        console.log(Graph_Data);
+        
     }, [Graph_Data]);
     return (
         <div style={{ width: '100%', height: '300px', textAlign: 'center' }}>

@@ -29,7 +29,6 @@ const ExhalationMainPage = () => {
             }
         );
         if (HandleClickDetailEquipmentInfo_Axios.status) {
-            console.log(HandleClickDetailEquipmentInfo_Axios);
             setEquipment_Exhalation_Lists(HandleClickDetailEquipmentInfo_Axios.data.Add_BOM_Lists_EQ_NO);
             setMC_Graph_Data([
                 { id: '판가', data: HandleClickDetailEquipmentInfo_Axios.data.Sell_Price_Graph_Data },

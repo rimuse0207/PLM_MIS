@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import StockBarGraph from './StockGraph/StockBarGraph';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
-import { Request_Get_Axios } from '../../../../API';
+import { API_Request_Get_Axios, API_Request_Post_Axios, Request_Get_Axios } from '../../../../API';
 import Loader from '../../../../Loader/Loader';
 import { Change_Grouping_Price, formatCurrency, getMonthsOfYearUntilNow, numberToKorean } from '../CommonFunc/CommonFunc';
 import { useNavigate } from 'react-router-dom';
@@ -194,7 +194,7 @@ const StockContainer = () => {
         try {
             setLoading(true);
             const Months = await getMonthsOfYearUntilNow(Select_Date_State.value);
-            const GetMonths = await Request_Get_Axios('/PLM_Route/PLM_Dashboard/Select_Stock_Data_For_Bar_Graph', { Months });
+            const GetMonths = await API_Request_Post_Axios('/ERPStock/Select_Stock_Data_For_Bar_Graph', { Months });
 
             if (GetMonths.status) {
                 setStock_Bar_State(GetMonths.data.Getting_Graph_Data);

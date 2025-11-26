@@ -1,4 +1,4 @@
-import { Request_Get_Axios } from '../../../API';
+import { API_Request_Get_Axios, Request_Get_Axios } from '../../../API';
 
 export const FETCH_DATA_REQUEST = 'FETCH_DATA_REQUEST';
 export const FETCH_DATA_SUCCESS = 'FETCH_DATA_SUCCESS';
@@ -12,11 +12,12 @@ export const Getting_MC_average_compared_to_sales_price_by_sector = Select_Date_
     return async dispatch => {
         dispatch(fetchDataRequest()); // 요청 시작
         try {
-            const response = await Request_Get_Axios('/PLM_Route/PLM_Dashboard/EIS_Calculate_For_Data', {
+            // const response = await Request_Get_Axios('/PLM_Route/PLM_Dashboard/EIS_Calculate_For_Data', {
+            const response = await API_Request_Get_Axios('/Dashboard/EIS_Calculate_For_Data', {
                 Select_Date_State,
             }); // Axios API 호출
 
-            if (response.data) dispatch(fetchDataSuccess(response.data)); // 성공 시 데이터 저장
+            if (response.status) dispatch(fetchDataSuccess(response.data)); // 성공 시 데이터 저장
             else dispatch(fetchDataFailure('error'));
         } catch (error) {
             dispatch(fetchDataFailure(error.message)); // 실패 시 에러 저장

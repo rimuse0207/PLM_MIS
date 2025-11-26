@@ -47,7 +47,7 @@ const BomListsMainPage = () => {
                 EQ_NO,
             }
         );
-        console.log(Making_BOM_Tree_For_Using_WebSite_Axios);
+
         if (Making_BOM_Tree_For_Using_WebSite_Axios.status) {
             setBom_Lists(Making_BOM_Tree_For_Using_WebSite_Axios.data);
         }

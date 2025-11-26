@@ -128,10 +128,10 @@ const TopNavigationMainPage = () => {
     const options = [
         { value: '2024', label: '2024년' },
         { value: '2025', label: '2025년' },
+        { value: '2026', label: '2026년' },
     ];
 
     useEffect(() => {
-        console.log(location.pathname);
         function handleClickOutside(event) {
             if (menuRef.current && !menuRef.current.contains(event.target)) {
                 setOpen(false);

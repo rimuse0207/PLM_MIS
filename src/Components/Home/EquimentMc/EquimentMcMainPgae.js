@@ -71,7 +71,6 @@ const EquimentMcMainPage = () => {
             setEquipment_Exhalation_Lists(Sending_Equipment_Fsc_Code_To_Server_Axios.data);
         } else {
         }
-        console.log(Sending_Equipment_Fsc_Code_To_Server_Axios);
     };
 
     const Getting_Equipment_MC_Info_Data = async () => {
@@ -82,7 +81,6 @@ const EquimentMcMainPage = () => {
         if (Getting_Equipment_MC_Info_Data_Axios.status) {
             setMC_Data(Getting_Equipment_MC_Info_Data_Axios.data);
         }
-        console.log(Getting_Equipment_MC_Info_Data_Axios);
     };
 
     return (

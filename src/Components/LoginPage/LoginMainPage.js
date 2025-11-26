@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { request, Request_Get_Axios, Request_Post_Axios } from '../../API/index';
+import { API_Request_Post_Axios, request, Request_Get_Axios, Request_Post_Axios } from '../../API/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { Login_Info_Apply_State_Func } from '../../Models/LoginInfoReducer/LoginInfoReduce';
 import { Now_Path_Initial_Reducer_State_Func } from '../../Models/NowPathReducer/NowPathReduce';
@@ -196,13 +196,14 @@ const LoginMainPage = () => {
             setLoginDataInfo({ ...LoginDataInfo, password: '' });
             return;
         }
-        const Login_Check = await Request_Post_Axios('/PLM_Route/PLM_Dashboard/Login', LoginDataInfo);
+        const Login_Check = await API_Request_Post_Axios('/Login/EIS_Login_Chceking', LoginDataInfo);
 
         if (Login_Check.status) {
             if (Login_Check.data.LoginChecking) {
                 localStorage.setItem('Token', Login_Check.data.CreateJWTToken.token);
                 localStorage.setItem('userId', Login_Check.data.email);
-
+                localStorage.setItem('id', Login_Check.data.email);
+                alert(Login_Check.data.CreateJWTToken.token);
                 return Navigate('/Sub/EIS');
             } else {
                 setLoginDataInfo({ ...LoginDataInfo, password: '' });
