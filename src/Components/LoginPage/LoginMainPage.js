@@ -203,7 +203,7 @@ const LoginMainPage = () => {
                 localStorage.setItem('Token', Login_Check.data.CreateJWTToken.token);
                 localStorage.setItem('userId', Login_Check.data.email);
                 localStorage.setItem('id', Login_Check.data.email);
-                alert(Login_Check.data.CreateJWTToken.token);
+                
                 return Navigate('/Sub/EIS');
             } else {
                 setLoginDataInfo({ ...LoginDataInfo, password: '' });
