@@ -9,6 +9,7 @@ import { Getting_Top6_Recent_Sell_Equipments_Lists } from "../../../../../Models
 import { useDispatch, useSelector } from "react-redux";
 import ClipLoaders from "../../../../../Loader/ClipLoader";
 import moment from "moment";
+import { CalculateMCPrice, Million } from "../PublicFunc/PublicFunc";
 
 const GraphsMainPageMainDivBox = styled.div`
   margin-top: 20px;
@@ -139,13 +140,8 @@ const GraphsMainPage = () => {
             return {
               id: list.WO_NO,
               equipments: `${list.Models}`,
-              MC: Number(
-                (list.MC_Price / list.EXPC_SEL_PRICE) * list.QTY * 100 > 100
-                  ? (list.MC_Price + list.outSoucingPriceSum) / 1000000
-                  : (list.MC_Price * list.QTY + list.outSoucingPriceSum) /
-                      1000000
-              ),
-              price: list.EXPC_SEL_PRICE / 1000000,
+              MC: CalculateMCPrice(list),
+              price: list.EXPC_SEL_PRICE / Million,
               dueDate: list.DUE_DT,
               WO_TYPE: list.WO_TYPE,
               QTY: list.QTY,
@@ -163,7 +159,7 @@ const GraphsMainPage = () => {
 
   const Grouping_Data = () => {
     const Grouping_Models = [];
-    const datas = Pie_State.PieData.map((list) => {
+    Pie_State.PieData.forEach((list) => {
       if (list.code === Select_Value) {
         return list.Lists.map((item) => {
           return Grouping_Models.push(item.Models);
@@ -181,7 +177,7 @@ const GraphsMainPage = () => {
         label: list,
         code: list,
         value: abc.Lists.filter((items) => items.Models === list).reduce(
-          (pre, acc) => pre + acc.EXPC_SEL_PRICE / 1000000,
+          (pre, acc) => pre + acc.EXPC_SEL_PRICE / Million,
           0
         ),
       };
@@ -192,7 +188,6 @@ const GraphsMainPage = () => {
   return (
     <GraphsMainPageMainDivBox>
       <div className="Graph_Container_GR" style={{ width: "38%" }}>
-        {/* <h3>매출액({Pie_State_By_Selector.reduce((pre, acc) => pre + acc.value, 0).toLocaleString('ko-kr')} M)</h3> */}
         <div className="Select_Group">
           <h3>
             {moment(Select_Date_State.value).format("YY")}년 수주액{" "}
@@ -230,12 +225,6 @@ const GraphsMainPage = () => {
             setClickData={(data) => setClickData(data)}
           ></Donuts>
         )}
-
-        {/* {Pie_State_By_Selector.length > 0 ? (
-                    <Donuts Pie_State={Pie_State_By_Selector.filter(item => item.value > 0)}></Donuts>
-                ) : (
-                    <></>
-                )} */}
       </div>
       <div className="Graph_Container_GR" style={{ width: "58%" }}>
         <div className="Select_Group">

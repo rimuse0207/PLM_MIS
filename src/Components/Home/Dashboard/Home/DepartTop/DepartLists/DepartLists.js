@@ -3,6 +3,11 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { FaWonSign } from "react-icons/fa6";
 import * as XLSX from "xlsx/xlsx.mjs";
+import {
+  CalculateMCPercent,
+  CalculateMCPrice,
+  Million,
+} from "../../PublicFunc/PublicFunc";
 
 const DepartListsMainDivBox = styled.div`
   border: 1px solid lightgray;
@@ -45,12 +50,6 @@ const DepartListsMainDivBox = styled.div`
 `;
 
 const DepartLists = ({ list }) => {
-  const Navigation = useNavigate();
-
-  const HandleClick_GoTo_DetailPage = (Select_Data) => {
-    Navigation(`/Sub/Detail/${Select_Data.Department_code}`);
-  };
-
   const HandleClicks = () => {
     exportToExcel();
   };
@@ -95,17 +94,7 @@ const DepartLists = ({ list }) => {
       </div>
       <div className="Price_Container">
         <h2 style={{ fontSize: "6vmin" }}>
-          {list.MC_Price
-            ? ((list.MC_Price / list.EXPC_SEL_PRICE) * list.QTY * 100 > 100
-                ? ((list.MC_Price + list.outSoucingPriceSum) /
-                    list.EXPC_SEL_PRICE) *
-                  100
-                : ((list.MC_Price * list.QTY + list.outSoucingPriceSum) /
-                    list.EXPC_SEL_PRICE) *
-                  100
-              ).toFixed(1)
-            : 0}
-          %
+          {list.MC_Price ? CalculateMCPercent(list).toFixed(1) : 0}%
         </h2>
         <div style={{ width: "40%", borderLeft: "1px solid lightgray" }}>
           <div className="Money_Containers">
@@ -120,17 +109,9 @@ const DepartLists = ({ list }) => {
             </div>
             <div>
               &#8361;{" "}
-              {Number(
-                (list.MC_Price / list.EXPC_SEL_PRICE) * list.QTY * 100 > 100
-                  ? (
-                      (list.MC_Price + list.outSoucingPriceSum) /
-                      1000000
-                    ).toFixed(1)
-                  : (
-                      (list.MC_Price * list.QTY + list.outSoucingPriceSum) /
-                      1000000
-                    ).toFixed(1)
-              ).toLocaleString("ko-KR")}{" "}
+              {Number(CalculateMCPrice(list).toFixed(1)).toLocaleString(
+                "ko-KR"
+              )}{" "}
               M
             </div>
           </div>
@@ -145,7 +126,10 @@ const DepartLists = ({ list }) => {
               판가
             </div>
             <div>
-              &#8361; {(list.EXPC_SEL_PRICE / 1000000).toLocaleString("ko-KR")}{" "}
+              &#8361;{" "}
+              {Number(
+                (list.EXPC_SEL_PRICE / Million).toFixed(1)
+              ).toLocaleString("ko-KR")}{" "}
               M
             </div>
           </div>
