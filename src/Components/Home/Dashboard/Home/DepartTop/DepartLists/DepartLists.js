@@ -68,8 +68,15 @@ const DepartLists = ({ list }) => {
 
     const filteredParts2 = list.outSoucingPrice;
 
-    if (filteredParts2.length > 0) {
-      const worksheet2 = XLSX.utils.json_to_sheet(filteredParts2);
+    const PriceDivice = filteredParts2.map((list) => {
+      return {
+        ...list,
+        Price: list.CurAmt / list.QTY,
+      };
+    });
+
+    if (PriceDivice.length > 0) {
+      const worksheet2 = XLSX.utils.json_to_sheet(PriceDivice);
       XLSX.utils.book_append_sheet(
         workbook,
         worksheet2,

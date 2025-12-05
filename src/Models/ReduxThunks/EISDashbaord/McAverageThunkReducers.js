@@ -27,7 +27,7 @@ export const Getting_MC_average_compared_to_sales_price_by_sector = (
           Select_Date_State,
         }
       ); // Axios API 호출
-      console.log(response);
+
       if (response.status)
         dispatch(fetchDataSuccess(response.data)); // 성공 시 데이터 저장
       else dispatch(fetchDataFailure("error"));
