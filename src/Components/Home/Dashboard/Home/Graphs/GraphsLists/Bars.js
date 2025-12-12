@@ -121,11 +121,11 @@ const Bars = ({ Bar_State, NowSelectGraphButton }) => {
           tickRotation: 0,
           legendPosition: "middle",
           legendOffset: -40,
-          tickValues: Array.from(
-            { length: Math.ceil(maxValue / DicideTicks) },
-            (_, i) => `${(i + 1) * DicideTicks} `
-          ),
-          format: (value) => Number(value).toLocaleString("ko-kr") + " M",
+          // tickValues: Array.from(
+          //   { length: Math.ceil(maxValue / DicideTicks) },
+          //   (_, i) => `${(i + 1) * DicideTicks} `
+          // ),
+          format: (value) => Number(value).toLocaleString("ko-kr"),
         }}
         enableGridY={false}
         enableLabel={false}
@@ -199,7 +199,7 @@ const Bars = ({ Bar_State, NowSelectGraphButton }) => {
                   {Bar_State.find((e) => e.id === indexValue)?.equipments}
                 </strong>
                 <br />
-                단가: {data.price.toLocaleString("ko-kr")} M
+                단가: {data.price.toLocaleString("ko-kr")}
               </div>
             );
           } else {
@@ -218,7 +218,7 @@ const Bars = ({ Bar_State, NowSelectGraphButton }) => {
                   {Bar_State.find((e) => e.id === indexValue)?.equipments}
                 </strong>
                 <br />
-                MC: {Number(data.MC.toFixed(1)).toLocaleString("ko-kr")} M
+                MC: {Number(data.MC.toFixed(1)).toLocaleString("ko-kr")}
               </div>
             );
           }

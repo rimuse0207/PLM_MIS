@@ -12,7 +12,6 @@ import {
 const DepartListsMainDivBox = styled.div`
   border: 1px solid lightgray;
   border-left: 1px solid rgb(0, 202, 255);
-  width: 18%;
   height: 170px;
   background-color: #fff;
   box-shadow: -8px 8px 3px -5px lightgray;
@@ -21,8 +20,11 @@ const DepartListsMainDivBox = styled.div`
   margin-bottom: 10px;
   padding-left: 10px;
   padding-right: 10px;
-  min-width: 260px;
   position: relative;
+  width: 400px;
+  margin-left: 20px;
+  flex: 0 0 auto;
+
   &:hover {
     cursor: pointer;
     background-color: #efefef;
@@ -45,6 +47,13 @@ const DepartListsMainDivBox = styled.div`
     position: absolute;
     right: 10px;
     top: 5px;
+    font-weight: bolder;
+  }
+  .Appear_Board_Data {
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    font-size: 0.8em;
     font-weight: bolder;
   }
 `;
@@ -84,7 +93,14 @@ const DepartLists = ({ list }) => {
       );
     }
 
-    XLSX.writeFile(workbook, `${list.Models}.xlsx`);
+    XLSX.writeFile(
+      workbook,
+      `${list.WO_NO}_${list.Models}_${
+        list.WO_TYPE === "B"
+          ? `${list.FSC_CD}`
+          : `${list.CHNG_CONT.split("#")[1]}`
+      }.xlsx`
+    );
   };
 
   return (
@@ -98,6 +114,11 @@ const DepartLists = ({ list }) => {
         {list.WO_TYPE === "B"
           ? `(${list.QTY}매)`
           : `#${list.CHNG_CONT.split("#")[1]}`}
+      </div>
+      <div className="Appear_Board_Data">
+        {list.WO_TYPE === "B"
+          ? `${list.boardName}-${list?.WO_CNFM_DT?.slice(4, 6)}월`
+          : ""}
       </div>
       <div className="Price_Container">
         <h2 style={{ fontSize: "6vmin" }}>
@@ -119,7 +140,6 @@ const DepartLists = ({ list }) => {
               {Number(CalculateMCPrice(list).toFixed(1)).toLocaleString(
                 "ko-KR"
               )}{" "}
-              M
             </div>
           </div>
           <div className="Money_Containers" style={{ marginTop: "20px" }}>
@@ -137,7 +157,6 @@ const DepartLists = ({ list }) => {
               {Number(
                 (list.EXPC_SEL_PRICE / Million).toFixed(1)
               ).toLocaleString("ko-KR")}{" "}
-              M
             </div>
           </div>
         </div>

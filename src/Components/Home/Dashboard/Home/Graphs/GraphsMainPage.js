@@ -15,6 +15,8 @@ const GraphsMainPageMainDivBox = styled.div`
   margin-top: 20px;
   display: flex;
   justify-content: space-around;
+  flex-flow: wrap;
+  width: 1920px;
   .Graph_Container_GR {
     border: 1px solid lightgray;
     height: calc(100vh - 350px);
@@ -146,6 +148,7 @@ const GraphsMainPage = () => {
               WO_TYPE: list.WO_TYPE,
               QTY: list.QTY,
               CHNG_CONT: list.CHNG_CONT,
+              ProductDate: list.ProductDate,
             };
           })
         );
@@ -187,7 +190,7 @@ const GraphsMainPage = () => {
 
   return (
     <GraphsMainPageMainDivBox>
-      <div className="Graph_Container_GR" style={{ width: "38%" }}>
+      <div className="Graph_Container_GR" style={{ width: "730px" }}>
         <div className="Select_Group">
           <h3>
             {moment(Select_Date_State.value).format("YY")}년 수주액{" "}
@@ -198,12 +201,19 @@ const GraphsMainPage = () => {
                 (pre, acc) => pre + acc.value,
                 0
               ).toLocaleString("ko-kr")}{" "}
-              M
             </span>
           </h3>
           <select
             className="Select_Container"
-            onChange={(e) => HandleChangeOptions(e)}
+            onChange={(e) => {
+              HandleChangeOptions(e);
+
+              if (e.target.value === "ALL") {
+                setClickData(null);
+              } else {
+                setClickData(e.target.value);
+              }
+            }}
             value={Select_Value}
           >
             {Pie_Selector_List.map((list) => {
@@ -214,7 +224,7 @@ const GraphsMainPage = () => {
               );
             })}
           </select>
-          <div className="Unit_Container">단위 : 원(&#8361;)</div>
+          <div className="Unit_Container">단위 : 백만원(&#8361;)</div>
         </div>
 
         {Pie_State.loading ? (
@@ -226,7 +236,7 @@ const GraphsMainPage = () => {
           ></Donuts>
         )}
       </div>
-      <div className="Graph_Container_GR" style={{ width: "58%" }}>
+      <div className="Graph_Container_GR" style={{ width: "1111px" }}>
         <div className="Select_Group">
           <h3>{ClickData} 최근 판매 제품 판가 및 MC</h3>
           <div className="Select_Buttons">
