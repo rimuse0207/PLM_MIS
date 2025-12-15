@@ -68,17 +68,17 @@ const Bars = ({ Bar_State, NowSelectGraphButton }) => {
         maxValue={maxValue}
         keys={["MC", "profit"]}
         indexBy="id"
-        margin={{ top: 150, right: 0, bottom: 70, left: 100 }}
+        margin={{ top: 130, right: 0, bottom: 90, left: 100 }}
         padding={0.6}
         groupMode="stacked"
         colors={["skyblue", "gray"]}
         colorBy="id"
         theme={{
-          labels: { text: { fontSize: "1.5vmin", fill: "#000000" } },
-          legends: { text: { fontSize: "1.5vmin", fill: "#000000" } },
+          labels: { text: { fontSize: "0.8rem", fill: "#000000" } },
+          legends: { text: { fontSize: "0.8rem", fill: "#000000" } },
           axis: {
-            legend: { text: { fontSize: "1.2vmin", fill: "#000000" } },
-            ticks: { text: { fontSize: "1.5vmin", fill: "#000000" } },
+            legend: { text: { fontSize: "0.8rem", fill: "#000000" } },
+            ticks: { text: { fontSize: "0.8rem", fill: "#000000" } },
           },
         }}
         axisBottom={{
@@ -89,7 +89,7 @@ const Bars = ({ Bar_State, NowSelectGraphButton }) => {
                 <text
                   textAnchor="middle"
                   dominantBaseline="hanging"
-                  style={{ fontSize: "1.3vmin", fill: "#000" }}
+                  style={{ fontSize: "0.7rem", fill: "#000" }}
                 >
                   {target?.equipments}
                 </text>
@@ -97,7 +97,7 @@ const Bars = ({ Bar_State, NowSelectGraphButton }) => {
                   textAnchor="middle"
                   dominantBaseline="hanging"
                   y={15} // 두 번째 줄 내려쓰기
-                  style={{ fontSize: "1.1vmin", fill: "#666" }}
+                  style={{ fontSize: "0.7rem", fill: "#666" }}
                 >
                   {`${target?.WO_CNFM_DT?.slice(4, 6)}월`}
                 </text>
@@ -105,11 +105,19 @@ const Bars = ({ Bar_State, NowSelectGraphButton }) => {
                   textAnchor="middle"
                   dominantBaseline="hanging"
                   y={30} // 세 번째 줄 내려쓰기
-                  style={{ fontSize: "1.1vmin", fill: "#666" }}
+                  style={{ fontSize: "0.7rem", fill: "#666" }}
                 >
                   {target?.WO_TYPE === "E"
                     ? `#${target?.CHNG_CONT.split("#")[1]}`
-                    : `${target?.QTY}매`}
+                    : `${target?.boardName?.slice(0, 10)}`}
+                </text>
+                <text
+                  textAnchor="middle"
+                  dominantBaseline="hanging"
+                  y={45} // 세 번째 줄 내려쓰기
+                  style={{ fontSize: "0.7rem", fill: "#666" }}
+                >
+                  {target?.WO_TYPE === "E" ? `` : `${target?.QTY}매`}
                 </text>
               </g>
             );
@@ -171,7 +179,7 @@ const Bars = ({ Bar_State, NowSelectGraphButton }) => {
                     textAnchor="middle"
                     style={{
                       fill: "black",
-                      fontSize: "1.5vmin",
+                      fontSize: "0.9rem",
                       fontWeight: "bold",
                       pointerEvents: "none", // 마우스 이벤트 막기
                     }}
@@ -192,12 +200,17 @@ const Bars = ({ Bar_State, NowSelectGraphButton }) => {
                   border: "1px solid #ccc",
                   borderRadius: "4px",
                   color: "black",
-                  fontSize: "2.0vmin",
+                  fontSize: "1.1rem",
                 }}
               >
-                <strong>
-                  {Bar_State.find((e) => e.id === indexValue)?.equipments}
-                </strong>
+                <div>
+                  <strong>
+                    {Bar_State.find((e) => e.id === indexValue)?.equipments}
+                  </strong>
+                </div>
+                <div>
+                  {Bar_State.find((e) => e.id === indexValue)?.boardName}
+                </div>
                 <br />
                 단가: {data.price.toLocaleString("ko-kr")}
               </div>
@@ -211,12 +224,17 @@ const Bars = ({ Bar_State, NowSelectGraphButton }) => {
                   border: "1px solid #ccc",
                   borderRadius: "4px",
                   color: "black",
-                  fontSize: "2.0vmin",
+                  fontSize: "1.1rem",
                 }}
               >
-                <strong>
-                  {Bar_State.find((e) => e.id === indexValue)?.equipments}
-                </strong>
+                <div>
+                  <strong>
+                    {Bar_State.find((e) => e.id === indexValue)?.equipments}
+                  </strong>
+                </div>
+                <div>
+                  {Bar_State.find((e) => e.id === indexValue)?.boardName}
+                </div>
                 <br />
                 MC: {Number(data.MC.toFixed(1)).toLocaleString("ko-kr")}
               </div>

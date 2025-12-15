@@ -149,6 +149,7 @@ const GraphsMainPage = () => {
             CHNG_CONT: list.CHNG_CONT,
             ProductDate: list.ProductDate,
             WO_CNFM_DT: list.WO_CNFM_DT,
+            boardName: list.boardName,
           };
         });
         setBar_State(

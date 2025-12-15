@@ -18,6 +18,7 @@ const DashboardMainPageMainStyled = styled.div`
   min-height: 100vh;
   width: 100%;
   overflow: auto;
+  min-width: 1920px;
 `;
 
 const DashboardMainPage = () => {

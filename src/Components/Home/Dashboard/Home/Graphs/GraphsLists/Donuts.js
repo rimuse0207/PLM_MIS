@@ -26,13 +26,13 @@ const Donuts = ({ Pie_State, setClickData }) => {
         theme={{
           labels: {
             text: {
-              fontSize: "1.5vmin",
+              fontSize: "0.8rem",
               fill: "#000000",
             },
           },
           legends: {
             text: {
-              fontSize: "1.3vmin",
+              fontSize: "0.8rem",
               // fill: '#000000',
             },
           },
@@ -79,7 +79,7 @@ const Donuts = ({ Pie_State, setClickData }) => {
                     dominantBaseline="central"
                     style={{
                       fill: "#000",
-                      fontSize: "1.5vmin",
+                      fontSize: "0.8rem",
                       fontWeight: "bold",
                     }}
                   >
@@ -94,7 +94,7 @@ const Donuts = ({ Pie_State, setClickData }) => {
                     dominantBaseline="central"
                     style={{
                       fill: "#000",
-                      fontSize: "1.5vmin",
+                      fontSize: "0.8rem",
                     }}
                   >
                     {percent > 10 ? `${percent}%` : ""}
@@ -107,7 +107,7 @@ const Donuts = ({ Pie_State, setClickData }) => {
             const total = Pie_State.reduce((sum, d) => sum + d.value, 0);
 
             return (
-              <g transform={`translate(${centerX - 380}, ${centerY - 250})`}>
+              <g transform={`translate(-30,-70)`}>
                 {Pie_State.map((legend, i) => {
                   const datum = dataWithArc.find((d) => d.id === legend.id);
                   const value = datum ? datum.value : 0;
@@ -117,7 +117,7 @@ const Donuts = ({ Pie_State, setClickData }) => {
                   return (
                     <g key={legend.id} transform={`translate(0, ${i * 20})`}>
                       <rect width={10} height={10} fill={datum.color} />
-                      <text x={20} y={12} fontSize="1.3vmin" fill="#000">
+                      <text x={20} y={12} fontSize="0.8rem" fill="#000">
                         {legend.label} : {value.toLocaleString("ko-KR")} (
                         {percent}%)
                       </text>

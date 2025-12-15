@@ -124,7 +124,7 @@ const DepartLists = ({ list }) => {
       </div>
 
       <div className="Price_Container">
-        <h2 style={{ fontSize: "6vmin" }}>
+        <h2 style={{ fontSize: "4rem" }}>
           {list.MC_Price ? CalculateMCPercent(list).toFixed(1) : 0}%
         </h2>
         <div style={{ width: "40%", borderLeft: "1px solid lightgray" }}>
