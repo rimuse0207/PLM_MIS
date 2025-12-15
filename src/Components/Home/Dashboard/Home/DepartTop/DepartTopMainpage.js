@@ -128,7 +128,10 @@ const DepartTopMainPage = () => {
       </div>
 
       <ul className="Top_Depart_Lists_GR">
-        {DepartMentLists_State.DepartMentLists.map((list) => {
+        {DepartMentLists_State.DepartMentLists?.sort(
+          (a, b) => b.WO_CNFM_DT - a.WO_CNFM_DT,
+          0
+        ).map((list) => {
           return (
             <DepartLists key={list.Department_Name} list={list}></DepartLists>
           );

@@ -105,7 +105,7 @@ const Donuts = ({ Pie_State, setClickData }) => {
           },
           ({ centerX, centerY, dataWithArc }) => {
             const total = Pie_State.reduce((sum, d) => sum + d.value, 0);
-            console.log(centerX);
+
             return (
               <g transform={`translate(${centerX - 380}, ${centerY - 250})`}>
                 {Pie_State.map((legend, i) => {
