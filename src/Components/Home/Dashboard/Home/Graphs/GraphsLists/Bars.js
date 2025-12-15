@@ -28,7 +28,7 @@ const Bars = ({ Bar_State, NowSelectGraphButton }) => {
     }
   }).map((item) => ({
     ...item,
-    profit: item.price - item.MC,
+    profit: item.price - item.MC <= 0 ? 0 : item.price - item.MC,
   }));
   const maxValue =
     Math.max(
@@ -99,7 +99,7 @@ const Bars = ({ Bar_State, NowSelectGraphButton }) => {
                   y={15} // 두 번째 줄 내려쓰기
                   style={{ fontSize: "1.1vmin", fill: "#666" }}
                 >
-                  {target?.WO_TYPE === "E" ? "장비" : "Board"}
+                  {`${target?.WO_CNFM_DT?.slice(4, 6)}월`}
                 </text>
                 <text
                   textAnchor="middle"

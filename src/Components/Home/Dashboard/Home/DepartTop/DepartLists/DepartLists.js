@@ -48,6 +48,7 @@ const DepartListsMainDivBox = styled.div`
     right: 10px;
     top: 5px;
     font-weight: bolder;
+    font-size: 15spx;
   }
   .Appear_Board_Data {
     position: absolute;
@@ -110,16 +111,18 @@ const DepartLists = ({ list }) => {
         <span>({list.WO_TYPE === "B" ? "Board" : "장비"})</span>
       </div>
       <div className="Apper_Container">
-        모델명: {list.Models}{" "}
+        {list.Models}
         {list.WO_TYPE === "B"
-          ? `(${list.QTY}매)`
-          : `#${list.CHNG_CONT.split("#")[1]}`}
+          ? `_${list.boardName}_${list.QTY}매 /${list?.WO_CNFM_DT?.slice(
+              4,
+              6
+            )}월`
+          : `#${list.CHNG_CONT.split("#")[1]} /${list?.WO_CNFM_DT?.slice(
+              4,
+              6
+            )}월`}
       </div>
-      <div className="Appear_Board_Data">
-        {list.WO_TYPE === "B"
-          ? `${list.boardName}-${list?.WO_CNFM_DT?.slice(4, 6)}월`
-          : ""}
-      </div>
+
       <div className="Price_Container">
         <h2 style={{ fontSize: "6vmin" }}>
           {list.MC_Price ? CalculateMCPercent(list).toFixed(1) : 0}%

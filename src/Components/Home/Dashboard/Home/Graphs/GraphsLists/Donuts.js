@@ -6,7 +6,7 @@ const Donuts = ({ Pie_State, setClickData }) => {
     <div style={{ width: "100%", height: "100%", textAlign: "center" }}>
       <ResponsivePie
         data={Pie_State}
-        margin={{ top: 100, right: 0, bottom: 80, left: 0 }}
+        margin={{ top: 150, right: 0, bottom: 80, left: 70 }}
         innerRadius={0}
         padAngle={5}
         cornerRadius={0}
@@ -49,7 +49,7 @@ const Donuts = ({ Pie_State, setClickData }) => {
             itemHeight: 18, // item height
             itemDirection: "left-to-right", // item 내부에 그려지는 방향
             itemOpacity: 1, // item opacity
-            symbolSize: 15, // symbol (색상 표기) 크기
+            symbolSize: 10, // symbol (색상 표기) 크기
             symbolShape: "square", // symbol (색상 표기) 모양
           },
         ]}
@@ -79,7 +79,7 @@ const Donuts = ({ Pie_State, setClickData }) => {
                     dominantBaseline="central"
                     style={{
                       fill: "#000",
-                      fontSize: "2vmin",
+                      fontSize: "1.5vmin",
                       fontWeight: "bold",
                     }}
                   >
@@ -94,7 +94,7 @@ const Donuts = ({ Pie_State, setClickData }) => {
                     dominantBaseline="central"
                     style={{
                       fill: "#000",
-                      fontSize: "2vmin",
+                      fontSize: "1.5vmin",
                     }}
                   >
                     {percent > 10 ? `${percent}%` : ""}
@@ -105,9 +105,9 @@ const Donuts = ({ Pie_State, setClickData }) => {
           },
           ({ centerX, centerY, dataWithArc }) => {
             const total = Pie_State.reduce((sum, d) => sum + d.value, 0);
-
+            console.log(centerX);
             return (
-              <g transform={`translate(${centerX - 350}, ${centerY - 230})`}>
+              <g transform={`translate(${centerX - 380}, ${centerY - 250})`}>
                 {Pie_State.map((legend, i) => {
                   const datum = dataWithArc.find((d) => d.id === legend.id);
                   const value = datum ? datum.value : 0;
@@ -115,9 +115,9 @@ const Donuts = ({ Pie_State, setClickData }) => {
                     total > 0 ? ((value / total) * 100).toFixed(1) : 0;
 
                   return (
-                    <g key={legend.id} transform={`translate(0, ${i * 25})`}>
-                      <rect width={14} height={14} fill={datum.color} />
-                      <text x={20} y={12} fontSize="12" fill="#000">
+                    <g key={legend.id} transform={`translate(0, ${i * 20})`}>
+                      <rect width={10} height={10} fill={datum.color} />
+                      <text x={20} y={12} fontSize="1.3vmin" fill="#000">
                         {legend.label} : {value.toLocaleString("ko-KR")} (
                         {percent}%)
                       </text>

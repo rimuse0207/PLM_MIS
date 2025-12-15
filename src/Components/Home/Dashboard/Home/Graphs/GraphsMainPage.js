@@ -16,7 +16,7 @@ const GraphsMainPageMainDivBox = styled.div`
   display: flex;
   justify-content: space-around;
   flex-flow: wrap;
-  width: 1920px;
+
   .Graph_Container_GR {
     border: 1px solid lightgray;
     height: calc(100vh - 350px);
@@ -135,22 +135,24 @@ const GraphsMainPage = () => {
   useEffect(() => {
     if (DepartMentLists_State) {
       if (DepartMentLists_State?.DepartMentLists.length > 0) {
+        const sortingData = DepartMentLists_State?.DepartMentLists.filter(
+          (item) => item.Segment === ClickData || item.Models === ClickData
+        ).map((list) => {
+          return {
+            id: list.WO_NO,
+            equipments: `${list.Models}`,
+            MC: CalculateMCPrice(list),
+            price: list.EXPC_SEL_PRICE / Million,
+            dueDate: list.DUE_DT,
+            WO_TYPE: list.WO_TYPE,
+            QTY: list.QTY,
+            CHNG_CONT: list.CHNG_CONT,
+            ProductDate: list.ProductDate,
+            WO_CNFM_DT: list.WO_CNFM_DT,
+          };
+        });
         setBar_State(
-          DepartMentLists_State?.DepartMentLists.filter(
-            (item) => item.Segment === ClickData || item.Models === ClickData
-          ).map((list) => {
-            return {
-              id: list.WO_NO,
-              equipments: `${list.Models}`,
-              MC: CalculateMCPrice(list),
-              price: list.EXPC_SEL_PRICE / Million,
-              dueDate: list.DUE_DT,
-              WO_TYPE: list.WO_TYPE,
-              QTY: list.QTY,
-              CHNG_CONT: list.CHNG_CONT,
-              ProductDate: list.ProductDate,
-            };
-          })
+          sortingData.sort((a, b) => b.WO_CNFM_DT - a.WO_CNFM_DT, 0)
         );
       } else {
         setBar_State([]);
@@ -190,7 +192,10 @@ const GraphsMainPage = () => {
 
   return (
     <GraphsMainPageMainDivBox>
-      <div className="Graph_Container_GR" style={{ width: "730px" }}>
+      <div
+        className="Graph_Container_GR"
+        style={{ width: "40%", minWidth: "700px", minHeight: "570px" }}
+      >
         <div className="Select_Group">
           <h3>
             {moment(Select_Date_State.value).format("YY")}년 수주액{" "}
@@ -236,7 +241,10 @@ const GraphsMainPage = () => {
           ></Donuts>
         )}
       </div>
-      <div className="Graph_Container_GR" style={{ width: "1111px" }}>
+      <div
+        className="Graph_Container_GR"
+        style={{ width: "55%", minWidth: "700px", minHeight: "570px" }}
+      >
         <div className="Select_Group">
           <h3>{ClickData} 최근 판매 제품 판가 및 MC</h3>
           <div className="Select_Buttons">
