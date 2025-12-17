@@ -99,7 +99,7 @@ const Bars = ({ Bar_State, NowSelectGraphButton }) => {
                   y={15} // 두 번째 줄 내려쓰기
                   style={{ fontSize: "0.7rem", fill: "#666" }}
                 >
-                  {`${target?.WO_CNFM_DT?.slice(4, 6)}월`}
+                  {`${target?.WO_CNFM_DT?.slice(5, 7)}월`}
                 </text>
                 <text
                   textAnchor="middle"

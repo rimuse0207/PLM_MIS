@@ -82,7 +82,7 @@ const GraphsMainPage = () => {
   const Select_Date_State = useSelector(
     (state) => state.Select_Date_Reducer_State.Select_Date_State
   );
-  const [ClickData, setClickData] = useState(null);
+  const [ClickData, setClickData] = useState("CLT");
   const [Bar_State, setBar_State] = useState([]);
   const [Pie_State_By_Selector, setPie_State_By_Selector] = useState([]);
   const [NowSelectGraphButton, setNowSelectGraphButton] = useState("Equipment");
@@ -129,7 +129,7 @@ const GraphsMainPage = () => {
   }, [Select_Value, Select_Date_State.value, Pie_State.PieData]);
 
   useEffect(() => {
-    setClickData(null);
+    setClickData("CLT");
   }, [Select_Date_State.value]);
 
   useEffect(() => {
@@ -148,12 +148,15 @@ const GraphsMainPage = () => {
             QTY: list.QTY,
             CHNG_CONT: list.CHNG_CONT,
             ProductDate: list.ProductDate,
-            WO_CNFM_DT: list.WO_CNFM_DT,
+            WO_CNFM_DT: list.ProductCreactDate,
             boardName: list.boardName,
           };
         });
         setBar_State(
-          sortingData.sort((a, b) => b.WO_CNFM_DT - a.WO_CNFM_DT, 0)
+          sortingData.sort(
+            (a, b) => b.ProductCreactDate - a.ProductCreactDate,
+            0
+          )
         );
       } else {
         setBar_State([]);
@@ -215,7 +218,7 @@ const GraphsMainPage = () => {
               HandleChangeOptions(e);
 
               if (e.target.value === "ALL") {
-                setClickData(null);
+                setClickData("CLT");
               } else {
                 setClickData(e.target.value);
               }

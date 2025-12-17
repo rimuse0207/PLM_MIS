@@ -88,48 +88,11 @@ const DepartTopMainPage = () => {
           최근 판매 된 장비 및 Board MC율{" "}
           <span style={{ fontSize: "0.8em" }}>( 단위: 백만원 )</span>
         </div>
-        {/* <div className="Button_Containers">
-          {EaChecking - 5 !== 0 ? (
-            <button onClick={() => setEachecking(5)}>처음</button>
-          ) : (
-            <button style={{ background: "lightgray" }}>처음</button>
-          )}
-          {EaChecking - 5 !== 0 ? (
-            <button onClick={() => setEachecking(EaChecking - 1)}>
-              <IoIosArrowBack />
-            </button>
-          ) : (
-            <button style={{ background: "lightgray" }}>
-              <IoIosArrowBack />
-            </button>
-          )}
-
-          {EaChecking === DepartMentLists_State.DepartMentLists.length ? (
-            <button style={{ background: "lightgray" }}>
-              <IoIosArrowForward />
-            </button>
-          ) : (
-            <button onClick={() => setEachecking(EaChecking + 1)}>
-              <IoIosArrowForward />
-            </button>
-          )}
-          {EaChecking === DepartMentLists_State.DepartMentLists.length ? (
-            <button style={{ background: "lightgray" }}>끝</button>
-          ) : (
-            <button
-              onClick={() =>
-                setEachecking(DepartMentLists_State.DepartMentLists.length)
-              }
-            >
-              끝
-            </button>
-          )}
-        </div> */}
       </div>
 
       <ul className="Top_Depart_Lists_GR">
         {DepartMentLists_State.DepartMentLists?.sort(
-          (a, b) => b.WO_CNFM_DT - a.WO_CNFM_DT,
+          (a, b) => b.ProductCreactDate - a.ProductCreactDate,
           0
         ).map((list) => {
           return (

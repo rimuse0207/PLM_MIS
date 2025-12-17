@@ -113,13 +113,13 @@ const DepartLists = ({ list }) => {
       <div className="Apper_Container">
         {list.Models}
         {list.WO_TYPE === "B"
-          ? `_${list.boardName}_${list.QTY}매 /${list?.WO_CNFM_DT?.slice(
-              4,
-              6
+          ? `_${list.boardName}_${list.QTY}매 /${list?.ProductCreactDate?.slice(
+              5,
+              7
             )}월`
-          : `#${list.CHNG_CONT.split("#")[1]} /${list?.WO_CNFM_DT?.slice(
-              4,
-              6
+          : `#${list.CHNG_CONT.split("#")[1]} /${list?.ProductCreactDate?.slice(
+              5,
+              7
             )}월`}
       </div>
 
