@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import {
-  API_Request_Post_Axios,
-  request,
-  Request_Get_Axios,
-  Request_Post_Axios,
-} from "../../API/index";
+import { API_Request_Post_Axios, API_Request_Get_Axios } from "../../API/index";
 import { useDispatch, useSelector } from "react-redux";
 import { Login_Info_Apply_State_Func } from "../../Models/LoginInfoReducer/LoginInfoReduce";
 import { Now_Path_Initial_Reducer_State_Func } from "../../Models/NowPathReducer/NowPathReduce";
@@ -190,7 +185,9 @@ const LoginMainPage = () => {
   }, []);
   const before_Login_Checkig = async () => {
     try {
-      const Login_Checking = await Request_Get_Axios("/Login/Token_Checking");
+      const Login_Checking = await API_Request_Get_Axios(
+        "/Login/Token_Checking"
+      );
 
       if (Login_Checking.status) {
         // Token이 살아 있어, Home으로 이동
