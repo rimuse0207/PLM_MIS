@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 
 import Donuts from "./GraphsLists/Donuts";
 import Bars from "./GraphsLists/Bars";
 
 import styled from "styled-components";
-import { Request_Get_Axios } from "../../../../../API";
-import { Getting_Top6_Recent_Sell_Equipments_Lists } from "../../../../../Models/ReduxThunks/EISDashbaord/Graphs/RecentEquipmentsThunkReducers";
 import { useDispatch, useSelector } from "react-redux";
 import ClipLoaders from "../../../../../Loader/ClipLoader";
 import moment from "moment";
@@ -35,9 +33,10 @@ const GraphsMainPageMainDivBox = styled.div`
       z-index: 10000;
       left: 40px;
       h3 {
-        font-size: 1.5em;
+        font-size: 1.3em;
         font-weight: bolder;
       }
+
       .Unit_Container {
         position: absolute;
         top: 40px;
@@ -81,6 +80,9 @@ const GraphsMainPage = () => {
   );
   const Select_Date_State = useSelector(
     (state) => state.Select_Date_Reducer_State.Select_Date_State
+  );
+  const ServiceRevenue_State = useSelector(
+    (state) => state.ServiceRevenueThunkReducers_State.ServiceRevenue
   );
   const [ClickData, setClickData] = useState("CLT");
   const [Bar_State, setBar_State] = useState([]);
@@ -201,19 +203,42 @@ const GraphsMainPage = () => {
         style={{ width: "40%", minWidth: "700px", minHeight: "570px" }}
       >
         <div className="Select_Group">
-          <h3>
-            {moment(Select_Date_State.value).format("YY")}년 수주액{" "}
-            <span style={{ color: "blue", fontSize: "0.8em" }}>
-              {" "}
-              :{" "}
-              {Pie_State_By_Selector.reduce(
-                (pre, acc) => pre + acc.value,
-                0
-              ).toLocaleString("ko-kr")}{" "}
-            </span>
-          </h3>
+          <div>
+            <h3>
+              <span>{moment(Select_Date_State.value).format("YY")}년</span>{" "}
+              수주액{" "}
+              <span style={{ color: "blue", fontSize: "0.8em" }}>
+                {" "}
+                :{" "}
+                {Pie_State_By_Selector.reduce(
+                  (pre, acc) => pre + acc.value,
+                  0
+                ).toLocaleString("ko-kr")}{" "}
+              </span>
+            </h3>
+            {Select_Value === "ALL" ? (
+              <h3 className="SellingContainer">
+                <span style={{ color: "#fff", opacity: 0 }}>
+                  {moment(Select_Date_State.value).format("YY")}년
+                </span>{" "}
+                매출액{" "}
+                <span style={{ color: "blue", fontSize: "0.8em" }}>
+                  {" "}
+                  :{" "}
+                  {Number(
+                    (
+                      ServiceRevenue_State[0]?.sumSupplyPrice / 1000000 || 0
+                    ).toFixed(0)
+                  )?.toLocaleString("ko-kr")}{" "}
+                </span>
+              </h3>
+            ) : (
+              <Fragment></Fragment>
+            )}
+          </div>
           <select
             className="Select_Container"
+            style={{ height: "30px" }}
             onChange={(e) => {
               HandleChangeOptions(e);
 
@@ -233,7 +258,7 @@ const GraphsMainPage = () => {
               );
             })}
           </select>
-          <div className="Unit_Container">단위 : 백만원(&#8361;)</div>
+          <div className="Unit_Container">단위 : 백만원</div>
         </div>
 
         {Pie_State.loading ? (

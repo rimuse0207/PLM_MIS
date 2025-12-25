@@ -12,6 +12,7 @@ import {
   PieDataReset,
 } from "../../../Models/ReduxThunks/EISDashbaord/Graphs/PieEquipmentsSellThunkReducers";
 import { Getting_Top6_Recent_Sell_Equipments_Lists } from "../../../Models/ReduxThunks/EISDashbaord/Graphs/RecentEquipmentsThunkReducers";
+import { Getting_Service_Revenue_Redux_Thunk } from "../../../Models/ReduxThunks/EISDashbaord/ServiceRevenueThunkReducer";
 
 const DashboardMainPageMainStyled = styled.div`
   background-color: #efefef;
@@ -42,6 +43,7 @@ const DashboardMainPage = () => {
     dispatch(
       Getting_DepartMents_Sell_Equipments_Lists(Select_Date_State.value)
     );
+    dispatch(Getting_Service_Revenue_Redux_Thunk(Select_Date_State.value));
   }, [Select_Date_State.value]);
   return (
     <DashboardMainPageMainStyled>
