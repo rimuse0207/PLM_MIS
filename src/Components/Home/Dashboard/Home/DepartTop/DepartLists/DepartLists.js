@@ -59,7 +59,7 @@ const DepartListsMainDivBox = styled.div`
   }
 `;
 
-const DepartLists = ({ list }) => {
+const DepartLists = ({ list, key }) => {
   const HandleClicks = () => {
     exportToExcel();
   };
@@ -105,7 +105,7 @@ const DepartLists = ({ list }) => {
   };
 
   return (
-    <DepartListsMainDivBox onDoubleClick={() => HandleClicks()}>
+    <DepartListsMainDivBox onDoubleClick={() => HandleClicks()} key={key}>
       <div style={{ marginTop: "30px" }}>
         <h2 style={{ display: "inline" }}>{list.Segment}</h2>
         <span>({list.WO_TYPE === "B" ? "Board" : "장비"})</span>

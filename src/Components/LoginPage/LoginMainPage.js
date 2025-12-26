@@ -7,6 +7,7 @@ import { Now_Path_Initial_Reducer_State_Func } from "../../Models/NowPathReducer
 import { useNavigate } from "react-router-dom";
 import { toast } from "../ToastMessage/ToastManager";
 import LoginContent from "./Contents/LoginContent";
+import PasswordChangeContent from "./Contents/PasswordChangeContent";
 
 const LoginMainPageDivBox = styled.div`
   .page-container {
@@ -204,7 +205,6 @@ const LoginMainPage = () => {
   // 로그인 API
   const handleClicksLogin = async (e) => {
     e.preventDefault();
-    const before_path = NowPath.path;
 
     if (LoginDataInfo.email === "" || LoginDataInfo.password === "") {
       toast.show({
@@ -221,6 +221,23 @@ const LoginMainPage = () => {
     );
 
     if (Login_Check.status) {
+      if (Login_Check.data.passwordChange) {
+        // 비밀번호 변경
+
+        setPasswordChangeStatus(true);
+        setChange_password({
+          ...Change_password,
+          email: LoginDataInfo.email,
+        });
+        toast.show({
+          title: `비밀번호 변경 이후 사용 가능합니다.`,
+          successCheck: false,
+          duration: 6000,
+        });
+        return;
+      }
+
+      // 로그인 성공
       if (Login_Check.data.LoginChecking) {
         localStorage.setItem("Token", Login_Check.data.CreateJWTToken.token);
         localStorage.setItem("userId", Login_Check.data.email);
@@ -236,6 +253,68 @@ const LoginMainPage = () => {
     }
   };
 
+  // 비밀번호 변경 API
+  const HandleChangePassword = async (e) => {
+    e.preventDefault();
+    if (Change_password.password.split("").length < 4) {
+      setChange_password({
+        ...Change_password,
+        password: "",
+        passwordCheck: "",
+      });
+      toast.show({
+        title: `비밀번호는 4자리 이상으로 설정 해 주세요.`,
+        successCheck: false,
+        duration: 3000,
+      });
+      return;
+    } else if (Change_password.password !== Change_password.passwordCheck) {
+      toast.show({
+        title: `비밀번호가 서로 다릅니다.`,
+        successCheck: false,
+        duration: 3000,
+      });
+      return;
+    } else if (!isValidPassword(Change_password.password)) {
+      toast.show({
+        title: `비밀번호에 ' , { , } 또는 \`는 사용할 수 없습니다.`,
+        successCheck: false,
+        duration: 3000,
+      });
+      return;
+    } else {
+      const Change_Password_Axios = await API_Request_Post_Axios(
+        "/Login/Change_Password",
+        Change_password
+      );
+      if (Change_Password_Axios.status) {
+        // 비밀번호 변경 성공
+        setLoginDataInfo({ ...LoginDataInfo, password: "" });
+        setPasswordChangeStatus(false);
+        setChange_password({
+          email: "",
+          password: "",
+          passwordCheck: "",
+        });
+        toast.show({
+          title: `비밀번호가 변경되었습니다.`,
+          successCheck: true,
+          duration: 3000,
+        });
+      } else {
+        toast.show({
+          title: `오류발생. DHKS_IT팀에 문의바랍니다.`,
+          successCheck: false,
+          duration: 3000,
+        });
+      }
+    }
+  };
+
+  function isValidPassword(password) {
+    // 작은따옴표('), 백틱(`)이 포함되어 있으면 false 반환
+    return !/['`{}]/.test(password);
+  }
   return (
     <div>
       <LoginMainPageDivBox>
@@ -247,11 +326,19 @@ const LoginMainPage = () => {
               <p>* 문의사항은 EXICON-연구기획팀에게 문의바랍니다.</p>
             </div>
 
-            <LoginContent
-              LoginDataInfo={LoginDataInfo}
-              setLoginDataInfo={(data) => setLoginDataInfo(data)}
-              handleClicksLogin={(data) => handleClicksLogin(data)}
-            ></LoginContent>
+            {PasswordChangeStatus ? (
+              <PasswordChangeContent
+                Change_password={Change_password}
+                setChange_password={(data) => setChange_password(data)}
+                HandleChangePassword={(e) => HandleChangePassword(e)}
+              ></PasswordChangeContent>
+            ) : (
+              <LoginContent
+                LoginDataInfo={LoginDataInfo}
+                setLoginDataInfo={(data) => setLoginDataInfo(data)}
+                handleClicksLogin={(data) => handleClicksLogin(data)}
+              ></LoginContent>
+            )}
           </div>
         </div>
       </LoginMainPageDivBox>
