@@ -14,7 +14,7 @@ import {
 import { Getting_Top6_Recent_Sell_Equipments_Lists } from "../../../Models/ReduxThunks/EISDashbaord/Graphs/RecentEquipmentsThunkReducers";
 import { Getting_Service_Revenue_Redux_Thunk } from "../../../Models/ReduxThunks/EISDashbaord/ServiceRevenueThunkReducer";
 
-const DashboardMainPageMainStyled = styled.div`
+export const DashboardMainPageMainStyled = styled.div`
   background-color: #efefef;
   min-height: 100vh;
   width: 100%;
@@ -25,10 +25,10 @@ const DashboardMainPageMainStyled = styled.div`
 const DashboardMainPage = () => {
   const dispatch = useDispatch();
   const DepartMentLists_State = useSelector(
-    (state) => state.McAverage_ThunkReducers_State
+    (state) => state.McAverage_ThunkReducers_State,
   );
   const Select_Date_State = useSelector(
-    (state) => state.Select_Date_Reducer_State.Select_Date_State
+    (state) => state.Select_Date_Reducer_State.Select_Date_State,
   );
   useEffect(() => {
     // dispatch(Getting_Top6_Recent_Sell_Equipments_Lists(Select_Date_State.value));
@@ -37,11 +37,11 @@ const DashboardMainPage = () => {
     dispatch(PieDataReset());
     dispatch(
       Getting_MC_average_compared_to_sales_price_by_sector(
-        Select_Date_State.value
-      )
+        Select_Date_State.value,
+      ),
     );
     dispatch(
-      Getting_DepartMents_Sell_Equipments_Lists(Select_Date_State.value)
+      Getting_DepartMents_Sell_Equipments_Lists(Select_Date_State.value),
     );
     dispatch(Getting_Service_Revenue_Redux_Thunk(Select_Date_State.value));
   }, [Select_Date_State.value]);
