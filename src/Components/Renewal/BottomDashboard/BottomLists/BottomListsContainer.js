@@ -4,45 +4,26 @@ import DonutsContainer from "./Donuts/DonutsContainer";
 
 import BarsContainer from "./Bras/BarsContainer";
 
-const BottomListsContainerMainDivBox = styled.div``;
+const BottomListsContainerMainDivBox = styled.div`
+  width: 50%;
+  display: flex;
+  flex-flow: wrap;
+  justify-content: space-around;
+`;
 
-const BottomListsContainer = ({ type }) => {
-  const data = [
-    {
-      id: "CLT",
-      label: "CLT",
-      value: 58820,
-      SumValue: 67686,
-      color: "#8BC34A",
-    },
-    {
-      id: "MBT",
-      label: "MBT",
-      value: 3000,
-      SumValue: 67686,
-      color: "#2196F3",
-    },
-    {
-      id: "Storage",
-      label: "Storage",
-      value: 1385,
-      SumValue: 67686,
-      color: "#F44336",
-    },
-    {
-      id: "DC/Module",
-      label: "DC/Module",
-      value: 1176,
-      SumValue: 67686,
-      color: "#FF9800",
-    },
-  ];
+const BottomListsContainer = ({ type, data }) => {
   const typeRendering = () => {
     switch (type) {
       case "Donuts":
-        return <DonutsContainer data={data}></DonutsContainer>;
+        return (
+          <DonutsContainer
+            data={data
+              .filter((item) => item.value !== 0)
+              .sort((a, b) => b.value - a.value)}
+          ></DonutsContainer>
+        );
       case "Bars":
-        return <BarsContainer></BarsContainer>;
+        return <BarsContainer data={data}></BarsContainer>;
       default:
         return <div></div>;
     }

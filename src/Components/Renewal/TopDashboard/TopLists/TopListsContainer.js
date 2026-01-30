@@ -7,8 +7,8 @@ import PartCommonality from "./PartCommonality/PartCommonality";
 
 const TopListsContainerMainDivBox = styled.div`
   border: 1px solid darkgray;
-  width: 23%;
-  min-width: 460px;
+  width: 45%;
+  /* min-width: 460px; */
   height: 200px;
   background-color: #fff;
   border-radius: 10px;
@@ -16,17 +16,17 @@ const TopListsContainerMainDivBox = styled.div`
   margin-bottom: 30px;
 `;
 
-const TopListsContainer = ({ type }) => {
+const TopListsContainer = ({ type, data }) => {
   const typeRendering = () => {
     switch (type) {
       case "AnnualRevenue":
-        return <AnnualRevenue></AnnualRevenue>;
-      case "CompletedOrders":
-        return <CompletedOrders></CompletedOrders>;
+        return <AnnualRevenue data={data}></AnnualRevenue>;
+      case "WorkOrders":
+        return <CompletedOrders data={data}></CompletedOrders>;
       case "AverageRatio":
-        return <AverageRatio></AverageRatio>;
+        return <AverageRatio data={data}></AverageRatio>;
       case "PartCommonality":
-        return <PartCommonality></PartCommonality>;
+        return <PartCommonality data={data}></PartCommonality>;
       default:
         return <div></div>;
     }

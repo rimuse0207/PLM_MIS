@@ -1,7 +1,13 @@
 import { ResponsivePie } from "@nivo/pie";
 import React from "react";
+import { diviceNumber } from "../../../RenewalMainPage";
+import { useSelector } from "react-redux";
+import { ColorArray } from "../../BottomDashboardMainPage";
 
 const DonutsGraph = ({ data }) => {
+  const Select_Date_State = useSelector(
+    (state) => state.Select_Date_Reducer_State.Select_Date_State,
+  );
   const CenteredMetric = ({ dataWithArc, centerX, centerY }) => {
     const total = dataWithArc.reduce((sum, d) => sum + d.value, 0);
 
@@ -20,20 +26,14 @@ const DonutsGraph = ({ data }) => {
           fontWeight="600"
           color="black"
         >
-          FY25
+          FY{Select_Date_State.value.slice(2, 4)}
         </tspan>
         <tspan x={centerX} dy="1.4em" fontSize="24" fontWeight="700">
-          Orders : {total.toLocaleString()}
+          Orders : {Math.round(total / diviceNumber).toLocaleString("ko-KR")}
         </tspan>
       </text>
     );
   };
-  const COLORS = [
-    "#8BC34A", // 연두
-    "#2196F3", // 파랑
-    "#F44336", // 빨강
-    "#FF9800", // 주황
-  ];
 
   return (
     <div style={{ width: "100%", height: "95%" }}>
@@ -50,7 +50,7 @@ const DonutsGraph = ({ data }) => {
           "legends",
           CenteredMetric,
         ]}
-        margin={{ top: 20, right: 80, bottom: 120, left: 80 }}
+        margin={{ top: 50, right: 50, bottom: 100, left: 50 }}
         padAngle={0.6}
         cornerRadius={2}
         activeOuterRadiusOffset={8}
@@ -84,7 +84,23 @@ const DonutsGraph = ({ data }) => {
           const percent = ((d.value / total) * 100).toFixed(1);
           return `${percent}%`;
         }}
-        colors={COLORS}
+        colors={ColorArray}
+        tooltip={({ datum }) => (
+          <div
+            style={{
+              padding: "6px 10px",
+              background: "#fff",
+              border: "1px solid #ddd",
+              borderRadius: 4,
+              fontSize: 14,
+              fontWeight: 600,
+            }}
+          >
+            <span style={{ color: datum.color }}>{datum.id}</span>
+            <br />
+            {datum.value.toLocaleString("ko-KR")}
+          </div>
+        )}
       />
     </div>
   );

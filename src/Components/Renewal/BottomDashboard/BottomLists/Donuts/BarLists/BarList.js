@@ -1,12 +1,14 @@
 import React from "react";
 import { CompletedOrdersMainDivBox } from "../../../../TopDashboard/TopLists/CompletedOrders/CompletedOrders";
 import styled from "styled-components";
+import { ColorArray } from "../../../BottomDashboardMainPage";
+import { diviceNumber } from "../../../../RenewalMainPage";
 
 const BarListMainDivBox = styled.div`
   width: 80%;
   .BackgroundContainer {
     position: relative;
-    height: 50px;
+    height: 40px;
     margin-top: 20px;
     margin-bottom: 20px;
     background-color: lightgray;
@@ -39,20 +41,22 @@ const BarListMainDivBox = styled.div`
   }
 `;
 
-const BarList = ({ list }) => {
+const BarList = ({ list, ColorNumber }) => {
   return (
     <BarListMainDivBox>
       <div className="BackgroundContainer">
         <div
           className="ActualContainer"
           style={{
-            backgroundColor: list.color,
+            backgroundColor: ColorArray[ColorNumber],
             width: `${Number((list.value / list.SumValue) * 100).toFixed(0)}%`,
           }}
         ></div>
         <div className="TextContainer">
           <div>{list.label}</div>
-          <div>{list.value}</div>
+          <div>
+            {Math.round(list.value / diviceNumber).toLocaleString("ko-KR")}
+          </div>
         </div>
       </div>
     </BarListMainDivBox>

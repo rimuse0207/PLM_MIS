@@ -16,7 +16,6 @@ export const CompletedOrdersMainDivBox = styled.div`
       position: absolute;
       top: 0px;
       right: 0px;
-      /* height: 30px; */
       width: 95%;
       background-color: orange;
       line-height: 30px;
@@ -27,22 +26,34 @@ export const CompletedOrdersMainDivBox = styled.div`
   }
 `;
 
-const CompletedOrders = () => {
+const CompletedOrders = ({ data }) => {
   return (
     <AnnualRevenueMainDivBox>
       <div className="MainContainer">
         <div className="Title">
-          <h4>Completed Orders</h4>
+          <h4>Work Orders CNT</h4>
         </div>
         <div className="MainContent">
-          <h2>95%</h2>
-        </div>
-
-        <CompletedOrdersMainDivBox>
-          <div className="BackgroundContainer">
-            <div className="ActualContainer">19/20</div>
+          <div className="WorkOrderContainer">
+            <table>
+              <tbody>
+                <tr>
+                  <td style={{ paddingLeft: "15px" }}>EQP</td>
+                  <td style={{ paddingLeft: "10px" }}>
+                    {data?.equipmentCount?.length}
+                  </td>
+                </tr>
+                <tr>
+                  <td style={{ paddingLeft: "15px" }}>BRD</td>
+                  <td style={{ paddingLeft: "10px" }}>
+                    {data?.boardCount?.length}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <h2>{data?.equipmentCount?.length + data?.boardCount?.length}</h2>
           </div>
-        </CompletedOrdersMainDivBox>
+        </div>
       </div>
     </AnnualRevenueMainDivBox>
   );

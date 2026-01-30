@@ -9,14 +9,7 @@ const PartCommonality = () => {
           <h4>Part Commonality Rate</h4>
         </div>
         <div className="MainContent">
-          <h2>25%</h2>
-        </div>
-        <div className="subContent">
-          <span className="colorChangeContent" style={{ color: "red" }}>
-            {" "}
-            + 2%p{" "}
-          </span>
-          <sapn className="noColorChangeContent">YoY</sapn>
+          <h2>-</h2>
         </div>
       </div>
     </AnnualRevenueMainDivBox>

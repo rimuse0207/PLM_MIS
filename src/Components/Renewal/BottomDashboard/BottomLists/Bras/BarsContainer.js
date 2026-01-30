@@ -1,22 +1,132 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import styled from "styled-components";
 import BarGraph from "./BarGraph";
+import moment from "moment";
+import { SegmentLists } from "../../../TopDashboard/TopLists/AverageRatio/AverageRatio";
+import MCBarGraph from "./MCBarGraph";
 
-const BarsContainerMainDivBox = styled.div`
+export const BarsContainerMainDivBox = styled.div`
   height: 100%;
-  width: 40%;
-  min-width: 800px;
-  height: calc(100vh - 350px);
+  width: 95%;
+  /* min-width: 800px; */
+  height: calc(100vh - 450px);
   background-color: #fff;
   border-radius: 10px;
   border: 1px solid darkgray;
   padding: 10px;
+
+  select {
+    height: 40px;
+    padding-left: 10px;
+    font-weight: 600;
+  }
 `;
 
-const BarsContainer = () => {
+const BarsContainer = ({ data }) => {
+  const [SelectBarTitle, setSelectBarTitle] = useState("SellingPriceTop5");
+  const [SelectBarSegment, setSelectBarSegment] = useState("all");
+
+  const filteringData = (selectData) => {
+    switch (SelectBarTitle) {
+      case "SellingPriceTop5": {
+        return [...selectData]
+          .filter((item) => item.EXPC_SEL_PRICE != null)
+          .sort((a, b) => b.EXPC_SEL_PRICE - a.EXPC_SEL_PRICE)
+          .slice(0, 5);
+      }
+      case "LatestOrders5": {
+        return [...selectData]
+          .filter((item) => item.ProductCreactDate)
+          .sort(
+            (a, b) =>
+              moment(b.ProductCreactDate).valueOf() -
+              moment(a.ProductCreactDate).valueOf(),
+          )
+          .slice(0, 5);
+      }
+      case "MCRatioTop5": {
+        return [...selectData]
+          .filter((item) => item.MCRate != null)
+          .sort((a, b) => b.MCRate - a.MCRate)
+          .slice(0, 5);
+      }
+      case "MCRatioBottom5": {
+        return [...selectData]
+          .filter((item) => item.MCRate != null)
+          .sort((a, b) => a.MCRate - b.MCRate)
+          .slice(0, 5);
+      }
+      default:
+        return "";
+    }
+  };
+
+  const SegmentfilteredData = useMemo(() => {
+    if (SelectBarSegment === "all") return data;
+    return data.filter((item) => item.Segment === SelectBarSegment);
+  }, [data, SelectBarSegment]);
+
+  const MakingAverage = (MCData) => {
+    if (!MCData.length) return 0;
+    return (
+      Math.round(
+        MCData.reduce((sum, item) => sum + item.MCRate, 0) / MCData.length,
+      ) || 0
+    );
+  };
+
+  const MakingMCGraphData = useMemo(() => {
+    return SegmentLists.map((list) => {
+      return {
+        ...list,
+        MCRate: MakingAverage(
+          data.filter((item) => item.Segment === list.code),
+        ),
+      };
+    });
+  }, [data, SelectBarSegment]);
+
   return (
     <BarsContainerMainDivBox>
-      <BarGraph></BarGraph>
+      <div>
+        <select
+          style={{ width: "300px" }}
+          value={SelectBarTitle}
+          onChange={(e) => setSelectBarTitle(e.target.value)}
+        >
+          <option value="SellingPriceTop5">Selling Price Top 5</option>
+          <option value="AverageMCRatioBySegment">
+            Average MC Ratio By Segment{" "}
+          </option>
+          <option value="LatestOrders5">Latest Orders 5</option>
+          <option value="MCRatioTop5">MC Ratio Top 5</option>
+          <option value="MCRatioBottom5">MC Ratio Bottom 5</option>
+        </select>
+
+        {SelectBarTitle !== "AverageMCRatioBySegment" ? (
+          <select
+            style={{ marginLeft: "20px" }}
+            value={SelectBarSegment}
+            onChange={(e) => setSelectBarSegment(e.target.value)}
+          >
+            <option value="all">Total</option>
+            {SegmentLists.map((list) => {
+              return (
+                <option value={list.code} key={list.code}>
+                  {list.label}
+                </option>
+              );
+            })}
+          </select>
+        ) : (
+          <></>
+        )}
+      </div>
+      {SelectBarTitle === "AverageMCRatioBySegment" ? (
+        <MCBarGraph data={MakingMCGraphData} />
+      ) : (
+        <BarGraph data={filteringData(SegmentfilteredData)}></BarGraph>
+      )}
     </BarsContainerMainDivBox>
   );
 };

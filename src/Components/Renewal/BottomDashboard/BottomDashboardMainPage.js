@@ -8,11 +8,25 @@ const BottomDashboardMainPageMainDivBox = styled.div`
   justify-content: space-around;
 `;
 
-const BottomDashboardMainPage = () => {
+export const ColorArray = [
+  "#00c800", // 연두
+  "#2196F3", // 파랑
+  "#F44336", // 빨강
+  "#FF9800", // 주황
+];
+
+const BottomDashboardMainPage = ({ bottomData }) => {
   return (
     <BottomDashboardMainPageMainDivBox>
-      <BottomListsContainer type={"Donuts"}></BottomListsContainer>
-      <BottomListsContainer type={"Bars"}></BottomListsContainer>
+      {bottomData.map((list) => {
+        return (
+          <BottomListsContainer
+            key={list.type}
+            type={list.type}
+            data={list.data}
+          ></BottomListsContainer>
+        );
+      })}
     </BottomDashboardMainPageMainDivBox>
   );
 };

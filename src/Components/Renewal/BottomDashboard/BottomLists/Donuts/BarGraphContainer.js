@@ -10,7 +10,7 @@ const BarGraphContainerMainDivBox = styled.div`
 
   .BarsContainers {
     width: 100%;
-    height: 80%;
+    height: 70%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -22,8 +22,8 @@ const BarGraphContainer = ({ data }) => {
   return (
     <BarGraphContainerMainDivBox>
       <div className="BarsContainers">
-        {data.map((list) => {
-          return <BarList list={list}></BarList>;
+        {data.map((list, j) => {
+          return <BarList list={list} ColorNumber={j}></BarList>;
         })}
       </div>
     </BarGraphContainerMainDivBox>
