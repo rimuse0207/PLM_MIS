@@ -70,6 +70,17 @@ export const AnnualRevenueMainDivBox = styled.div`
         transform: rotate(180deg);
       }
     }
+    .RateDown {
+      background-color: #e5efff;
+      color: blue;
+      svg {
+        transform: rotate(180deg);
+      }
+    }
+    .RateUp {
+      background-color: #f443;
+      color: red;
+    }
   }
   .subContent {
     width: 100%;

@@ -45,12 +45,14 @@ const RenewalMainPage = () => {
 
   const Getting_Axios_Data = async () => {
     setLoading(true);
+
     const GettingData = await API_Request_Get_Axios(
       "/Dashboard/EIS_RenewalData_For_Dashboards",
       {
         Select_Date_State: Select_Date_State.value,
       },
     );
+
     if (GettingData.status) {
       setTopData(GettingData.data.TopData);
       setBottomData(GettingData.data.BottomData);
