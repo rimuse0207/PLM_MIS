@@ -5,7 +5,7 @@ import BottomListsContainer from "./BottomLists/BottomListsContainer";
 const BottomDashboardMainPageMainDivBox = styled.div`
   display: flex;
   flex-flow: wrap;
-  justify-content: space-around;
+  justify-content: space-evenly;
 `;
 
 export const ColorArray = [

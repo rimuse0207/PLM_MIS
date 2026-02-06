@@ -79,7 +79,9 @@ const AverageRatio = ({ data }) => {
             <div
               className={`UPDownData ${MakingAverage(filteredData.NowYear) - MakingAverage(filteredData.PreYear) > 0 ? "Down" : "Up"}`}
             >
-              <VscTriangleUp />
+              <div className="IconContainer">
+                <VscTriangleUp />
+              </div>
               <span>
                 {Math.abs(
                   MakingAverage(filteredData.NowYear) -

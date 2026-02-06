@@ -5,7 +5,7 @@ import { ColorArray } from "../../../BottomDashboardMainPage";
 import { diviceNumber } from "../../../../RenewalMainPage";
 
 const BarListMainDivBox = styled.div`
-  width: 80%;
+  width: 85%;
   .BackgroundContainer {
     position: relative;
     height: 40px;

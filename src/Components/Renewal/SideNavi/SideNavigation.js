@@ -19,8 +19,8 @@ const SideNavigation = () => {
     <SideNavigationMainDivBox>
       <ul>
         <li onClick={() => window.open("/ERP/Stock/Part")}>Inventory</li>
-        <li>A</li>
-        <li>B</li>
+        {/* <li>A</li>
+        <li>B</li> */}
       </ul>
     </SideNavigationMainDivBox>
   );

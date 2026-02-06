@@ -1,6 +1,7 @@
 import { ResponsiveBar } from "@nivo/bar";
 import moment from "moment";
 import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 export const BarGraphMainDivBox = styled.div`
@@ -16,14 +17,17 @@ export const ChartWrapper = styled.div`
 `;
 
 const BarGraph = ({ data }) => {
+  const Select_Date_State = useSelector(
+    (state) => state.Select_Date_Reducer_State.Select_Date_State,
+  );
   const LegendBarSymbol = ({ x, y, size, fill }) => {
     return (
       <rect
         x={x}
         y={y + size / 4}
-        width={size * 2.5} // 👈 길이
-        height={size / 2} // 👈 두께
-        rx={size / 4} // 👈 둥근 모서리
+        width={size * 2.5}
+        height={size / 2}
+        rx={size / 4}
         fill={fill}
       />
     );
@@ -31,7 +35,7 @@ const BarGraph = ({ data }) => {
 
   const chartData = data.map((d) => ({
     ...d,
-    Sell_Price_View: d.Sell_Price - d.MC_Price, // 👈 시각화용
+    Sell_Price_View: d.Sell_Price - d.MC_Price,
   }));
   const StackEndMarkerLayer = ({ bars }) => {
     const value1Bars = bars.filter((bar) => bar.data.id === "MC_Price");
@@ -39,18 +43,28 @@ const BarGraph = ({ data }) => {
     return (
       <g>
         {value1Bars.map((bar) => {
+          const { Sell_Price, MCRate } = bar.data.data;
           const centerX = bar.x + bar.width / 2;
           const y = bar.y;
 
           // bar 크기 기준 계산
           const totalWidth = bar.width * 1;
-          const sideWidth = totalWidth * 0.065;
-          const middleWidth = totalWidth * 0.88;
+          const sideWidth = 3;
+          const middleWidth = totalWidth - 6;
 
-          const sideHeight = 5;
-          const middleHeight = 4;
+          const sideHeight = 13;
+          const middleHeight = 3;
 
           const startX = centerX - totalWidth / 2;
+          // ⭐ 조건: 판가가 Y축 최대값보다 1/5 이상 낮은가?
+          const showAbove =
+            Sell_Price <=
+            Math.max(...chartData.map((d) => d.MC_Price + d.Sell_Price_View)) *
+              1.1 *
+              0.8;
+
+          // ⭐ 위치 결정
+          const textY = showAbove ? y - 10 : y + 25;
 
           return (
             <g key={bar.key}>
@@ -60,7 +74,7 @@ const BarGraph = ({ data }) => {
                 y={y - sideHeight / 2}
                 width={sideWidth}
                 height={sideHeight}
-                rx={1}
+                rx={0}
                 fill="#FFC400"
               />
 
@@ -70,7 +84,7 @@ const BarGraph = ({ data }) => {
                 y={y - middleHeight / 2}
                 width={middleWidth}
                 height={middleHeight}
-                rx={2}
+                rx={0}
                 fill="#FFC400"
               />
 
@@ -80,14 +94,15 @@ const BarGraph = ({ data }) => {
                 y={y - sideHeight / 2}
                 width={sideWidth}
                 height={sideHeight}
-                rx={2}
+                rx={0}
                 fill="#FFC400"
               />
 
               {/* 퍼센트 */}
               <text
                 x={centerX}
-                y={y + 25}
+                // y={y + 25}
+                y={textY}
                 textAnchor="middle"
                 fontSize={20}
                 fontWeight="bold"
@@ -124,7 +139,7 @@ const BarGraph = ({ data }) => {
           ]}
           colors={({ id }) => {
             if (id === "MC_Price") return "#0000ff"; // fallback
-            if (id === "Sell_Price_View") return "#e5efff"; // 연한 파랑 (단색)
+            if (id === "Sell_Price_View") return "rgb(0,0,255,0.6)"; // 연한 파랑 (단색)
             return "#ccc";
           }}
           maxValue={
@@ -186,17 +201,32 @@ const BarGraph = ({ data }) => {
                     dominantBaseline="middle"
                     style={{ fontSize: 12, fontWeight: "bold" }}
                   >
-                    {item?.Models} {`#${item?.CHNG_CONT?.split("#")[1]} `}
+                    {item?.Models}
                   </text>
-
-                  {/* 추가 항목 */}
                   <text
                     y={14}
                     textAnchor="middle"
                     dominantBaseline="middle"
                     style={{ fontSize: 11, fill: "#666" }}
                   >
-                    {moment(item?.ProductCreactDate).locale("en").format("MMM")}
+                    {`#${item?.CHNG_CONT?.split("#")[1]} `}
+                  </text>
+
+                  {/* 추가 항목 */}
+                  <text
+                    y={28}
+                    textAnchor="middle"
+                    dominantBaseline="middle"
+                    style={{ fontSize: 11, fill: "#666" }}
+                  >
+                    {moment(item?.ProductCreactDate).format("YYYY") ===
+                    Select_Date_State.value
+                      ? moment(item?.ProductCreactDate)
+                          .locale("en")
+                          .format("MMM")
+                      : moment(item?.ProductCreactDate)
+                          .locale("en")
+                          .format("YY-MMM")}
                   </text>
                 </g>
               );
@@ -207,12 +237,14 @@ const BarGraph = ({ data }) => {
               dataFrom: "custom",
               anchor: "bottom",
               direction: "row",
+              justify: false,
+              itemsSpacing: 0,
               translateY: 90,
               itemWidth: 160,
               itemHeight: 24,
-              itemsSpacing: 0,
 
               itemDirection: "left-to-right",
+
               symbolSize: 30,
               symbolSpacing: 60,
               symbolShape: LegendBarSymbol,

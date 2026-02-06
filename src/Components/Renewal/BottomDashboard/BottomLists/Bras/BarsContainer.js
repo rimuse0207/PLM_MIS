@@ -7,7 +7,7 @@ import MCBarGraph from "./MCBarGraph";
 
 export const BarsContainerMainDivBox = styled.div`
   height: 100%;
-  width: 95%;
+  width: 803px;
   /* min-width: 800px; */
   height: calc(100vh - 450px);
   background-color: #fff;
@@ -18,7 +18,8 @@ export const BarsContainerMainDivBox = styled.div`
   select {
     height: 40px;
     padding-left: 10px;
-    font-weight: 600;
+    font-weight: 400;
+    font-size: 21px;
   }
 `;
 
@@ -90,7 +91,7 @@ const BarsContainer = ({ data }) => {
     <BarsContainerMainDivBox>
       <div>
         <select
-          style={{ width: "300px" }}
+          style={{ width: "350px" }}
           value={SelectBarTitle}
           onChange={(e) => setSelectBarTitle(e.target.value)}
         >

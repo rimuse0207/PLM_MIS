@@ -14,23 +14,21 @@ const RenewalMainPageMainDivBox = styled.div`
   flex-flow: wrap;
   height: calc(100% - 80px);
   .NavLeft {
-    width: 200px;
+    width: 190px;
     height: calc(100vh - 80px);
     ul {
-      padding-left: 10px;
-      padding-right: 40px;
       li {
         margin-top: 10px;
         border-bottom: 1px solid gray;
         padding: 10px;
-        font-size: 1.4em;
+        font-size: 1em;
         color: gray;
         font-weight: bold;
       }
     }
   }
   .ContentRight {
-    width: calc(100% - 200px);
+    width: calc(100% - 190px);
     height: calc(100vh - 80px);
   }
 `;

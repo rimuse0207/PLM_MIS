@@ -21,41 +21,56 @@ export const AnnualRevenueMainDivBox = styled.div`
 
   .Title {
     width: 100%;
-    /* display: flex; */
+
     align-items: center;
     position: absolute;
     top: 10px;
     left: 15px;
-    font-size: 1.2em;
+
     select {
       margin-right: 15px;
-      width: 80px;
+      width: 120px;
       height: 30px;
       margin-left: 15px;
-      font-weight: bold;
+      /* font-weight: bold; */
+      font-size: 21px;
     }
     h4 {
       font-weight: 500;
-      font-size: 1.1em;
+      font-size: 21px;
     }
   }
   .MainContent {
     width: 100%;
     text-align: center;
-    font-size: 50px;
+    font-size: 40px;
     margin: 0px 10px;
     position: relative;
+    margin-top: 20px;
+
+    .IconContainer {
+      position: absolute;
+      top: 3px;
+      left: 10px;
+    }
+
     .UPDownData {
-      font-size: 18px;
+      font-size: 15px;
+
       position: absolute;
       top: 50%;
       right: 0px;
       transform: translate(0%, -50%);
 
-      width: 85px;
-
+      width: 80px;
+      height: 25px;
+      line-height: 25px;
       font-weight: bolder;
+      span {
+        padding-left: 20px;
+      }
       svg {
+        font-size: 1em;
         margin-right: 10px;
       }
     }
@@ -106,7 +121,7 @@ export const AnnualRevenueMainDivBox = styled.div`
           border-left: 3px solid lightgray;
           height: 10px;
           td {
-            font-size: 18px;
+            font-size: 15px;
             height: 10px;
             line-height: 10px;
             padding: 0;

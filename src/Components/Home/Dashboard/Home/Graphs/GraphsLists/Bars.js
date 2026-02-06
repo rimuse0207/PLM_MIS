@@ -44,23 +44,7 @@ const Bars = ({ Bar_State, NowSelectGraphButton }) => {
         }
       }).map((d) => Math.max(d.MC, d.price))
     ) * 1.3;
-  const DicideTicks =
-    maxValue >= 5000
-      ? 1000
-      : maxValue >= 4000
-      ? 800
-      : maxValue >= 3000
-      ? 600
-      : maxValue >= 2000
-      ? 350
-      : maxValue >= 1000
-      ? 200
-      : maxValue >= 500
-      ? 100
-      : maxValue >= 100
-      ? 20
-      : 5;
-
+ 
   return (
     <BarsMainDivBox>
       <ResponsiveBar

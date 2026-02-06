@@ -50,7 +50,7 @@ const DonutsGraph = ({ data }) => {
           "legends",
           CenteredMetric,
         ]}
-        margin={{ top: 50, right: 50, bottom: 100, left: 50 }}
+        margin={{ top: 30, right: 50, bottom: 100, left: 50 }}
         padAngle={0.6}
         cornerRadius={2}
         activeOuterRadiusOffset={8}
@@ -82,6 +82,7 @@ const DonutsGraph = ({ data }) => {
         arcLabel={(d) => {
           const total = data.reduce((sum, v) => sum + v.value, 0);
           const percent = ((d.value / total) * 100).toFixed(1);
+          if (percent < 5) return "";
           return `${percent}%`;
         }}
         colors={ColorArray}

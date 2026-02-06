@@ -7,7 +7,7 @@ import PartCommonality from "./PartCommonality/PartCommonality";
 
 const TopListsContainerMainDivBox = styled.div`
   border: 1px solid darkgray;
-  width: 45%;
+  width: 380px;
   /* min-width: 460px; */
   height: 200px;
   background-color: #fff;

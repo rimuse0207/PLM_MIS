@@ -5,10 +5,9 @@ import DonutsContainer from "./Donuts/DonutsContainer";
 import BarsContainer from "./Bras/BarsContainer";
 
 const BottomListsContainerMainDivBox = styled.div`
-  width: 50%;
   display: flex;
   flex-flow: wrap;
-  justify-content: space-around;
+  justify-content: space-evenly;
 `;
 
 const BottomListsContainer = ({ type, data }) => {

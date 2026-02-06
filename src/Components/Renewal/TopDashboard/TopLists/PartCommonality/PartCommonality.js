@@ -30,7 +30,7 @@ const PartCommonality = ({ data }) => {
                 className="UPDownData"
                 style={{
                   background: "#efefef",
-                  padding: "4px",
+                  padding: "0px",
                   color: "gray",
                 }}
               >
@@ -40,7 +40,9 @@ const PartCommonality = ({ data }) => {
               <div
                 className={`UPDownData ${PercentCal > 0 ? "RateUp" : "RateDown"}`}
               >
-                <VscTriangleUp />
+                <div className="IconContainer">
+                  <VscTriangleUp />
+                </div>
                 <span>
                   {Math.abs(PercentCal) || "No Data"}
                   %p
