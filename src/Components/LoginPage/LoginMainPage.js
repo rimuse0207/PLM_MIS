@@ -156,10 +156,10 @@ const LoginMainPage = () => {
   const Navigate = useNavigate();
   const dispatch = useDispatch();
   const LoginInfo = useSelector(
-    (state) => state.Login_Info_Reducer_State.Login_Info
+    (state) => state.Login_Info_Reducer_State.Login_Info,
   );
   const NowPath = useSelector(
-    (state) => state.Now_Path_Reducer_State.Path_Info
+    (state) => state.Now_Path_Reducer_State.Path_Info,
   );
   const [PasswordChangeStatus, setPasswordChangeStatus] = useState(false);
   const [LoginDataInfo, setLoginDataInfo] = useState({
@@ -187,7 +187,7 @@ const LoginMainPage = () => {
   const before_Login_Checkig = async () => {
     try {
       const Login_Checking = await API_Request_Get_Axios(
-        "/Login/Token_Checking"
+        "/Login/Token_Checking",
       );
 
       if (Login_Checking.status) {
@@ -217,7 +217,7 @@ const LoginMainPage = () => {
     }
     const Login_Check = await API_Request_Post_Axios(
       "/Login/EIS_Login_Chceking",
-      LoginDataInfo
+      LoginDataInfo,
     );
 
     if (Login_Check.status) {
@@ -243,7 +243,7 @@ const LoginMainPage = () => {
         localStorage.setItem("userId", Login_Check.data.email);
         localStorage.setItem("id", Login_Check.data.email);
 
-        return Navigate("/Sub/EIS");
+        return Navigate("/Renewal");
       } else {
         setLoginDataInfo({ ...LoginDataInfo, password: "" });
         alert("아이디 또는 비밀번호가 틀립니다.");
@@ -285,7 +285,7 @@ const LoginMainPage = () => {
     } else {
       const Change_Password_Axios = await API_Request_Post_Axios(
         "/Login/Change_Password",
-        Change_password
+        Change_password,
       );
       if (Change_Password_Axios.status) {
         // 비밀번호 변경 성공

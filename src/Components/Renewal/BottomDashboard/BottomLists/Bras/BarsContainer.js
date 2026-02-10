@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { Fragment, useMemo, useState } from "react";
 import styled from "styled-components";
 import BarGraph from "./BarGraph";
 import moment from "moment";
@@ -20,6 +20,34 @@ export const BarsContainerMainDivBox = styled.div`
     padding-left: 10px;
     font-weight: 400;
     font-size: 21px;
+  }
+  .GraphsContainersCount {
+    position: relative;
+
+    .LegendContainer {
+      display: flex;
+      justify-content: center;
+      position: absolute;
+      bottom: 50px;
+      width: 100%;
+      .LegendBox {
+        display: flex;
+        flex-wrap: wrap;
+        width: 200px;
+        .LegendColors {
+          width: 80px;
+          /* background-color: #0000ff; */
+          height: 17px;
+          border-radius: 100px;
+          margin-right: 10px;
+        }
+        .LegendText {
+          width: 100px;
+          font-weight: 600;
+          text-align: start;
+        }
+      }
+    }
   }
 `;
 
@@ -123,11 +151,46 @@ const BarsContainer = ({ data }) => {
           <></>
         )}
       </div>
-      {SelectBarTitle === "AverageMCRatioBySegment" ? (
-        <MCBarGraph data={MakingMCGraphData} />
-      ) : (
-        <BarGraph data={filteringData(SegmentfilteredData)}></BarGraph>
-      )}
+      <div style={{ height: "100%" }} className="GraphsContainersCount">
+        {SelectBarTitle === "AverageMCRatioBySegment" ? (
+          <MCBarGraph data={MakingMCGraphData} />
+        ) : (
+          <Fragment>
+            <BarGraph data={filteringData(SegmentfilteredData)}></BarGraph>
+            <div>
+              <ul className="LegendContainer">
+                <li>
+                  <div className="LegendBox">
+                    <div
+                      className="LegendColors"
+                      style={{ backgroundColor: "rgb(0,0,255,0.6)" }}
+                    ></div>
+                    <div className="LegendText">Price</div>
+                  </div>
+                </li>
+                <li>
+                  <div className="LegendBox">
+                    <div
+                      className="LegendColors"
+                      style={{ backgroundColor: "#0000ff" }}
+                    ></div>
+                    <div className="LegendText">MC</div>
+                  </div>
+                </li>
+                <li>
+                  <div className="LegendBox">
+                    <div
+                      className="LegendColors"
+                      style={{ backgroundColor: "#FFC400" }}
+                    ></div>
+                    <div className="LegendText">MC Ratio (%)</div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </Fragment>
+        )}
+      </div>
     </BarsContainerMainDivBox>
   );
 };

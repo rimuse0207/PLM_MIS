@@ -232,29 +232,29 @@ const BarGraph = ({ data }) => {
               );
             },
           }}
-          legends={[
-            {
-              dataFrom: "custom",
-              anchor: "bottom",
-              direction: "row",
-              justify: false,
-              itemsSpacing: 0,
-              translateY: 90,
-              itemWidth: 160,
-              itemHeight: 24,
+          // legends={[
+          //   {
+          //     dataFrom: "custom",
+          //     anchor: "bottom",
+          //     direction: "row",
+          //     justify: false,
+          //     itemsSpacing: 0,
+          //     translateY: 90,
+          //     itemWidth: 160,
+          //     itemHeight: 24,
 
-              itemDirection: "left-to-right",
+          //     itemDirection: "left-to-right",
 
-              symbolSize: 30,
-              symbolSpacing: 60,
-              symbolShape: LegendBarSymbol,
-              data: [
-                { id: "Sell_Price_View", label: "Price", color: "#e5efff" },
-                { id: "MC_Price", label: "MC", color: "#0000ff" },
-                { id: "MC_Ratio", label: "MC Ratio (%)", color: "#FFC400" },
-              ],
-            },
-          ]}
+          //     symbolSize: 30,
+          //     symbolSpacing: 60,
+          //     symbolShape: LegendBarSymbol,
+          //     data: [
+          //       { id: "Sell_Price_View", label: "Price", color: "#e5efff" },
+          //       { id: "MC_Price", label: "MC", color: "#0000ff" },
+          //       { id: "MC_Ratio", label: "MC Ratio (%)", color: "#FFC400" },
+          //     ],
+          //   },
+          // ]}
           theme={{
             legends: {
               text: {
