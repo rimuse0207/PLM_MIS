@@ -50,6 +50,7 @@ const DonutsGraph = ({ data }) => {
           "legends",
           CenteredMetric,
         ]}
+        colors={(datum) => datum.data.color}
         margin={{ top: 30, right: 50, bottom: 100, left: 50 }}
         padAngle={0.6}
         cornerRadius={2}
@@ -74,7 +75,7 @@ const DonutsGraph = ({ data }) => {
             anchor: "bottom",
             direction: "row",
             translateY: 56,
-            itemWidth: 100,
+            itemWidth: 90,
             itemHeight: 18,
             symbolShape: "circle",
           },
@@ -85,7 +86,6 @@ const DonutsGraph = ({ data }) => {
           if (percent < 5) return "";
           return `${percent}%`;
         }}
-        colors={ColorArray}
         tooltip={({ datum }) => (
           <div
             style={{

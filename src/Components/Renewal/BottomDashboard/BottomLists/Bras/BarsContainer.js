@@ -163,7 +163,7 @@ const BarsContainer = ({ data }) => {
                   <div className="LegendBox">
                     <div
                       className="LegendColors"
-                      style={{ backgroundColor: "rgb(0,0,255,0.6)" }}
+                      style={{ backgroundColor: "#ddddff" }}
                     ></div>
                     <div className="LegendText">Price</div>
                   </div>

@@ -16,9 +16,7 @@ const BottomListsContainer = ({ type, data }) => {
       case "Donuts":
         return (
           <DonutsContainer
-            data={data
-              .filter((item) => item.value !== 0)
-              .sort((a, b) => b.value - a.value)}
+            data={data.sort((a, b) => b.value - a.value)}
           ></DonutsContainer>
         );
       case "Bars":

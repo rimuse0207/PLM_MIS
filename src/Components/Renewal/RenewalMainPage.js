@@ -13,6 +13,7 @@ const RenewalMainPageMainDivBox = styled.div`
   display: flex;
   flex-flow: wrap;
   height: calc(100% - 80px);
+  width: 1920px;
   .NavLeft {
     width: 190px;
     height: calc(100vh - 80px);

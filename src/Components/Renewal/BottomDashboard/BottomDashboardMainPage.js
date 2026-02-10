@@ -9,10 +9,11 @@ const BottomDashboardMainPageMainDivBox = styled.div`
 `;
 
 export const ColorArray = [
-  "#00c800", // 연두
-  "#2196F3", // 파랑
-  "#F44336", // 빨강
-  "#FF9800", // 주황
+  "#00c800",
+  "#0066ff",
+  "#ff0000",
+  "#ffc000",
+  "#6600cc",
 ];
 
 const BottomDashboardMainPage = ({ bottomData }) => {

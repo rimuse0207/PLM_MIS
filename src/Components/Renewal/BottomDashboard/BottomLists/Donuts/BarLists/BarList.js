@@ -48,7 +48,7 @@ const BarList = ({ list, ColorNumber }) => {
         <div
           className="ActualContainer"
           style={{
-            backgroundColor: ColorArray[ColorNumber],
+            backgroundColor: list.color,
             width: `${Number((list.value / list.SumValue) * 100).toFixed(0)}%`,
           }}
         ></div>

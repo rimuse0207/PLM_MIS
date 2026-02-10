@@ -7,26 +7,31 @@ export const SegmentLists = [
     id: "CLT",
     label: "CLT",
     code: "CLT",
+    color: "#00c800",
   },
   {
     id: "MBT",
     label: "MBT",
     code: "MBT",
+    color: "#0066ff",
   },
   {
     id: "Storage",
     label: "Storage",
     code: "Storage",
+    color: "#ff0000",
   },
   {
     id: "DC/Module",
     label: "DC/Module",
     code: "Module",
+    color: "#ffc000",
   },
   {
     id: "SoC",
     label: "SoC",
     code: "SOC",
+    color: "#6600cc",
   },
 ];
 

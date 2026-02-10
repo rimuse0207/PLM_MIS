@@ -139,7 +139,7 @@ const BarGraph = ({ data }) => {
           ]}
           colors={({ id }) => {
             if (id === "MC_Price") return "#0000ff"; // fallback
-            if (id === "Sell_Price_View") return "rgb(0,0,255,0.6)"; // 연한 파랑 (단색)
+            if (id === "Sell_Price_View") return "#ddddff"; // 연한 파랑 (단색)
             return "#ccc";
           }}
           maxValue={

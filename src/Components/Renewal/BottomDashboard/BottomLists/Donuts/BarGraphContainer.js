@@ -28,7 +28,7 @@ const BarGraphContainer = ({ data }) => {
         <div className="BarsContainers">
           {data.map((list, j) => {
             return (
-              <BarList key={list.value} list={list} ColorNumber={j}></BarList>
+              <BarList key={list.code} list={list} ColorNumber={j}></BarList>
             );
           })}
         </div>

@@ -192,7 +192,7 @@ const LoginMainPage = () => {
 
       if (Login_Checking.status) {
         // Token이 살아 있어, Home으로 이동
-        return Navigate("/Sub/EIS");
+        return Navigate("/Renewal");
       } else {
         // Token이 없음
         // localStorage.removeItem('Token');
