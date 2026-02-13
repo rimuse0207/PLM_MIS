@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import BottomListsContainer from "./BottomLists/BottomListsContainer";
 
-const BottomDashboardMainPageMainDivBox = styled.div`
+export const BottomDashboardMainPageMainDivBox = styled.div`
   display: flex;
   flex-flow: wrap;
   justify-content: space-evenly;

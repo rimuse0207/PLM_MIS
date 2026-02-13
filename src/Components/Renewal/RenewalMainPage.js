@@ -9,7 +9,7 @@ import { API_Request_Get_Axios, Request_Get_Axios } from "../../API";
 import { useSelector } from "react-redux";
 import Loader from "../../Loader/Loader";
 
-const RenewalMainPageMainDivBox = styled.div`
+export const RenewalMainPageMainDivBox = styled.div`
   display: flex;
   flex-flow: wrap;
   height: calc(100% - 80px);
@@ -29,8 +29,9 @@ const RenewalMainPageMainDivBox = styled.div`
     }
   }
   .ContentRight {
-    width: calc(100% - 190px);
+    width: 100%;
     height: calc(100vh - 80px);
+    background-color: #f2f2f2;
   }
 `;
 export const diviceNumber = 1000000;
@@ -69,9 +70,6 @@ const RenewalMainPage = () => {
       <NavigationMainPage></NavigationMainPage>
 
       <RenewalMainPageMainDivBox>
-        <div className="NavLeft">
-          <SideNavigation></SideNavigation>
-        </div>
         <div className="ContentRight">
           <TopDashboardMainPage topData={topData}></TopDashboardMainPage>
           <BottomDashboardMainPage

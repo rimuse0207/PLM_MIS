@@ -18,7 +18,10 @@ const SideNavigation = () => {
   return (
     <SideNavigationMainDivBox>
       <ul>
-        <li onClick={() => window.open("/ERP/Stock/Part")}>Inventory</li>
+        <li onClick={() => window.open("/Renewal")}>EIS</li>
+        <li onClick={() => window.open("/Renewal/ERP/Stock/Part")}>
+          Inventory
+        </li>
         {/* <li>A</li>
         <li>B</li> */}
       </ul>

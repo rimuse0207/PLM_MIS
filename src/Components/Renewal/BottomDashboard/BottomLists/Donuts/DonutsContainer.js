@@ -7,12 +7,12 @@ import BarGraphContainer from "./BarGraphContainer";
 
 const DonutsContainerMainDivBox = styled.div`
   height: 100%;
-  width: 803px;
+  width: 840px;
   /* min-width: 1100px; */
   height: calc(100vh - 450px);
   background-color: #fff;
   border-radius: 10px;
-  border: 1px solid darkgray;
+  border: 0.5px solid #e7e6e6;
   position: relative;
   .MilliContainer {
     position: absolute;

@@ -2,7 +2,7 @@ import React from "react";
 import TopListsContainer from "./TopLists/TopListsContainer";
 import styled from "styled-components";
 
-const TopDashboardMainPageMainDivBox = styled.div`
+export const TopDashboardMainPageMainDivBox = styled.div`
   margin-top: 40px;
   display: flex;
   flex-flow: wrap;

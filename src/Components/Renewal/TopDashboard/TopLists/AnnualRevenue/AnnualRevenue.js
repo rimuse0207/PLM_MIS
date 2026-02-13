@@ -146,7 +146,7 @@ const AnnualRevenue = ({ data }) => {
           <h2>
             {data[0]
               ? Math.round(
-                  data[0].sumSupplyPrice / diviceNumber,
+                  data[0]?.sumSupplyPrice / diviceNumber,
                 ).toLocaleString("ko-KR")
               : 0}
           </h2>

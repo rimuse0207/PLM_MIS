@@ -8,15 +8,17 @@ const BottomListsContainerMainDivBox = styled.div`
   display: flex;
   flex-flow: wrap;
   justify-content: space-evenly;
+  box-shadow: 2px 2px 5px 1px rgba(189, 215, 238, 0.6);
+  border-radius: 10px;
 `;
 
-const BottomListsContainer = ({ type, data }) => {
+const BottomListsContainer = ({ type, data = [] }) => {
   const typeRendering = () => {
     switch (type) {
       case "Donuts":
         return (
           <DonutsContainer
-            data={data.sort((a, b) => b.value - a.value)}
+            data={data?.sort((a, b) => b.value - a.value)}
           ></DonutsContainer>
         );
       case "Bars":

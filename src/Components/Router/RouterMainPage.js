@@ -22,6 +22,7 @@ import DetailMainPageSub from "../Home/DashboardCopy/Detail/DetailMainPage";
 
 import LoginMainPage from "../LoginPage/LoginMainPage";
 import RenewalMainPage from "../Renewal/RenewalMainPage";
+import ERPRenewalMainPage from "../ERPRenewal/ERPRenewalMainPage";
 
 const RouterMainPage = () => {
   const User_Info = useSelector(
@@ -64,9 +65,16 @@ const RouterMainPage = () => {
       withAuthorization: true,
       withAdminAuthorization: false,
     },
+
     {
       path: "/ERP/Stock/Part/Detail/Table",
       element: <StockDetailMainPage></StockDetailMainPage>,
+      withAuthorization: true,
+      withAdminAuthorization: false,
+    },
+    {
+      path: "/Renewal/ERP/Stock/Part",
+      element: <ERPRenewalMainPage></ERPRenewalMainPage>,
       withAuthorization: true,
       withAdminAuthorization: false,
     },

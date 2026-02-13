@@ -6,12 +6,14 @@ import { diviceNumber } from "../../../../RenewalMainPage";
 
 const BarListMainDivBox = styled.div`
   width: 85%;
+
   .BackgroundContainer {
     position: relative;
     height: 40px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    background-color: lightgray;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: #f2f2f2;
+    border-radius: 5px;
     .ActualContainer {
       position: absolute;
       right: 0px;
@@ -19,6 +21,8 @@ const BarListMainDivBox = styled.div`
       height: 100%;
       background-color: green;
       width: 50%;
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
     }
     .TextContainer {
       display: flex;

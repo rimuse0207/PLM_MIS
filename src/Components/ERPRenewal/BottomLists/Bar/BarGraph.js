@@ -1,29 +1,82 @@
-import React from "react";
 import { ResponsiveBar } from "@nivo/bar";
-import styled from "styled-components";
-import { BarsMainDivBox } from "../../../Dashboard/Home/Graphs/GraphsLists/Bars";
+import React from "react";
+import { BarsMainDivBox } from "../../../Home/Dashboard/Home/Graphs/GraphsLists/Bars";
 import moment from "moment";
 
-const StockBarGraph = ({ Stock_Bar_State }) => {
-  // 시각화 전용 데이터 가공 (원본은 그대로)
-  console.log(Stock_Bar_State);
-  const adjustedData = Stock_Bar_State.map((item) => ({
-    ...item,
-    profit: item.price,
-  }));
-  const maxValue =
-    Math.max(...Stock_Bar_State.map((d) => Math.max(d.price))) * 1.3;
+const BarGraph = () => {
+  const data = [
+    {
+      dates: "202601",
+      profit: 174,
+      price: 174,
+    },
+    {
+      dates: "202602",
+      profit: 274,
+      price: 274,
+    },
+    {
+      dates: "202603",
+      profit: 374,
+      price: 374,
+    },
+    {
+      dates: "202604",
+      profit: 474,
+      price: 474,
+    },
+    {
+      dates: "202605",
+      profit: 374,
+      price: 374,
+    },
+    {
+      dates: "202606",
+      profit: 274,
+      price: 274,
+    },
+    {
+      dates: "202607",
+      profit: 174,
+      price: 174,
+    },
+    {
+      dates: "202608",
+      profit: 274,
+      price: 274,
+    },
+    {
+      dates: "202609",
+      profit: 374,
+      price: 374,
+    },
+    {
+      dates: "202610",
+      profit: 474,
+      price: 474,
+    },
+    {
+      dates: "202611",
+      profit: 374,
+      price: 374,
+    },
+    {
+      dates: "202612",
+      profit: 274,
+      price: 274,
+    },
+  ];
   return (
-    <BarsMainDivBox style={{ height: "90%" }}>
+    <BarsMainDivBox style={{ height: "100%" }}>
       <ResponsiveBar
-        data={adjustedData}
-        maxValue={maxValue}
+        data={data}
+        maxValue={400}
         keys={["profit"]}
         indexBy="dates"
-        margin={{ top: 50, right: 0, bottom: 60, left: 0 }}
+        margin={{ top: 200, right: 0, bottom: 40, left: 0 }}
         padding={0.7}
         groupMode="stacked"
-        colors={["rgb(0,202,255)", "gray"]}
+        colors={["rgb(50, 85, 235)", "gray"]}
         colorBy="id"
         theme={{
           labels: { text: { fontSize: "2vmin", fill: "#000000" } },
@@ -51,24 +104,6 @@ const StockBarGraph = ({ Stock_Bar_State }) => {
         ]}
         enableGridY={false}
         enableLabel={false}
-        // legends={[
-        //     {
-        //         dataFrom: 'keys',
-        //         anchor: 'top-right',
-        //         direction: 'row',
-        //         translateX: 0,
-        //         translateY: -50,
-        //         itemWidth: 100,
-        //         itemHeight: 20,
-        //         itemsSpacing: 2,
-        //         symbolSize: 20,
-        //         itemDirection: 'left-to-right',
-        //         data: [
-        //             // { id: 'MC', label: 'MC', color: 'skyblue' },
-        //             { id: 'profit', label: '단가', color: 'skyblue' },
-        //         ],
-        //     },
-        // ]}
         layers={[
           "grid",
           "axes",
@@ -125,5 +160,4 @@ const StockBarGraph = ({ Stock_Bar_State }) => {
     </BarsMainDivBox>
   );
 };
-
-export default StockBarGraph;
+export default BarGraph;

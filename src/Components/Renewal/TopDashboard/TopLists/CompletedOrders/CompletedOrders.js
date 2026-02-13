@@ -30,28 +30,13 @@ const CompletedOrders = ({ data }) => {
   return (
     <AnnualRevenueMainDivBox>
       <div className="MainContainer">
-        <div className="Title">
-          <h4>Work Orders CNT</h4>
+        <div className="Title krSuc">
+          <h4>Inventory Value</h4>
+          <div>(KRW Million)</div>
         </div>
         <div className="MainContent">
           <div className="WorkOrderContainer">
-            <table>
-              <tbody>
-                <tr>
-                  <td style={{ paddingLeft: "15px" }}>EQP</td>
-                  <td style={{ paddingLeft: "10px" }}>
-                    {data?.equipmentCount?.length}
-                  </td>
-                </tr>
-                <tr>
-                  <td style={{ paddingLeft: "15px" }}>BRD</td>
-                  <td style={{ paddingLeft: "10px" }}>
-                    {data?.boardCount?.length}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <h2>{data?.equipmentCount?.length + data?.boardCount?.length}</h2>
+            <h2>{data?.price?.toLocaleString()}</h2>
           </div>
         </div>
       </div>

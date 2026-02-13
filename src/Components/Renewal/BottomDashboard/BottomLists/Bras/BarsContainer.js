@@ -7,12 +7,12 @@ import MCBarGraph from "./MCBarGraph";
 
 export const BarsContainerMainDivBox = styled.div`
   height: 100%;
-  width: 803px;
+  width: 840px;
   /* min-width: 800px; */
   height: calc(100vh - 450px);
   background-color: #fff;
   border-radius: 10px;
-  border: 1px solid darkgray;
+
   padding: 10px;
 
   select {
@@ -33,18 +33,19 @@ export const BarsContainerMainDivBox = styled.div`
       .LegendBox {
         display: flex;
         flex-wrap: wrap;
-        width: 200px;
+        margin-right: 30px;
         .LegendColors {
-          width: 80px;
+          width: 50px;
           /* background-color: #0000ff; */
-          height: 17px;
+          height: 15px;
           border-radius: 100px;
           margin-right: 10px;
         }
         .LegendText {
-          width: 100px;
+          display: inline-block;
           font-weight: 600;
           text-align: start;
+          font-size: 15px;
         }
       }
     }

@@ -37,6 +37,7 @@ const BarGraph = ({ data }) => {
     ...d,
     Sell_Price_View: d.Sell_Price - d.MC_Price,
   }));
+
   const StackEndMarkerLayer = ({ bars }) => {
     const value1Bars = bars.filter((bar) => bar.data.id === "MC_Price");
 
@@ -56,15 +57,15 @@ const BarGraph = ({ data }) => {
           const middleHeight = 3;
 
           const startX = centerX - totalWidth / 2;
-          // ⭐ 조건: 판가가 Y축 최대값보다 1/5 이상 낮은가?
+          // 조건: 판가가 Y축 최대값보다 1/5 이상 낮은가?
           const showAbove =
             Sell_Price <=
             Math.max(...chartData.map((d) => d.MC_Price + d.Sell_Price_View)) *
               1.1 *
               0.8;
 
-          // ⭐ 위치 결정
-          const textY = showAbove ? y - 10 : y + 25;
+          //위치 결정
+          const textY = showAbove ? y - 30 : y + 25;
 
           return (
             <g key={bar.key}>
@@ -126,8 +127,8 @@ const BarGraph = ({ data }) => {
               id: "value1Gradient",
               type: "linearGradient",
               colors: [
-                { offset: 0, color: "#0000ff" }, // 👈 x축 쪽 (진한 파랑)
-                { offset: 30, color: "#0000ff" }, // 👈 위쪽 (연한 파랑)
+                { offset: 0, color: "#0000ff" },
+                { offset: 30, color: "#0000ff" },
               ],
             },
           ]}
@@ -151,8 +152,8 @@ const BarGraph = ({ data }) => {
           indexBy="EQ_NO"
           groupMode="stacked"
           margin={{ top: 20, right: 20, bottom: 100, left: 50 }}
-          padding={0.5}
-          layers={["grid", "axes", "bars", StackEndMarkerLayer, "legends"]}
+          padding={0.6}
+          layers={["axes", "bars", StackEndMarkerLayer, "legends"]}
           enableLabel={false}
           tooltip={({ id, value, data }) => {
             if (id === "Sell_Price_View") {
@@ -226,7 +227,7 @@ const BarGraph = ({ data }) => {
                           .format("MMM")
                       : moment(item?.ProductCreactDate)
                           .locale("en")
-                          .format("YY-MMM")}
+                          .format("YY MMM")}
                   </text>
                 </g>
               );
@@ -255,11 +256,28 @@ const BarGraph = ({ data }) => {
           //     ],
           //   },
           // ]}
+          axisLeft={{
+            tickSize: 5,
+            tickPadding: 5, // 숫자가 축에서 너무 붙지 않게 띄움
+            legendPosition: "middle",
+            legendOffset: -60, // 폰트가 커진 만큼 제목을 왼쪽으로 밀어줌
+            format: (value) => `${value.toLocaleString()}`,
+            tickValues: 5,
+          }}
           theme={{
-            legends: {
-              text: {
-                fontSize: 18,
-                fontWeight: 900,
+            axis: {
+              ticks: {
+                text: {
+                  fontSize: 15, // 글자 크기 (원하는 수치로 조절)
+                  fill: "#333333", // 글자 색상
+                  fontWeight: 600, // 글자 굵기 (선택 사항)
+                },
+              },
+              legend: {
+                text: {
+                  fontSize: 20, // 축 제목(Label) 크기
+                  fill: "#000000",
+                },
               },
             },
           }}
