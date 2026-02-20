@@ -2,17 +2,21 @@ import React from "react";
 import { ResponsiveBar } from "@nivo/bar";
 import { BarGraphMainDivBox, ChartWrapper } from "./BarGraph";
 
-const MCBarGraph = ({ data }) => {
+const MCBarGraph = ({ data, setSelectBarSegment, setSelectBarTitle }) => {
   return (
     <BarGraphMainDivBox>
       <ChartWrapper>
         <ResponsiveBar
+          onClick={(e) => {
+            setSelectBarSegment(e.indexValue);
+            setSelectBarTitle(e.indexValue);
+          }}
           defs={[
             {
               id: "yellowGradient",
               type: "linearGradient",
               colors: [
-                { offset: 0, color: "#FFF8E1" }, // 👇 아래 (진한 노랑)
+                { offset: 0, color: "#ffe89f" }, // 👇 아래 (진한 노랑)
                 { offset: 100, color: "#FFD54F" }, // 👆 위 (연한 노랑)
               ],
             },
@@ -35,7 +39,7 @@ const MCBarGraph = ({ data }) => {
             return "#ccc";
           }}
           colorBy="id"
-          isInteractive={false}
+          isInteractive={true}
           enableLabel={false}
           theme={{
             labels: { text: { fontSize: "0.8rem", fill: "#000000" } },

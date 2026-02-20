@@ -30,7 +30,7 @@ export const SegmentLists = [
   {
     id: "SoC",
     label: "SoC",
-    code: "SOC",
+    code: "SoC",
     color: "#6600cc",
   },
 ];
@@ -64,7 +64,7 @@ const AverageRatio = ({ data }) => {
       <div className="MainContainer">
         <div className="Title" style={{ display: "flex", flexFlow: "wrap" }}>
           <h4>Average MC Ratio</h4>
-          <select
+          {/* <select
             value={ChooseSelect}
             onChange={(data) => setChooseSelect(data.target.value)}
           >
@@ -76,7 +76,7 @@ const AverageRatio = ({ data }) => {
                 </option>
               );
             })}
-          </select>
+          </select> */}
         </div>
         <div className="MainContent">
           <h2>

@@ -17,18 +17,24 @@ const DonutsGraph = ({ data }) => {
         y={centerY}
         textAnchor="middle"
         dominantBaseline="central"
-        fill="#000"
+        fill="#4d4d4d"
       >
         <tspan
           x={centerX}
           dy="-0.6em"
           fontSize="24"
           fontWeight="600"
-          color="black"
+          color="#4d4d4d"
         >
           FY{Select_Date_State.value.slice(2, 4)}
         </tspan>
-        <tspan x={centerX} dy="1.4em" fontSize="24" fontWeight="700">
+        <tspan
+          x={centerX}
+          dy="1.4em"
+          fontSize="24"
+          fontWeight="700"
+          color="#4d4d4d"
+        >
           Orders : {Math.round(total / diviceNumber).toLocaleString("ko-KR")}
         </tspan>
       </text>

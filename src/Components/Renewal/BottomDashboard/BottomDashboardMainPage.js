@@ -6,6 +6,7 @@ export const BottomDashboardMainPageMainDivBox = styled.div`
   display: flex;
   flex-flow: wrap;
   justify-content: space-evenly;
+  color: #4d4d4d;
 `;
 
 export const ColorArray = [

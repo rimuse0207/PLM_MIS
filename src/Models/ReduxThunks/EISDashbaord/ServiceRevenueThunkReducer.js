@@ -27,9 +27,9 @@ export const Getting_Service_Revenue_Redux_Thunk = (Select_Date_State) => {
         "/Dashboard/EIS_ServiceRevenue_From_ERP",
         {
           Select_Date_State,
-        }
+        },
       ); // Axios API 호출
-      console.log(response);
+
       if (response.status)
         dispatch(ServiceRevenuefetchDataSuccess(response.data));
       // 성공 시 데이터 저장

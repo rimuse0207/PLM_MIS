@@ -5,6 +5,7 @@ export const AnnualRevenueMainDivBox = styled.div`
   height: 100%;
   padding: 0 10px;
   position: relative;
+  color: #4d4d4d;
   .MainContainer {
     display: flex;
     flex-flow: wrap;

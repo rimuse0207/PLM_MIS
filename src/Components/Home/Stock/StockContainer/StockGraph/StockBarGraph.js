@@ -6,7 +6,7 @@ import moment from "moment";
 
 const StockBarGraph = ({ Stock_Bar_State }) => {
   // 시각화 전용 데이터 가공 (원본은 그대로)
-  console.log(Stock_Bar_State);
+
   const adjustedData = Stock_Bar_State.map((item) => ({
     ...item,
     profit: item.price,

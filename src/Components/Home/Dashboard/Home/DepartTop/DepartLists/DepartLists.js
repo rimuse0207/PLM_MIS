@@ -48,7 +48,9 @@ const DepartListsMainDivBox = styled.div`
     right: 10px;
     top: 5px;
     font-weight: bolder;
-    font-size: 15spx;
+    font-size: 15px;
+    height: 20px;
+    overflow: hidden;
   }
   .Appear_Board_Data {
     position: absolute;
@@ -68,7 +70,7 @@ const DepartLists = ({ list, key }) => {
     const workbook = XLSX.utils.book_new();
 
     const filteredParts = list.Part_Price_Calcu.filter((part) =>
-      part.ERP_PART.startsWith("R")
+      part.ERP_PART.startsWith("R"),
     );
 
     if (filteredParts.length > 0) {
@@ -90,7 +92,7 @@ const DepartLists = ({ list, key }) => {
       XLSX.utils.book_append_sheet(
         workbook,
         worksheet2,
-        `ERP 외주 가공비 단가`
+        `ERP 외주 가공비 단가`,
       );
     }
 
@@ -100,7 +102,7 @@ const DepartLists = ({ list, key }) => {
         list.WO_TYPE === "B"
           ? `${list.FSC_CD}`
           : `${list.CHNG_CONT.split("#")[1]}`
-      }.xlsx`
+      }.xlsx`,
     );
   };
 
@@ -115,11 +117,11 @@ const DepartLists = ({ list, key }) => {
         {list.WO_TYPE === "B"
           ? `_${list.boardName}_${list.QTY}매 /${list?.ProductCreactDate?.slice(
               5,
-              7
+              7,
             )}월`
           : `#${list.CHNG_CONT.split("#")[1]} /${list?.ProductCreactDate?.slice(
               5,
-              7
+              7,
             )}월`}
       </div>
 
@@ -141,7 +143,7 @@ const DepartLists = ({ list, key }) => {
             <div>
               &#8361;{" "}
               {Number(CalculateMCPrice(list).toFixed(1)).toLocaleString(
-                "ko-KR"
+                "ko-KR",
               )}{" "}
             </div>
           </div>
@@ -158,7 +160,7 @@ const DepartLists = ({ list, key }) => {
             <div>
               &#8361;{" "}
               {Number(
-                (list.EXPC_SEL_PRICE / Million).toFixed(1)
+                (list.EXPC_SEL_PRICE / Million).toFixed(1),
               ).toLocaleString("ko-KR")}{" "}
             </div>
           </div>

@@ -7,105 +7,111 @@ import styled from "styled-components";
 export const BarGraphMainDivBox = styled.div`
   background-color: #fff;
   width: 100%;
-  height: 90%;
-  /* height: 500px; */
+  height: 88%;
+  display: flex; /* Y축 고정 배치 */
+  position: relative;
+`;
+
+const FixedYAxis = styled.div`
+  width: 70px;
+  height: 100%;
+  flex-shrink: 0;
+  background-color: #fff;
+  z-index: 2;
 `;
 
 export const ChartWrapper = styled.div`
-  width: 100%;
+  flex-grow: 1;
   height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  z-index: 1;
+
+  /* --- 스크롤바 커스텀 스타일 --- */
+  &::-webkit-scrollbar {
+    height: 10px; /* 스크롤바 두께 */
+  }
+  &::-webkit-scrollbar-track {
+    background: lightgray; /* 스크롤바 배경색 */
+    border-radius: 10px; /* 배경 양끝 둥글게 */
+    border: none;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #ddddff; /* 스크롤바 막대 색상 */
+    border-radius: 10px; /* 막대 양끝 둥글게 */
+    border: 1px solid #fff;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: #ccccff; /* 마우스 오버 시 색상 */
+  }
+`;
+
+export const InnerChartContainer = styled.div`
+  height: 100%;
+  width: ${(props) => props.width};
 `;
 
 const BarGraph = ({ data }) => {
   const Select_Date_State = useSelector(
     (state) => state.Select_Date_Reducer_State.Select_Date_State,
   );
-  const LegendBarSymbol = ({ x, y, size, fill }) => {
-    return (
-      <rect
-        x={x}
-        y={y + size / 4}
-        width={size * 2.5}
-        height={size / 2}
-        rx={size / 4}
-        fill={fill}
-      />
-    );
-  };
+
+  const MAX_VISIBLE_ITEMS = 7;
+  const ITEM_WIDTH = 120;
+  const dynamicWidth =
+    data.length > MAX_VISIBLE_ITEMS ? `${data.length * ITEM_WIDTH}px` : "100%";
 
   const chartData = data.map((d) => ({
     ...d,
     Sell_Price_View: d.Sell_Price - d.MC_Price,
   }));
 
+  // 높이 기준점 계산
+  const globalMaxValue =
+    Math.max(...chartData.map((d) => d.MC_Price + d.Sell_Price_View)) * 1.1;
+
+  // 공통 마진
+  const commonMargin = { top: 30, right: 70, bottom: 120, left: 0 };
+
   const StackEndMarkerLayer = ({ bars }) => {
     const value1Bars = bars.filter((bar) => bar.data.id === "MC_Price");
-
     return (
       <g>
         {value1Bars.map((bar) => {
-          const { Sell_Price, MCRate } = bar.data.data;
+          const { Sell_Price } = bar.data.data;
           const centerX = bar.x + bar.width / 2;
           const y = bar.y;
-
-          // bar 크기 기준 계산
-          const totalWidth = bar.width * 1;
-          const sideWidth = 3;
-          const middleWidth = totalWidth - 6;
-
-          const sideHeight = 13;
-          const middleHeight = 3;
-
-          const startX = centerX - totalWidth / 2;
-          // 조건: 판가가 Y축 최대값보다 1/5 이상 낮은가?
-          const showAbove =
-            Sell_Price <=
-            Math.max(...chartData.map((d) => d.MC_Price + d.Sell_Price_View)) *
-              1.1 *
-              0.8;
-
-          //위치 결정
+          const showAbove = Sell_Price <= globalMaxValue * 0.8;
           const textY = showAbove ? y - 30 : y + 25;
 
           return (
             <g key={bar.key}>
-              {/* 왼쪽 사각형 */}
               <rect
-                x={startX}
-                y={y - sideHeight / 2}
-                width={sideWidth}
-                height={sideHeight}
-                rx={0}
+                x={centerX - bar.width / 2}
+                y={y - 6.5}
+                width={3}
+                height={13}
                 fill="#FFC400"
               />
-
-              {/* 가운데 얇은 바 */}
               <rect
-                x={startX + sideWidth}
-                y={y - middleHeight / 2}
-                width={middleWidth}
-                height={middleHeight}
-                rx={0}
+                x={centerX - bar.width / 2}
+                y={y - 1.5}
+                width={bar.width}
+                height={3}
                 fill="#FFC400"
               />
-
-              {/* 오른쪽 사각형 */}
               <rect
-                x={startX + sideWidth + middleWidth}
-                y={y - sideHeight / 2}
-                width={sideWidth}
-                height={sideHeight}
-                rx={0}
+                x={centerX + bar.width / 2 - 3}
+                y={y - 6.5}
+                width={3}
+                height={13}
                 fill="#FFC400"
               />
-
-              {/* 퍼센트 */}
               <text
                 x={centerX}
-                // y={y + 25}
                 y={textY}
                 textAnchor="middle"
-                fontSize={20}
+                fontSize={18}
                 fontWeight="bold"
                 fill="#FFC400"
               >
@@ -120,168 +126,96 @@ const BarGraph = ({ data }) => {
 
   return (
     <BarGraphMainDivBox>
-      <ChartWrapper>
+      {/* --- 1. 고정된 Y축 (가로선 제거 및 틱 개수 조절) --- */}
+      <FixedYAxis>
         <ResponsiveBar
-          defs={[
-            {
-              id: "value1Gradient",
-              type: "linearGradient",
-              colors: [
-                { offset: 0, color: "#0000ff" },
-                { offset: 30, color: "#0000ff" },
-              ],
-            },
-          ]}
-          fill={[
-            {
-              match: { id: "MC_Price" },
-              id: "value1Gradient",
-            },
-          ]}
-          colors={({ id }) => {
-            if (id === "MC_Price") return "#0000ff"; // fallback
-            if (id === "Sell_Price_View") return "#ddddff"; // 연한 파랑 (단색)
-            return "#ccc";
-          }}
-          maxValue={
-            Math.max(...chartData.map((d) => d.MC_Price + d.Sell_Price_View)) *
-            1.1
-          }
           data={chartData}
           keys={["MC_Price", "Sell_Price_View"]}
           indexBy="EQ_NO"
-          groupMode="stacked"
-          margin={{ top: 20, right: 20, bottom: 100, left: 50 }}
-          padding={0.6}
-          layers={["axes", "bars", StackEndMarkerLayer, "legends"]}
-          enableLabel={false}
-          tooltip={({ id, value, data }) => {
-            if (id === "Sell_Price_View") {
-              return (
-                <div
-                  style={{
-                    padding: 8,
-                    background: "#fff",
-                    border: "1px solid #ccc",
-                  }}
-                >
-                  <strong>판가</strong> :{" "}
-                  {data.Sell_Price.toLocaleString("ko-KR")}
-                </div>
-              );
-            }
-
-            if (id === "MC_Price") {
-              return (
-                <div
-                  style={{
-                    padding: 8,
-                    background: "#fff",
-                    border: "1px solid #ccc",
-                  }}
-                >
-                  <strong>MC</strong> : {data.MC_Price.toLocaleString("ko-KR")}
-                </div>
-              );
-            }
-
-            return null;
-          }}
-          axisBottom={{
-            tickSize: 5,
-            tickPadding: 10,
-            tickRotation: 0,
-            renderTick: (tick) => {
-              const item = chartData.find((d) => d.EQ_NO === tick.value);
-
-              return (
-                <g transform={`translate(${tick.x},${tick.y + 22})`}>
-                  {/* Models */}
-                  <text
-                    textAnchor="middle"
-                    dominantBaseline="middle"
-                    style={{ fontSize: 12, fontWeight: "bold" }}
-                  >
-                    {item?.Models}
-                  </text>
-                  <text
-                    y={14}
-                    textAnchor="middle"
-                    dominantBaseline="middle"
-                    style={{ fontSize: 11, fill: "#666" }}
-                  >
-                    {`#${item?.CHNG_CONT?.split("#")[1]} `}
-                  </text>
-
-                  {/* 추가 항목 */}
-                  <text
-                    y={28}
-                    textAnchor="middle"
-                    dominantBaseline="middle"
-                    style={{ fontSize: 11, fill: "#666" }}
-                  >
-                    {moment(item?.ProductCreactDate).format("YYYY") ===
-                    Select_Date_State.value
-                      ? moment(item?.ProductCreactDate)
-                          .locale("en")
-                          .format("MMM")
-                      : moment(item?.ProductCreactDate)
-                          .locale("en")
-                          .format("YY MMM")}
-                  </text>
-                </g>
-              );
-            },
-          }}
-          // legends={[
-          //   {
-          //     dataFrom: "custom",
-          //     anchor: "bottom",
-          //     direction: "row",
-          //     justify: false,
-          //     itemsSpacing: 0,
-          //     translateY: 90,
-          //     itemWidth: 160,
-          //     itemHeight: 24,
-
-          //     itemDirection: "left-to-right",
-
-          //     symbolSize: 30,
-          //     symbolSpacing: 60,
-          //     symbolShape: LegendBarSymbol,
-          //     data: [
-          //       { id: "Sell_Price_View", label: "Price", color: "#e5efff" },
-          //       { id: "MC_Price", label: "MC", color: "#0000ff" },
-          //       { id: "MC_Ratio", label: "MC Ratio (%)", color: "#FFC400" },
-          //     ],
-          //   },
-          // ]}
+          maxValue={globalMaxValue}
+          margin={{ ...commonMargin, left: 60 }}
+          padding={0.5}
           axisLeft={{
             tickSize: 5,
-            tickPadding: 5, // 숫자가 축에서 너무 붙지 않게 띄움
-            legendPosition: "middle",
-            legendOffset: -60, // 폰트가 커진 만큼 제목을 왼쪽으로 밀어줌
-            format: (value) => `${value.toLocaleString()}`,
-            tickValues: 5,
+            tickPadding: 5,
+            tickValues: 5, // Y축 눈금 개수를 최대 5개로 설정
+            format: (v) => v.toLocaleString(),
           }}
+          axisBottom={null}
+          enableGridX={false}
+          enableGridY={false} // ★ Y축 배경 선 제거
+          layers={["axes"]} // ★ grid 레이어를 제거하여 선을 없앰
           theme={{
-            axis: {
-              ticks: {
-                text: {
-                  fontSize: 15, // 글자 크기 (원하는 수치로 조절)
-                  fill: "#333333", // 글자 색상
-                  fontWeight: 600, // 글자 굵기 (선택 사항)
-                },
-              },
-              legend: {
-                text: {
-                  fontSize: 20, // 축 제목(Label) 크기
-                  fill: "#000000",
-                },
-              },
-            },
+            axis: { ticks: { text: { fontSize: 13, fontWeight: 600 } } },
           }}
         />
+      </FixedYAxis>
+
+      {/* --- 2. 실제 데이터 스크롤 차트 (가로선 제거) --- */}
+      <ChartWrapper>
+        <InnerChartContainer width={dynamicWidth}>
+          <ResponsiveBar
+            data={chartData}
+            keys={["MC_Price", "Sell_Price_View"]}
+            indexBy="EQ_NO"
+            maxValue={globalMaxValue}
+            margin={commonMargin}
+            padding={0.5}
+            colors={({ id }) => (id === "MC_Price" ? "#0000ff" : "#ddddff")}
+            enableLabel={false}
+            enableGridY={false} // ★ 데이터 영역 가로 선 제거
+            axisLeft={null}
+            axisBottom={{
+              tickSize: 5,
+              tickPadding: 10,
+              renderTick: (tick) => {
+                const item = chartData.find((d) => d.EQ_NO === tick.value);
+                return (
+                  <g transform={`translate(${tick.x},${tick.y + 22})`}>
+                    <text
+                      textAnchor="middle"
+                      style={{ fontSize: 12, fontWeight: "bold" }}
+                    >
+                      {item?.Models}
+                    </text>
+                    <text
+                      y={14}
+                      textAnchor="middle"
+                      style={{ fontSize: 11 }}
+                    >{`#${item?.CHNG_CONT?.split("#")[1]}`}</text>
+                    <text y={28} textAnchor="middle" style={{ fontSize: 11 }}>
+                      {moment(item?.ProductCreactDate).format("YYYY") ===
+                      Select_Date_State.value
+                        ? moment(item?.ProductCreactDate)
+                            .locale("en")
+                            .format("MMM")
+                        : moment(item?.ProductCreactDate)
+                            .locale("en")
+                            .format("YY MMM")}
+                    </text>
+                  </g>
+                );
+              },
+            }}
+            // grid를 제외하고 바와 축(X축용)만 표시
+            layers={["bars", StackEndMarkerLayer, "axes"]}
+            tooltip={({ id, data }) => (
+              <div
+                style={{
+                  padding: 8,
+                  background: "#fff",
+                  border: "1px solid #ccc",
+                }}
+              >
+                <strong>{id === "Sell_Price_View" ? "판가" : "MC"}</strong> :{" "}
+                {(id === "Sell_Price_View"
+                  ? data.Sell_Price
+                  : data.MC_Price
+                ).toLocaleString()}
+              </div>
+            )}
+          />
+        </InnerChartContainer>
       </ChartWrapper>
     </BarGraphMainDivBox>
   );

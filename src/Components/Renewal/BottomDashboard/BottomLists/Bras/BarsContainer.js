@@ -4,6 +4,7 @@ import BarGraph from "./BarGraph";
 import moment from "moment";
 import { SegmentLists } from "../../../TopDashboard/TopLists/AverageRatio/AverageRatio";
 import MCBarGraph from "./MCBarGraph";
+import { IoArrowRedo } from "react-icons/io5";
 
 export const BarsContainerMainDivBox = styled.div`
   height: 100%;
@@ -14,7 +15,7 @@ export const BarsContainerMainDivBox = styled.div`
   border-radius: 10px;
 
   padding: 10px;
-
+  color: #4d4d4d;
   select {
     height: 40px;
     padding-left: 10px;
@@ -28,7 +29,7 @@ export const BarsContainerMainDivBox = styled.div`
       display: flex;
       justify-content: center;
       position: absolute;
-      bottom: 50px;
+      bottom: 80px;
       width: 100%;
       .LegendBox {
         display: flex;
@@ -50,19 +51,54 @@ export const BarsContainerMainDivBox = styled.div`
       }
     }
   }
+
+  .SegmentClickButtonContainer {
+    display: flex;
+    justify-content: space-between;
+    select {
+      margin-right: 10px;
+      border: 2px solid lightgray;
+      border-radius: 10px;
+      color: #4d4d4d;
+    }
+    span {
+      font-size: 21px;
+      font-weight: 400;
+    }
+    .IconsBox {
+      width: 60px;
+      height: 30px;
+      background-color: lightgray;
+      border-radius: 5px;
+      text-align: center;
+      font-size: 30px;
+      &:hover {
+        cursor: pointer;
+      }
+      svg {
+        color: white;
+      }
+    }
+  }
 `;
 
 const BarsContainer = ({ data }) => {
-  const [SelectBarTitle, setSelectBarTitle] = useState("SellingPriceTop5");
+  const [SelectBarTitle, setSelectBarTitle] = useState(
+    "AverageMCRatioBySegment",
+  );
   const [SelectBarSegment, setSelectBarSegment] = useState("all");
 
   const filteringData = (selectData) => {
     switch (SelectBarTitle) {
-      case "SellingPriceTop5": {
+      case "CLT": {
         return [...selectData]
           .filter((item) => item.EXPC_SEL_PRICE != null)
-          .sort((a, b) => b.EXPC_SEL_PRICE - a.EXPC_SEL_PRICE)
-          .slice(0, 5);
+          .filter((item) => item.Segment === "CLT")
+          .sort(
+            (a, b) =>
+              moment(b.ProductCreactDate).valueOf() -
+              moment(a.ProductCreactDate).valueOf(),
+          );
       }
       case "LatestOrders5": {
         return [...selectData]
@@ -89,6 +125,16 @@ const BarsContainer = ({ data }) => {
       default:
         return "";
     }
+  };
+
+  const filterSegmentData = (selectData, segements) => {
+    return [...selectData]
+      .filter((item) => item.EXPC_SEL_PRICE != null)
+      .sort(
+        (a, b) =>
+          moment(b.ProductCreactDate).valueOf() -
+          moment(a.ProductCreactDate).valueOf(),
+      );
   };
 
   const SegmentfilteredData = useMemo(() => {
@@ -119,45 +165,57 @@ const BarsContainer = ({ data }) => {
   return (
     <BarsContainerMainDivBox>
       <div>
-        <select
-          style={{ width: "350px" }}
-          value={SelectBarTitle}
-          onChange={(e) => setSelectBarTitle(e.target.value)}
-        >
-          <option value="SellingPriceTop5">Selling Price Top 5</option>
-          <option value="AverageMCRatioBySegment">
-            Average MC Ratio By Segment{" "}
-          </option>
-          <option value="LatestOrders5">Latest Orders 5</option>
-          <option value="MCRatioTop5">MC Ratio Top 5</option>
-          <option value="MCRatioBottom5">MC Ratio Bottom 5</option>
-        </select>
-
         {SelectBarTitle !== "AverageMCRatioBySegment" ? (
-          <select
-            style={{ marginLeft: "20px" }}
-            value={SelectBarSegment}
-            onChange={(e) => setSelectBarSegment(e.target.value)}
-          >
-            <option value="all">Total</option>
-            {SegmentLists.map((list) => {
-              return (
-                <option value={list.code} key={list.code}>
-                  {list.label}
-                </option>
-              );
-            })}
-          </select>
+          <div className="SegmentClickButtonContainer">
+            <div>
+              <select
+                style={{ marginLeft: "20px" }}
+                value={SelectBarSegment}
+                onChange={(e) => setSelectBarSegment(e.target.value)}
+              >
+                {/* <option value="all">Total</option> */}
+                {SegmentLists.map((list) => {
+                  return (
+                    <option value={list.code} key={list.code}>
+                      {list.label}
+                    </option>
+                  );
+                })}
+              </select>
+              <span>MC Ratio</span>
+            </div>
+            <div
+              className="IconsBox"
+              onClick={() => {
+                setSelectBarTitle("AverageMCRatioBySegment");
+              }}
+            >
+              <IoArrowRedo />
+            </div>
+          </div>
         ) : (
-          <></>
+          <div
+            style={{
+              fontWeight: "400",
+              fontSize: "21px",
+              marginLeft: "10px",
+              marginTop: "10px",
+            }}
+          >
+            Average MC Ratio By Segment
+          </div>
         )}
       </div>
       <div style={{ height: "100%" }} className="GraphsContainersCount">
         {SelectBarTitle === "AverageMCRatioBySegment" ? (
-          <MCBarGraph data={MakingMCGraphData} />
+          <MCBarGraph
+            data={MakingMCGraphData}
+            setSelectBarSegment={(data) => setSelectBarSegment(data)}
+            setSelectBarTitle={(data) => setSelectBarTitle(data)}
+          />
         ) : (
           <Fragment>
-            <BarGraph data={filteringData(SegmentfilteredData)}></BarGraph>
+            <BarGraph data={filterSegmentData(SegmentfilteredData)}></BarGraph>
             <div>
               <ul className="LegendContainer">
                 <li>

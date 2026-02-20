@@ -209,7 +209,7 @@ const StockContainer = () => {
         "/ERPStock/Select_Stock_Data_For_Bar_Graph",
         { Months },
       );
-      console.log(GetMonths);
+
       if (GetMonths.status) {
         setStock_Bar_State(GetMonths.data.Getting_Graph_Data);
         setGet_Part_List(GetMonths.data.Getting_Now_Stock_Data_List);
