@@ -13,6 +13,7 @@ import { Changed_Select_Date_Info_State_Func } from "../../../Models/SelectDateR
 import Select from "@mui/material/Select";
 import ReactSelect from "react-select";
 import { Request_Get_Axios } from "../../../API";
+import { IoMdPaperPlane } from "react-icons/io";
 
 const NavigationMainPageMainDivBox = styled.div`
   position: sticky;
@@ -175,6 +176,16 @@ const TopNavigationMainPage = () => {
             </div>
           )}
         </div>
+        <Link to="http://sbms.exicon.co.kr" target="_blank">
+          <div style={{ display: "flex", marginRight: "20px" }}>
+            <h2>
+              <span style={{ color: "red" }}>S</span>BMS
+            </h2>
+            <div style={{ color: "red", fontSize: "20px" }}>
+              <IoMdPaperPlane />
+            </div>
+          </div>
+        </Link>
       </div>
     </NavigationMainPageMainDivBox>
   );

@@ -52,7 +52,7 @@ const RenewalMainPage = () => {
         Select_Date_State: Select_Date_State.value,
       },
     );
-
+    console.log(GettingData);
     if (GettingData.status) {
       setTopData(GettingData.data.TopData);
       setBottomData(GettingData.data.BottomData);

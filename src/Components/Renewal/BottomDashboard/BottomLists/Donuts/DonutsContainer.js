@@ -35,7 +35,8 @@ const DonutsContainerMainDivBox = styled.div`
   }
 `;
 
-const DonutsContainer = ({ data }) => {
+const DonutsContainer = ({ data, bottomData }) => {
+  console.log(bottomData);
   return (
     <DonutsContainerMainDivBox>
       <div className="MainContainers">
@@ -54,7 +55,10 @@ const DonutsContainer = ({ data }) => {
           <DonutsGraph data={data}></DonutsGraph>
         </div>
         <div className="Right">
-          <BarGraphContainer data={data}></BarGraphContainer>
+          <BarGraphContainer
+            data={data}
+            BarData={bottomData.find((list) => list.type === "Bars").data}
+          ></BarGraphContainer>
         </div>
       </div>
       <div className="MilliContainer">
