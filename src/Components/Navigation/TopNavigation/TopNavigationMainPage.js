@@ -176,7 +176,7 @@ const TopNavigationMainPage = () => {
             </div>
           )}
         </div>
-        <Link to="http://sbms.exicon.co.kr" target="_blank">
+        <Link to="http://sbms.exicon.co.kr:8090" target="_blank">
           <div style={{ display: "flex", marginRight: "20px" }}>
             <h2>
               <span style={{ color: "red" }}>S</span>BMS

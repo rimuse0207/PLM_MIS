@@ -82,7 +82,7 @@ const AverageRatio = ({ data }) => {
           <h2>
             {MakingAverage(filteredData.NowYear)}%
             <div
-              className={`UPDownData ${MakingAverage(filteredData.NowYear) - MakingAverage(filteredData.PreYear) > 0 ? "Down" : "Up"}`}
+              className={`UPDownData ${MakingAverage(filteredData.NowYear) - MakingAverage(filteredData.PreYear) > 0 ? "Up" : "Down"}`}
             >
               <div className="IconContainer">
                 <VscTriangleUp />
