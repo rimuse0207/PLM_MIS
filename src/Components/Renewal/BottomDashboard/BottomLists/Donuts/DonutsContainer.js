@@ -36,7 +36,6 @@ const DonutsContainerMainDivBox = styled.div`
 `;
 
 const DonutsContainer = ({ data, bottomData }) => {
-  console.log(bottomData);
   return (
     <DonutsContainerMainDivBox>
       <div className="MainContainers">

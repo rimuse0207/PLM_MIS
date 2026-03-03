@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { diviceNumber } from "../../../RenewalMainPage";
+import { useSelector } from "react-redux";
 export const AnnualRevenueMainDivBox = styled.div`
   height: 100%;
   padding: 0 10px;
@@ -136,6 +137,20 @@ export const AnnualRevenueMainDivBox = styled.div`
 `;
 
 const AnnualRevenue = ({ data }) => {
+  const SelectDate = useSelector(
+    (state) => state.Select_Date_Reducer_State.Select_Date_State,
+  );
+  const DataChecking = (selectData) => {
+    if (SelectDate?.value === "2025") {
+      return Math.round(58321369823 / diviceNumber).toLocaleString("ko-KR");
+    } else if (selectData[0]) {
+      return Math.round(
+        selectData[0]?.sumSupplyPrice / diviceNumber,
+      ).toLocaleString("ko-KR");
+    } else {
+      return 0;
+    }
+  };
   return (
     <AnnualRevenueMainDivBox>
       <div className="MainContainer">
@@ -144,13 +159,7 @@ const AnnualRevenue = ({ data }) => {
           <div>(KRW Million)</div>
         </div>
         <div className="MainContent">
-          <h2>
-            {data[0]
-              ? Math.round(
-                  data[0]?.sumSupplyPrice / diviceNumber,
-                ).toLocaleString("ko-KR")
-              : 0}
-          </h2>
+          <h2>{DataChecking(data)}</h2>
         </div>
       </div>
     </AnnualRevenueMainDivBox>

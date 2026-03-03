@@ -3,6 +3,7 @@ import { CompletedOrdersMainDivBox } from "../../../../TopDashboard/TopLists/Com
 import styled from "styled-components";
 import { ColorArray } from "../../../BottomDashboardMainPage";
 import { diviceNumber } from "../../../../RenewalMainPage";
+import { useSelector } from "react-redux";
 
 const BarListMainDivBox = styled.div`
   width: 100%;
@@ -31,7 +32,7 @@ const BarListMainDivBox = styled.div`
       .PercentContainer {
         font-size: 12px;
         position: absolute;
-        bottom: -20px;
+        bottom: -15px;
         right: -0px;
       }
     }
@@ -56,14 +57,115 @@ const BarListMainDivBox = styled.div`
   }
 `;
 
+const Manually_written_sales = {
+  CLT: 50549360000,
+  MBT: 6485388264,
+  Storage: 345805104,
+  Module: 940816455,
+  SOC: 0,
+};
+
 const BarList = ({ list, ColorNumber, BarData = [] }) => {
-  console.log(list.code, BarData);
+  const SelectDate = useSelector(
+    (state) => state.Select_Date_Reducer_State.Select_Date_State,
+  );
+
+  const ExceptionTurOver = (SelectData) => {
+    if (SelectDate.value === "2025") {
+      switch (list.code) {
+        case "CLT":
+          return Math.round(
+            Manually_written_sales.CLT / diviceNumber,
+          ).toLocaleString("ko-KR");
+        case "MBT":
+          return Math.round(
+            Manually_written_sales.MBT / diviceNumber,
+          ).toLocaleString("ko-KR");
+        case "Storage":
+          return Math.round(
+            Manually_written_sales.Storage / diviceNumber,
+          ).toLocaleString("ko-KR");
+        case "Module":
+          return Math.round(
+            Manually_written_sales.Module / diviceNumber,
+          ).toLocaleString("ko-KR");
+        case "SOC":
+          return Math.round(
+            Manually_written_sales.SOC / diviceNumber,
+          ).toLocaleString("ko-KR");
+        default:
+          return 0;
+      }
+    } else {
+      if (
+        Number(
+          SelectData?.reduce((pre, acc) => pre + acc.Real_Sell_Price, 0),
+        ) === 0
+      ) {
+        return 0;
+      } else {
+        return Number(
+          (Number(
+            SelectData?.reduce((pre, acc) => pre + acc.Real_Sell_Price, 0),
+          ) /
+            list.value) *
+            100,
+        ).toFixed(0);
+      }
+    }
+  };
+
+  const ExceptionPercent = (SelectData) => {
+    if (SelectDate.value === "2025") {
+      switch (list.code) {
+        case "CLT":
+          return Number(
+            (Number(Manually_written_sales.CLT) / list.value) * 100,
+          ).toFixed(0);
+        case "MBT":
+          return Number(
+            (Number(Manually_written_sales.MBT) / list.value) * 100,
+          ).toFixed(0);
+
+        case "Storage":
+          return Number(
+            (Number(Manually_written_sales.Storage) / list.value) * 100,
+          ).toFixed(0);
+
+        case "Module":
+          return Number(
+            (Number(Manually_written_sales.Module) / list.value) * 100,
+          ).toFixed(0);
+
+        case "SOC":
+          return 0;
+        default:
+          return 0;
+      }
+    } else {
+      if (
+        Number(
+          SelectData?.reduce((pre, acc) => pre + acc.Real_Sell_Price, 0),
+        ) === 0
+      ) {
+        return 0;
+      } else {
+        return Number(
+          (Number(
+            SelectData?.reduce((pre, acc) => pre + acc.Real_Sell_Price, 0),
+          ) /
+            list.value) *
+            100,
+        ).toFixed(0);
+      }
+    }
+  };
 
   const ValueReturn = (data) => {
     if (data === 0) {
       return "";
     }
-    return data;
+    return data + "%";
   };
 
   return (
@@ -78,7 +180,6 @@ const BarList = ({ list, ColorNumber, BarData = [] }) => {
                 Math.round(list.value / diviceNumber) === 0
                   ? "#fff"
                   : list.color,
-              // width: `${list.value === 0 ? 0 : 100}%`,
             }}
           ></div>
           <div
@@ -92,55 +193,26 @@ const BarList = ({ list, ColorNumber, BarData = [] }) => {
             className="ActualContainer"
             style={{
               backgroundColor: "#fff",
-              // width: `${list.value === 0 ? 0 : 100}%`,
             }}
           >
             <div
               className="RealContainer"
               style={{
                 backgroundColor:
-                  Math.round(
-                    Number(
-                      BarData?.reduce(
-                        (pre, acc) => pre + acc.Real_Sell_Price,
-                        0,
-                      ),
-                    ) / diviceNumber,
-                  ) === 0
-                    ? "#fff"
-                    : "#efefef",
-                width: `${Number((Number(BarData?.reduce((pre, acc) => pre + acc.Real_Sell_Price, 0)) / list.value) * 100).toFixed(0)}%`,
+                  ExceptionTurOver(BarData) === 0 ? "#fff" : "#efefef",
+                width: `${ExceptionPercent(BarData)}%`,
               }}
             >
-              {BarData?.reduce((pre, acc) => pre + acc.Real_Sell_Price, 0) ===
-              0 ? (
-                <></>
-              ) : (
-                <div className="PercentContainer">
-                  {Number(
-                    (Number(
-                      BarData?.reduce(
-                        (pre, acc) => pre + acc.Real_Sell_Price,
-                        0,
-                      ),
-                    ) /
-                      list.value) *
-                      100,
-                  ).toFixed(0)}
-                  %
-                </div>
-              )}
+              <div className="PercentContainer">
+                {ValueReturn(ExceptionPercent(BarData))}
+              </div>
             </div>
           </div>
 
           <div
             style={{ width: "100px", paddingLeft: "20px", fontSize: "14px" }}
           >
-            {Math.round(
-              Number(
-                BarData?.reduce((pre, acc) => pre + acc.Real_Sell_Price, 0),
-              ) / diviceNumber,
-            ).toLocaleString("ko-KR")}
+            {ExceptionTurOver(BarData)}
           </div>
         </div>
       </div>

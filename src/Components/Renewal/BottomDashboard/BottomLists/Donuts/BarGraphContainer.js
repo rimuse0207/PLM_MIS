@@ -71,6 +71,7 @@ const BarGraphContainer = ({ data, BarData }) => {
             {data.map((list) => {
               return (
                 <div
+                  key={list.color}
                   style={{
                     background: list.color,
                     width: "20%",
