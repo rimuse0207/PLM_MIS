@@ -25,11 +25,11 @@ const DonutsContainerMainDivBox = styled.div`
     width: 100%;
     height: 100%;
     .Left {
-      width: 60%;
+      width: 50%;
       height: 100%;
     }
     .Right {
-      width: 40%;
+      width: 50%;
       height: 100%;
     }
   }

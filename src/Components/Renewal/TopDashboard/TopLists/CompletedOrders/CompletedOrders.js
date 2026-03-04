@@ -31,7 +31,7 @@ const CompletedOrders = ({ data }) => {
     <AnnualRevenueMainDivBox>
       <div className="MainContainer">
         <div className="Title krSuc">
-          <h4>Inventory Value</h4>
+          <h4>Inventory</h4>
           <div>(KRW Million)</div>
         </div>
         <div className="MainContent">
