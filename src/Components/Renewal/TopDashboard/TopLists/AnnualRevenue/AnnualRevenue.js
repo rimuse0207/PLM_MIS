@@ -141,7 +141,9 @@ const AnnualRevenue = ({ data }) => {
     (state) => state.Select_Date_Reducer_State.Select_Date_State,
   );
   const DataChecking = (selectData) => {
-    if (SelectDate?.value === "2025") {
+    if (SelectDate?.value === "2024") {
+      return Math.round(4120000000 / diviceNumber).toLocaleString("ko-KR");
+    } else if (SelectDate?.value === "2025") {
       return Math.round(58321369823 / diviceNumber).toLocaleString("ko-KR");
     } else if (selectData[0]) {
       return Math.round(

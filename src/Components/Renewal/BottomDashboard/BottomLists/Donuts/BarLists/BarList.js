@@ -71,7 +71,14 @@ const BarList = ({ list, ColorNumber, BarData = [] }) => {
   );
 
   const ExceptionTurOver = (SelectData) => {
-    if (SelectDate.value === "2025") {
+    if (SelectDate.value === "2024") {
+      switch (list.code) {
+        case "CLT":
+          return Math.round(4120000000 / diviceNumber).toLocaleString("ko-KR");
+        default:
+          return 0;
+      }
+    } else if (SelectDate.value === "2025") {
       switch (list.code) {
         case "CLT":
           return Math.round(
@@ -116,7 +123,14 @@ const BarList = ({ list, ColorNumber, BarData = [] }) => {
   };
 
   const ExceptionPercent = (SelectData) => {
-    if (SelectDate.value === "2025") {
+    if (SelectDate.value === "2024") {
+      switch (list.code) {
+        case "CLT":
+          return Number((Number(4120000000) / list.value) * 100).toFixed(0);
+        default:
+          return 0;
+      }
+    } else if (SelectDate.value === "2025") {
       switch (list.code) {
         case "CLT":
           return Number(
