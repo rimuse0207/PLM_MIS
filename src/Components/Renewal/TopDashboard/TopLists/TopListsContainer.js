@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import AnnualRevenue from "./AnnualRevenue/AnnualRevenue";
 import CompletedOrders from "./CompletedOrders/CompletedOrders";
@@ -17,17 +17,40 @@ const TopListsContainerMainDivBox = styled.div`
   box-shadow: 2px 2px 5px 1px rgba(189, 215, 238, 0.6);
 `;
 
-const TopListsContainer = ({ type, data }) => {
+const TopListsContainer = ({ type, data, autoShowing }) => {
+  const [showingIndex, setShowingIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setShowingIndex((prev) => (prev + 1) % 5);
+    }, 10000);
+
+    return () => clearInterval(timer);
+  }, []);
   const typeRendering = () => {
     switch (type) {
       case "AnnualRevenue":
-        return <AnnualRevenue data={data}></AnnualRevenue>;
+        return <AnnualRevenue data={data} subTitle="억원"></AnnualRevenue>;
       case "WorkOrders":
-        return <CompletedOrders data={data}></CompletedOrders>;
+        return (
+          <CompletedOrders
+            data={data}
+            subTitle="억원"
+            autoShowing={autoShowing}
+            showingIndex={showingIndex}
+          ></CompletedOrders>
+        );
       case "AverageRatio":
-        return <AverageRatio data={data}></AverageRatio>;
+        return <AverageRatio data={data} subTitle="%"></AverageRatio>;
       case "PartCommonality":
-        return <PartCommonality data={data}></PartCommonality>;
+        return (
+          <PartCommonality
+            data={data}
+            subTitle="%"
+            autoShowing={autoShowing}
+            showingIndex={showingIndex}
+          ></PartCommonality>
+        );
       default:
         return <div></div>;
     }

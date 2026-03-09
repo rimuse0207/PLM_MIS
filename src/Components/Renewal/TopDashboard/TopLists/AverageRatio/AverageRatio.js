@@ -35,7 +35,7 @@ export const SegmentLists = [
   },
 ];
 
-const AverageRatio = ({ data }) => {
+const AverageRatio = ({ data, subTitle }) => {
   const [ChooseSelect, setChooseSelect] = useState("all");
   const MakingAverage = (MCData) => {
     if (!MCData.length) return 0;
@@ -46,24 +46,19 @@ const AverageRatio = ({ data }) => {
     );
   };
   const filteredData = useMemo(() => {
-    const make = (SelectType) => {
-      if (ChooseSelect === "all") return data[SelectType] ?? [];
-      return (
-        data[SelectType]?.filter((item) => item.Segment === ChooseSelect) ?? []
-      );
+    const make = () => {
+      if (ChooseSelect === "all") return data ?? [];
+      return data.filter((item) => item.Segment === ChooseSelect) ?? [];
     };
 
-    return {
-      NowYear: make("NowYear"),
-      PreYear: make("PreYear"),
-    };
+    return make();
   }, [data, ChooseSelect]);
 
   return (
     <AnnualRevenueMainDivBox>
       <div className="MainContainer">
         <div className="Title" style={{ display: "flex", flexFlow: "wrap" }}>
-          <h4>Average MC Ratio</h4>
+          <h4>실적 MC율</h4>
           {/* <select
             value={ChooseSelect}
             onChange={(data) => setChooseSelect(data.target.value)}
@@ -80,8 +75,9 @@ const AverageRatio = ({ data }) => {
         </div>
         <div className="MainContent">
           <h2>
-            {MakingAverage(filteredData.NowYear)}%
-            <div
+            {MakingAverage(filteredData)}
+            <span style={{ fontSize: "40px" }}>{subTitle}</span>
+            {/* <div
               className={`UPDownData ${MakingAverage(filteredData.NowYear) - MakingAverage(filteredData.PreYear) > 0 ? "Up" : "Down"}`}
             >
               <div className="IconContainer">
@@ -94,7 +90,7 @@ const AverageRatio = ({ data }) => {
                 )}
                 %p
               </span>
-            </div>
+            </div> */}
           </h2>
         </div>
       </div>

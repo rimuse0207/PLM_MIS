@@ -26,7 +26,7 @@ const BarGraphContainerMainDivBox = styled.div`
     bottom: 25px;
     display: flex;
     width: 80%;
-    justify-content: space-around;
+    justify-content: center;
     .LegendSubContainer {
       display: flex;
       width: 100px;
@@ -45,7 +45,7 @@ const BarGraphContainerMainDivBox = styled.div`
   }
 `;
 
-const BarGraphContainer = ({ data, BarData }) => {
+const BarGraphContainer = ({ data, BarData, formData }) => {
   return (
     <BarGraphContainerMainDivBox>
       <div className="MainContainer">
@@ -57,6 +57,8 @@ const BarGraphContainer = ({ data, BarData }) => {
                 list={list}
                 ColorNumber={j}
                 BarData={BarData.filter((item) => item.Segment === list.code)}
+                equipmentData={formData?.equipmentCount}
+                boardData={formData?.boardCount}
               ></BarList>
             );
           })}
@@ -81,7 +83,7 @@ const BarGraphContainer = ({ data, BarData }) => {
               );
             })}
           </div>
-          <div className="LegendText">Orders</div>
+          <div className="LegendText">수주액</div>
         </div>
         <div className="LegendSubContainer">
           <div className="LegendList">
@@ -89,7 +91,7 @@ const BarGraphContainer = ({ data, BarData }) => {
               style={{ width: "100%", height: "5px", background: "#efefef" }}
             ></div>
           </div>
-          <div className="LegendText">Revenue</div>
+          <div className="LegendText">실적</div>
         </div>
       </div>
     </BarGraphContainerMainDivBox>

@@ -31,7 +31,7 @@ const MCBarGraph = ({ data, setSelectBarSegment, setSelectBarTitle }) => {
           maxValue={100}
           keys={["MCRate"]}
           indexBy="code"
-          margin={{ top: 50, right: 0, left: 100, bottom: 40 }}
+          margin={{ top: 50, right: 0, left: 40, bottom: 40 }}
           padding={0.5}
           groupMode="stacked"
           colors={({ id }) => {
@@ -42,25 +42,34 @@ const MCBarGraph = ({ data, setSelectBarSegment, setSelectBarTitle }) => {
           isInteractive={true}
           enableLabel={false}
           theme={{
-            labels: { text: { fontSize: "0.8rem", fill: "#000000" } },
+            // labels: { text: { fontSize: "0.8rem", fill: "#000000" } },
             legends: { text: { fontSize: "0.8rem", fill: "#000000" } },
             axis: {
+              domain: {
+                line: {
+                  stroke: "#777",
+                  strokeWidth: 1,
+                },
+              },
               legend: { text: { fontSize: "0.8rem", fill: "#000000" } },
-              ticks: { text: { fontSize: "0.8rem", fill: "#000000" } },
+              ticks: {
+                text: { fontSize: "0.8rem", fill: "#000000" },
+                line: {
+                  stroke: "#777",
+                  strokeWidth: 1,
+                },
+              },
             },
           }}
           axisBottom={{
             tickSize: 0,
           }}
           axisLeft={{
-            tickSize: 0,
-            tickPadding: 20,
+            tickSize: -5,
+            tickPadding: 5,
             tickRotation: 0,
-            legendPosition: "middle",
-            legendOffset: -40,
-
-            tickValues: [0, 25, 50, 75, 100], // 👈 핵심
-            format: (value) => `${value}%`, // 퍼센트면 이게 더 예쁨
+            tickValues: [25, 50, 75, 100],
+            format: () => "", // 👈 숫자를 빈 문자열로 반환하여 숨김
           }}
           enableGridY={false}
           layers={[

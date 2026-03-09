@@ -26,7 +26,7 @@ const DonutsGraph = ({ data }) => {
           fontWeight="600"
           color="#4d4d4d"
         >
-          FY{Select_Date_State.value.slice(2, 4)}
+          {Select_Date_State.value.slice(0, 4)}
         </tspan>
         <tspan
           x={centerX}
@@ -35,7 +35,8 @@ const DonutsGraph = ({ data }) => {
           fontWeight="700"
           color="#4d4d4d"
         >
-          Orders : {Math.round(total / diviceNumber).toLocaleString("ko-KR")}
+          수주액 : {Math.round(total / diviceNumber).toLocaleString("ko-KR")}
+          억원
         </tspan>
       </text>
     );

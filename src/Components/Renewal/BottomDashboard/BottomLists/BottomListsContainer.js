@@ -12,7 +12,7 @@ const BottomListsContainerMainDivBox = styled.div`
   border-radius: 10px;
 `;
 
-const BottomListsContainer = ({ type, data = [], bottomData }) => {
+const BottomListsContainer = ({ type, data = [], bottomData, formData }) => {
   const typeRendering = () => {
     switch (type) {
       case "Donuts":
@@ -20,6 +20,7 @@ const BottomListsContainer = ({ type, data = [], bottomData }) => {
           <DonutsContainer
             data={data?.sort((a, b) => b.value - a.value)}
             bottomData={bottomData}
+            formData={formData}
           ></DonutsContainer>
         );
       case "Bars":

@@ -26,6 +26,7 @@ const BottomDashboardMainPage = ({ bottomData }) => {
             key={list.type}
             type={list.type}
             data={list.data}
+            formData={list.formData}
             bottomData={bottomData}
           ></BottomListsContainer>
         );

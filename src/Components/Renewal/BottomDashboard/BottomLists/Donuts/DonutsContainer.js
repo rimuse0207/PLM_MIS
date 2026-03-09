@@ -35,7 +35,7 @@ const DonutsContainerMainDivBox = styled.div`
   }
 `;
 
-const DonutsContainer = ({ data, bottomData }) => {
+const DonutsContainer = ({ data, bottomData, formData }) => {
   return (
     <DonutsContainerMainDivBox>
       <div className="MainContainers">
@@ -48,7 +48,7 @@ const DonutsContainer = ({ data, bottomData }) => {
               fontSize: "21px",
             }}
           >
-            Orders By Segment
+            설비별 수주액
           </h4>
 
           <DonutsGraph data={data}></DonutsGraph>
@@ -57,10 +57,11 @@ const DonutsContainer = ({ data, bottomData }) => {
           <BarGraphContainer
             data={data}
             BarData={bottomData.find((list) => list.type === "Bars").data}
+            formData={formData}
           ></BarGraphContainer>
         </div>
       </div>
-      <div className="MilliContainer">
+      {/* <div className="MilliContainer">
         <h4
           style={{
             fontWeight: "550",
@@ -72,7 +73,7 @@ const DonutsContainer = ({ data, bottomData }) => {
         >
           (KRW Million)
         </h4>
-      </div>
+      </div> */}
     </DonutsContainerMainDivBox>
   );
 };

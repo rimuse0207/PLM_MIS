@@ -12,7 +12,7 @@ export const AnnualRevenueMainDivBox = styled.div`
     flex-flow: wrap;
     align-items: center;
     justify-content: center;
-    height: 100%;
+    height: 90%;
 
     .krSuc {
       display: flex;
@@ -136,7 +136,7 @@ export const AnnualRevenueMainDivBox = styled.div`
   }
 `;
 
-const AnnualRevenue = ({ data }) => {
+const AnnualRevenue = ({ data, subTitle }) => {
   const SelectDate = useSelector(
     (state) => state.Select_Date_Reducer_State.Select_Date_State,
   );
@@ -157,11 +157,14 @@ const AnnualRevenue = ({ data }) => {
     <AnnualRevenueMainDivBox>
       <div className="MainContainer">
         <div className="Title krSuc">
-          <h4>Annual Revenue</h4>
-          <div>(KRW Million)</div>
+          <h4>실적</h4>
+          {/* <div>(KRW Million)</div> */}
         </div>
         <div className="MainContent">
-          <h2>{DataChecking(data)}</h2>
+          <h2>
+            {DataChecking(data)}
+            <span style={{ fontSize: "40px" }}>{subTitle}</span>
+          </h2>
         </div>
       </div>
     </AnnualRevenueMainDivBox>

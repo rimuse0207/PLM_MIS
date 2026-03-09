@@ -3,6 +3,7 @@ import moment from "moment";
 import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { diviceNumber } from "../../../RenewalMainPage";
 
 export const BarGraphMainDivBox = styled.div`
   background-color: #fff;
@@ -71,7 +72,7 @@ const BarGraph = ({ data }) => {
     Math.max(...chartData.map((d) => d.MC_Price + d.Sell_Price_View)) * 1.1;
 
   // 공통 마진
-  const commonMargin = { top: 30, right: 70, bottom: 120, left: 0 };
+  const commonMargin = { top: 30, right: 100, bottom: 120, left: 0 };
 
   const StackEndMarkerLayer = ({ bars }) => {
     const value1Bars = bars.filter((bar) => bar.data.id === "MC_Price");
@@ -170,6 +171,7 @@ const BarGraph = ({ data }) => {
               tickPadding: 10,
               renderTick: (tick) => {
                 const item = chartData.find((d) => d.EQ_NO === tick.value);
+
                 return (
                   <g transform={`translate(${tick.x},${tick.y + 22})`}>
                     <text
@@ -178,12 +180,8 @@ const BarGraph = ({ data }) => {
                     >
                       {item?.Models}
                     </text>
-                    <text
-                      y={14}
-                      textAnchor="middle"
-                      style={{ fontSize: 11 }}
-                    >{`#${item?.CHNG_CONT?.split("#")[1]}`}</text>
-                    <text y={28} textAnchor="middle" style={{ fontSize: 11 }}>
+                    <text y={14} textAnchor="middle" style={{ fontSize: 11 }}>
+                      {`#${item?.CHNG_CONT?.split("#")[1]}`}_
                       {moment(item?.ProductCreactDate).format("YYYY") ===
                       Select_Date_State.value
                         ? moment(item?.ProductCreactDate)
@@ -193,12 +191,66 @@ const BarGraph = ({ data }) => {
                             .locale("en")
                             .format("YY MMM")}
                     </text>
+                    <text
+                      y={50}
+                      textAnchor="middle"
+                      style={{ fontSize: 15, fontWeight: "bolder" }}
+                    >
+                      {(item?.EXPC_SEL_PRICE / diviceNumber).toFixed(1)}
+                    </text>
+                    <text
+                      y={75}
+                      textAnchor="middle"
+                      style={{
+                        fontSize: 15,
+                        color: "blue",
+                        fill: "blue",
+                        fontWeight: "bolder",
+                      }}
+                    >
+                      {(
+                        (item?.partSum + item?.outSoucingPriceSum) /
+                        diviceNumber
+                      ).toFixed(1)}
+                    </text>
                   </g>
                 );
               },
             }}
             // grid를 제외하고 바와 축(X축용)만 표시
-            layers={["bars", StackEndMarkerLayer, "axes"]}
+            layers={[
+              "grid",
+              "axes",
+              "bars",
+              "markers",
+              "legends",
+              ({ bars }) => (
+                <g>
+                  {bars.map((bar) => {
+                    const percent = bar.data.data.MCRate;
+
+                    if (bar.data.id === "MC_Price") return;
+                    return (
+                      <text
+                        key={`${bar.key}-percent`}
+                        x={bar.x + bar.width / 2}
+                        y={bar.y - 6}
+                        textAnchor="middle"
+                        dominantBaseline="baseline"
+                        style={{
+                          fill: "#FFC400",
+                          fontSize: "20px",
+                          fontWeight: 700,
+                          pointerEvents: "none",
+                        }}
+                      >
+                        {percent}%
+                      </text>
+                    );
+                  })}
+                </g>
+              ),
+            ]}
             tooltip={({ id, data }) => (
               <div
                 style={{

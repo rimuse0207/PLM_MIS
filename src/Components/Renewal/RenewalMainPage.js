@@ -34,7 +34,7 @@ export const RenewalMainPageMainDivBox = styled.div`
     background-color: #f2f2f2;
   }
 `;
-export const diviceNumber = 1000000;
+export const diviceNumber = 100000000;
 const RenewalMainPage = () => {
   const Select_Date_State = useSelector(
     (state) => state.Select_Date_Reducer_State.Select_Date_State,
@@ -52,7 +52,7 @@ const RenewalMainPage = () => {
         Select_Date_State: Select_Date_State.value,
       },
     );
-    console.log(GettingData);
+
     if (GettingData.status) {
       setTopData(GettingData.data.TopData);
       setBottomData(GettingData.data.BottomData);

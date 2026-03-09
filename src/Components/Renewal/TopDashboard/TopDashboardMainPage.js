@@ -20,7 +20,12 @@ const TopDashboardMainPage = ({ topData = [] }) => {
     <TopDashboardMainPageMainDivBox>
       <div className="FirstContainer">
         {topData.map((item, j) => (
-          <TopListsContainer key={j} type={item.type} data={item.data} />
+          <TopListsContainer
+            key={j}
+            type={item.type}
+            data={item.data}
+            autoShowing={item.autoShowingList}
+          />
         ))}
       </div>
     </TopDashboardMainPageMainDivBox>

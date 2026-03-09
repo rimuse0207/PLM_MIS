@@ -1,56 +1,54 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { AnnualRevenueMainDivBox } from "../AnnualRevenue/AnnualRevenue";
 import { VscTriangleUp } from "react-icons/vsc";
+import { diviceNumber } from "../../../RenewalMainPage";
+import { AnimatedItemBox } from "../CompletedOrders/CompletedOrders";
 
-const PartCommonality = ({ data }) => {
-  console.log(data.Now[0].sum_reUse, data.Now[0].sum_cnt);
-
+const PartCommonality = ({
+  data,
+  subTitle,
+  autoShowing = [],
+  showingIndex,
+}) => {
   const MakingPercent = (SelectData) => {
-    if (SelectData.length === 0) return 0;
-    return (
-      Math.round((SelectData[0].sum_reUse / SelectData[0].sum_cnt) * 100) || 0
-    );
+    if (!SelectData.sum_reUse || !SelectData.sum_cnt) return 0;
+    return Math.round((SelectData.sum_reUse / SelectData.sum_cnt) * 100) || 0;
   };
 
-  const PercentCal = useMemo(() => {
-    return MakingPercent(data.Now) - MakingPercent(data.pre);
-  }, [data]);
+  const safeIndex = Math.min(showingIndex, autoShowing.length - 1);
+  const currentItem = autoShowing[safeIndex];
 
   return (
     <AnnualRevenueMainDivBox>
       <div className="MainContainer">
         <div className="Title">
-          <h4>Part Commonality Rate</h4>
+          <h4>부품 공용화율</h4>
         </div>
         <div className="MainContent">
-          <h2>
-            {MakingPercent(data.Now)}%
-            {PercentCal === 0 ? (
-              <div
-                className="UPDownData"
-                style={{
-                  background: "#efefef",
-                  padding: "0px",
-                  color: "gray",
-                }}
-              >
-                No Data
-              </div>
-            ) : (
-              <div
-                className={`UPDownData ${PercentCal > 0 ? "RateUp" : "RateDown"}`}
-              >
-                <div className="IconContainer">
-                  <VscTriangleUp />
-                </div>
-                <span>
-                  {Math.abs(PercentCal) || "No Data"}
-                  %p
-                </span>
-              </div>
-            )}
-          </h2>
+          <div className="WorkOrderContainer">
+            <h2>
+              {MakingPercent(data.Now)}
+              <span style={{ fontSize: "40px" }}>{subTitle}</span>
+            </h2>
+          </div>
         </div>
+
+        {currentItem && (
+          <AnimatedItemBox
+            key={showingIndex}
+            style={{
+              fontSize: "20px",
+              paddingTop: "10px",
+              position: "absolute",
+              bottom: "20px",
+            }}
+          >
+            <span className="index-num">{showingIndex + 1} </span>
+            {currentItem.partTypeName}{" "}
+            <strong>{Math.round(currentItem.reuseRate)}</strong>
+            <span className="unit">%</span>
+          </AnimatedItemBox>
+        )}
       </div>
     </AnnualRevenueMainDivBox>
   );

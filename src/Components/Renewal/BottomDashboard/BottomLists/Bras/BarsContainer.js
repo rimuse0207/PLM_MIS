@@ -26,21 +26,24 @@ export const BarsContainerMainDivBox = styled.div`
     position: relative;
 
     .LegendContainer {
-      display: flex;
-      justify-content: center;
       position: absolute;
-      bottom: 80px;
+
       width: 100%;
+      left: 20px;
+      z-index: 10;
+
       .LegendBox {
         display: flex;
         flex-wrap: wrap;
         margin-right: 30px;
         .LegendColors {
-          width: 50px;
+          width: 70px;
           /* background-color: #0000ff; */
-          height: 15px;
-          border-radius: 100px;
+          height: 25px;
           margin-right: 10px;
+          text-align: center;
+          line-height: 25px;
+          font-weight: bolder;
         }
         .LegendText {
           display: inline-block;
@@ -182,7 +185,7 @@ const BarsContainer = ({ data }) => {
                   );
                 })}
               </select>
-              <span>MC Ratio</span>
+              <span>MC율</span>
             </div>
             <div
               className="IconsBox"
@@ -202,7 +205,7 @@ const BarsContainer = ({ data }) => {
               marginTop: "10px",
             }}
           >
-            Average MC Ratio By Segment
+            설비별 평균 MC율
           </div>
         )}
       </div>
@@ -217,32 +220,39 @@ const BarsContainer = ({ data }) => {
           <Fragment>
             <BarGraph data={filterSegmentData(SegmentfilteredData)}></BarGraph>
             <div>
-              <ul className="LegendContainer">
+              <ul
+                className="LegendContainer"
+                style={{
+                  bottom:
+                    filterSegmentData(SegmentfilteredData).length > 6
+                      ? "80px"
+                      : "72px",
+                }}
+              >
                 <li>
                   <div className="LegendBox">
                     <div
                       className="LegendColors"
                       style={{ backgroundColor: "#ddddff" }}
-                    ></div>
-                    <div className="LegendText">Price</div>
+                    >
+                      판가
+                    </div>
+                    {/* <div className="LegendText">Price</div> */}
                   </div>
                 </li>
                 <li>
                   <div className="LegendBox">
                     <div
                       className="LegendColors"
-                      style={{ backgroundColor: "#0000ff" }}
-                    ></div>
-                    <div className="LegendText">MC</div>
-                  </div>
-                </li>
-                <li>
-                  <div className="LegendBox">
-                    <div
-                      className="LegendColors"
-                      style={{ backgroundColor: "#FFC400" }}
-                    ></div>
-                    <div className="LegendText">MC Ratio (%)</div>
+                      style={{
+                        backgroundColor: "#0000ff",
+                        color: "#fff",
+                        marginTop: "2px",
+                      }}
+                    >
+                      MC
+                    </div>
+                    {/* <div className="LegendText">MC</div> */}
                   </div>
                 </li>
               </ul>
