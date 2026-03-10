@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { diviceNumber } from "../../../RenewalMainPage";
 import { useSelector } from "react-redux";
+import { AnimatedItemBox } from "../CompletedOrders/CompletedOrders";
 export const AnnualRevenueMainDivBox = styled.div`
   height: 100%;
   padding: 0 10px;
@@ -136,10 +137,14 @@ export const AnnualRevenueMainDivBox = styled.div`
   }
 `;
 
-const AnnualRevenue = ({ data, subTitle }) => {
+const AnnualRevenue = ({ data, subTitle, autoShowing = [], showingIndex }) => {
   const SelectDate = useSelector(
     (state) => state.Select_Date_Reducer_State.Select_Date_State,
   );
+
+  const safeIndex = Math.min(showingIndex, autoShowing.length - 1);
+  const currentItem = autoShowing[safeIndex];
+
   const DataChecking = (selectData) => {
     if (SelectDate?.value === "2024") {
       return Math.round(4120000000 / diviceNumber).toLocaleString("ko-KR");
@@ -158,7 +163,6 @@ const AnnualRevenue = ({ data, subTitle }) => {
       <div className="MainContainer">
         <div className="Title krSuc">
           <h4>실적</h4>
-          {/* <div>(KRW Million)</div> */}
         </div>
         <div className="MainContent">
           <h2>
@@ -166,6 +170,18 @@ const AnnualRevenue = ({ data, subTitle }) => {
             <span style={{ fontSize: "40px" }}>{subTitle}</span>
           </h2>
         </div>
+        {currentItem && (
+          <AnimatedItemBox key={showingIndex}>
+            <span className="index-num">{safeIndex + 1}</span>
+            {currentItem.Segment}
+            {" #"}
+            {currentItem.CHNG_CONT.split("#")[1]}{" "}
+            <strong>
+              {Number(currentItem.EXPC_SEL_PRICE / diviceNumber).toFixed(0)}
+            </strong>
+            <span className="unit">억원</span>
+          </AnimatedItemBox>
+        )}
       </div>
     </AnnualRevenueMainDivBox>
   );

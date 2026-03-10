@@ -12,7 +12,13 @@ const BottomListsContainerMainDivBox = styled.div`
   border-radius: 10px;
 `;
 
-const BottomListsContainer = ({ type, data = [], bottomData, formData }) => {
+const BottomListsContainer = ({
+  type,
+  data = [],
+  bottomData,
+  formData,
+  showingIndex,
+}) => {
   const typeRendering = () => {
     switch (type) {
       case "Donuts":
@@ -24,7 +30,12 @@ const BottomListsContainer = ({ type, data = [], bottomData, formData }) => {
           ></DonutsContainer>
         );
       case "Bars":
-        return <BarsContainer data={data}></BarsContainer>;
+        return (
+          <BarsContainer
+            data={data}
+            showingIndex={showingIndex}
+          ></BarsContainer>
+        );
       default:
         return <div></div>;
     }

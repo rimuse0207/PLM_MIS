@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { AnnualRevenueMainDivBox } from "../AnnualRevenue/AnnualRevenue";
 import { VscTriangleUp } from "react-icons/vsc";
+import { AnimatedItemBox } from "../CompletedOrders/CompletedOrders";
 
 export const SegmentLists = [
   {
@@ -35,8 +36,10 @@ export const SegmentLists = [
   },
 ];
 
-const AverageRatio = ({ data, subTitle }) => {
+const AverageRatio = ({ data, subTitle, autoShowing = [], showingIndex }) => {
   const [ChooseSelect, setChooseSelect] = useState("all");
+  const safeIndex = Math.min(showingIndex, autoShowing.length - 1);
+  const currentItem = autoShowing[safeIndex];
   const MakingAverage = (MCData) => {
     if (!MCData.length) return 0;
     return (
@@ -93,6 +96,16 @@ const AverageRatio = ({ data, subTitle }) => {
             </div> */}
           </h2>
         </div>
+        {currentItem && (
+          <AnimatedItemBox key={showingIndex}>
+            {/* <span className="index-num">{safeIndex + 1}</span> */}
+            {currentItem.Segment}
+            {" #"}
+            {currentItem.CHNG_CONT.split("#")[1]}{" "}
+            <strong>{Number(currentItem.MCRate).toFixed(0)}</strong>
+            <span className="unit">%</span>
+          </AnimatedItemBox>
+        )}
       </div>
     </AnnualRevenueMainDivBox>
   );

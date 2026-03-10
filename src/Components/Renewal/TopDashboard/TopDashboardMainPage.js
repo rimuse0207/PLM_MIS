@@ -15,7 +15,7 @@ export const TopDashboardMainPageMainDivBox = styled.div`
   }
 `;
 
-const TopDashboardMainPage = ({ topData = [] }) => {
+const TopDashboardMainPage = ({ topData = [], showingIndex }) => {
   return (
     <TopDashboardMainPageMainDivBox>
       <div className="FirstContainer">
@@ -25,6 +25,7 @@ const TopDashboardMainPage = ({ topData = [] }) => {
             type={item.type}
             data={item.data}
             autoShowing={item.autoShowingList}
+            showingIndex={showingIndex}
           />
         ))}
       </div>

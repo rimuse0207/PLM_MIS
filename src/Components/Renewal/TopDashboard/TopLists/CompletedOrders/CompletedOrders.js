@@ -99,7 +99,7 @@ const CompletedOrders = ({
         {/* 데이터가 있을 때만 렌더링 */}
         {currentItem && (
           <AnimatedItemBox key={showingIndex}>
-            <span className="index-num">{showingIndex + 1}</span>
+            <span className="index-num">{safeIndex + 1}</span>
             {currentItem.ItemSName}{" "}
             <strong>
               {Number(currentItem.Price / diviceNumber).toFixed(0)}

@@ -17,20 +17,18 @@ const TopListsContainerMainDivBox = styled.div`
   box-shadow: 2px 2px 5px 1px rgba(189, 215, 238, 0.6);
 `;
 
-const TopListsContainer = ({ type, data, autoShowing }) => {
-  const [showingIndex, setShowingIndex] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setShowingIndex((prev) => (prev + 1) % 5);
-    }, 10000);
-
-    return () => clearInterval(timer);
-  }, []);
+const TopListsContainer = ({ type, data, autoShowing, showingIndex }) => {
   const typeRendering = () => {
     switch (type) {
       case "AnnualRevenue":
-        return <AnnualRevenue data={data} subTitle="억원"></AnnualRevenue>;
+        return (
+          <AnnualRevenue
+            data={data}
+            subTitle="억원"
+            autoShowing={autoShowing}
+            showingIndex={showingIndex}
+          ></AnnualRevenue>
+        );
       case "WorkOrders":
         return (
           <CompletedOrders
@@ -41,7 +39,14 @@ const TopListsContainer = ({ type, data, autoShowing }) => {
           ></CompletedOrders>
         );
       case "AverageRatio":
-        return <AverageRatio data={data} subTitle="%"></AverageRatio>;
+        return (
+          <AverageRatio
+            data={data}
+            subTitle="%"
+            autoShowing={autoShowing}
+            showingIndex={showingIndex}
+          ></AverageRatio>
+        );
       case "PartCommonality":
         return (
           <PartCommonality

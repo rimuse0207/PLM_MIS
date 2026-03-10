@@ -1,4 +1,4 @@
-import React, { Fragment, useMemo, useState } from "react";
+import React, { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import styled from "styled-components";
 import BarGraph from "./BarGraph";
 import moment from "moment";
@@ -85,50 +85,79 @@ export const BarsContainerMainDivBox = styled.div`
   }
 `;
 
-const BarsContainer = ({ data }) => {
-  const [SelectBarTitle, setSelectBarTitle] = useState(
-    "AverageMCRatioBySegment",
-  );
-  const [SelectBarSegment, setSelectBarSegment] = useState("all");
+const AutoSegmentLists = ["all", "CLT", "MBT", "Storage", "Module", "SoC"];
 
-  const filteringData = (selectData) => {
-    switch (SelectBarTitle) {
-      case "CLT": {
-        return [...selectData]
-          .filter((item) => item.EXPC_SEL_PRICE != null)
-          .filter((item) => item.Segment === "CLT")
-          .sort(
-            (a, b) =>
-              moment(b.ProductCreactDate).valueOf() -
-              moment(a.ProductCreactDate).valueOf(),
-          );
-      }
-      case "LatestOrders5": {
-        return [...selectData]
-          .filter((item) => item.ProductCreactDate)
-          .sort(
-            (a, b) =>
-              moment(b.ProductCreactDate).valueOf() -
-              moment(a.ProductCreactDate).valueOf(),
-          )
-          .slice(0, 5);
-      }
-      case "MCRatioTop5": {
-        return [...selectData]
-          .filter((item) => item.MCRate != null)
-          .sort((a, b) => b.MCRate - a.MCRate)
-          .slice(0, 5);
-      }
-      case "MCRatioBottom5": {
-        return [...selectData]
-          .filter((item) => item.MCRate != null)
-          .sort((a, b) => a.MCRate - b.MCRate)
-          .slice(0, 5);
-      }
-      default:
-        return "";
+const BarsContainer = ({ data, showingIndex }) => {
+  const [SelectBarSegment, setSelectBarSegment] = useState(
+    AutoSegmentLists[showingIndex],
+  );
+  const [localIndex, setLocalIndex] = useState(showingIndex);
+  const [isPaused, setIsPaused] = useState(false);
+
+  const pauseTimerRef = useRef(null); // 10초 대기용
+  const safetyTimerRef = useRef(null); // 5분 강제 재개용 (추가)
+
+  // 1. 부모의 인덱스 추적 (isPaused가 false일 때만 복사)
+  useEffect(() => {
+    if (!isPaused) {
+      setLocalIndex(showingIndex);
     }
+  }, [showingIndex, isPaused]);
+
+  // 2. 마우스 진입 시
+  const handleMouseEnter = () => {
+    setIsPaused(true);
+
+    // 10초 재시작 예약이 있었다면 취소
+    if (pauseTimerRef.current) clearTimeout(pauseTimerRef.current);
+
+    // [추가] 5분(300,000ms) 뒤에는 마우스가 있어도 강제로 움직이게 설정
+    if (safetyTimerRef.current) clearTimeout(safetyTimerRef.current);
+    safetyTimerRef.current = setTimeout(
+      () => {
+        setIsPaused(false);
+        console.log("5분이 지나 자동 재생을 강제 재개합니다.");
+      },
+      5 * 60 * 1000,
+    ); // 5분
   };
+
+  // 3. 마우스 이탈 시
+  const handleMouseLeave = () => {
+    // 5분 타이머는 이제 필요 없으니 취소
+    if (safetyTimerRef.current) clearTimeout(safetyTimerRef.current);
+
+    if (pauseTimerRef.current) clearTimeout(pauseTimerRef.current);
+
+    // 10초 뒤에 다시 부모 리듬에 맞춤
+    pauseTimerRef.current = setTimeout(() => {
+      setIsPaused(false);
+      setLocalIndex(showingIndex);
+    }, 10000);
+  };
+
+  // 컴포넌트 언마운트 시 모든 타이머 청소 (메모리 누수 방지)
+  useEffect(() => {
+    return () => {
+      if (pauseTimerRef.current) clearTimeout(pauseTimerRef.current);
+      if (safetyTimerRef.current) clearTimeout(safetyTimerRef.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    const currentSegment = AutoSegmentLists[localIndex];
+
+    if (currentSegment === "all") {
+      setSelectBarSegment("all");
+    } else {
+      const dataChecking = data.filter(
+        (item) => item.Segment === currentSegment,
+      );
+      if (dataChecking.length > 0) {
+        setSelectBarSegment(currentSegment);
+      }
+    }
+  }, [localIndex, data]);
 
   const filterSegmentData = (selectData, segements) => {
     return [...selectData]
@@ -166,9 +195,12 @@ const BarsContainer = ({ data }) => {
   }, [data, SelectBarSegment]);
 
   return (
-    <BarsContainerMainDivBox>
+    <BarsContainerMainDivBox
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       <div>
-        {SelectBarTitle !== "AverageMCRatioBySegment" ? (
+        {SelectBarSegment !== "all" ? (
           <div className="SegmentClickButtonContainer">
             <div>
               <select
@@ -190,7 +222,7 @@ const BarsContainer = ({ data }) => {
             <div
               className="IconsBox"
               onClick={() => {
-                setSelectBarTitle("AverageMCRatioBySegment");
+                setSelectBarSegment("all");
               }}
             >
               <IoArrowRedo />
@@ -210,11 +242,10 @@ const BarsContainer = ({ data }) => {
         )}
       </div>
       <div style={{ height: "100%" }} className="GraphsContainersCount">
-        {SelectBarTitle === "AverageMCRatioBySegment" ? (
+        {SelectBarSegment === "all" ? (
           <MCBarGraph
             data={MakingMCGraphData}
             setSelectBarSegment={(data) => setSelectBarSegment(data)}
-            setSelectBarTitle={(data) => setSelectBarTitle(data)}
           />
         ) : (
           <Fragment>

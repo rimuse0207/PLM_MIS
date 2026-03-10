@@ -43,7 +43,7 @@ const PartCommonality = ({
               bottom: "20px",
             }}
           >
-            <span className="index-num">{showingIndex + 1} </span>
+            <span className="index-num">{safeIndex + 1} </span>
             {currentItem.partTypeName}{" "}
             <strong>{Math.round(currentItem.reuseRate)}</strong>
             <span className="unit">%</span>

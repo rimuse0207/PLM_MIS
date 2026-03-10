@@ -36,6 +36,16 @@ export const RenewalMainPageMainDivBox = styled.div`
 `;
 export const diviceNumber = 100000000;
 const RenewalMainPage = () => {
+  const [showingIndex, setShowingIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setShowingIndex((prev) => (prev + 1) % 5);
+    }, 10000);
+
+    return () => clearInterval(timer);
+  }, []);
+
   const Select_Date_State = useSelector(
     (state) => state.Select_Date_Reducer_State.Select_Date_State,
   );
@@ -52,10 +62,11 @@ const RenewalMainPage = () => {
         Select_Date_State: Select_Date_State.value,
       },
     );
-
+    console.log(GettingData);
     if (GettingData.status) {
       setTopData(GettingData.data.TopData);
       setBottomData(GettingData.data.BottomData);
+      setShowingIndex(0);
     }
 
     setLoading(false);
@@ -71,9 +82,13 @@ const RenewalMainPage = () => {
 
       <RenewalMainPageMainDivBox>
         <div className="ContentRight">
-          <TopDashboardMainPage topData={topData}></TopDashboardMainPage>
+          <TopDashboardMainPage
+            topData={topData}
+            showingIndex={showingIndex}
+          ></TopDashboardMainPage>
           <BottomDashboardMainPage
             bottomData={bottomData}
+            showingIndex={showingIndex}
           ></BottomDashboardMainPage>
         </div>
       </RenewalMainPageMainDivBox>
