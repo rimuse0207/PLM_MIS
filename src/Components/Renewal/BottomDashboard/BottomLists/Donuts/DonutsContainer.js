@@ -55,25 +55,12 @@ const DonutsContainer = ({ data, bottomData, formData }) => {
         </div>
         <div className="Right">
           <BarGraphContainer
-            data={data}
+            data={data.filter((list) => list.value !== 0)}
             BarData={bottomData.find((list) => list.type === "Bars").data}
             formData={formData}
           ></BarGraphContainer>
         </div>
       </div>
-      {/* <div className="MilliContainer">
-        <h4
-          style={{
-            fontWeight: "550",
-            marginRight: "20px",
-            marginTop: "20px",
-            fontSize: "1.1em",
-            textAlign: "end",
-          }}
-        >
-          (KRW Million)
-        </h4>
-      </div> */}
     </DonutsContainerMainDivBox>
   );
 };

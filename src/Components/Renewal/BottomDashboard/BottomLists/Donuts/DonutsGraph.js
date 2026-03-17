@@ -4,10 +4,38 @@ import { diviceNumber } from "../../../RenewalMainPage";
 import { useSelector } from "react-redux";
 import { ColorArray } from "../../BottomDashboardMainPage";
 
+const legendContainerStyle = {
+  display: "flex",
+  flexWrap: "wrap", // 줄바꿈 허용
+  justifyContent: "center", // 중앙 정렬
+  gap: "15px", // 아이템 사이 간격 (여기서 조절!)
+  marginTop: "20px",
+  position: "absolute",
+  bottom: "45px",
+  left: "30px",
+};
+
+const legendItemStyle = {
+  display: "flex",
+  alignItems: "center",
+  fontSize: "12px",
+  fontWeight: "400",
+  color: "#4d4d4d",
+};
+
+const colorBoxStyle = (color) => ({
+  width: "12px",
+  height: "12px",
+  backgroundColor: color,
+  borderRadius: "50%", // 원형 심볼
+  marginRight: "6px",
+});
+
 const DonutsGraph = ({ data }) => {
   const Select_Date_State = useSelector(
     (state) => state.Select_Date_Reducer_State.Select_Date_State,
   );
+
   const CenteredMetric = ({ dataWithArc, centerX, centerY }) => {
     const total = dataWithArc.reduce((sum, d) => sum + d.value, 0);
 
@@ -41,13 +69,53 @@ const DonutsGraph = ({ data }) => {
       </text>
     );
   };
+  const CustomArcLabels = ({ dataWithArc, centerX, centerY }) => {
+    const sortedData = [...dataWithArc].sort((a, b) => b.value - a.value);
+    const firstId = sortedData[0]?.data.id;
+
+    const total = dataWithArc.reduce((sum, v) => sum + v.value, 0);
+
+    return dataWithArc.map((arc) => {
+      const isFirst = arc.data.id === firstId;
+
+      const percent = (arc.value / total) * 100;
+      if (percent < 5) return null;
+
+      const midAngle =
+        (arc.arc.startAngle + arc.arc.endAngle) / 2 - Math.PI / 2;
+
+      const radius =
+        arc.arc.innerRadius + (arc.arc.outerRadius - arc.arc.innerRadius) / 2;
+
+      const x = centerX + Math.cos(midAngle) * radius;
+      const y = centerY + Math.sin(midAngle) * radius;
+
+      return (
+        <text
+          key={arc.data.id}
+          x={x}
+          y={y}
+          textAnchor="middle"
+          dominantBaseline="central"
+          style={{
+            fill: "#FFFFFF",
+            fontSize: isFirst ? "20px" : "12px",
+            fontWeight: isFirst ? "900" : "500",
+            pointerEvents: "none",
+          }}
+        >
+          {percent.toFixed(1)}%
+        </text>
+      );
+    });
+  };
 
   return (
-    <div style={{ width: "100%", height: "95%" }}>
+    <div style={{ width: "100%", height: "95%", position: "relative" }}>
       <ResponsivePie
         data={data}
         innerRadius={0.7}
-        enableArcLabels={true}
+        enableArcLabels={false}
         arcLinkLabel={(d) => `${d.id} (${d.formattedValue})`}
         activeInnerRadiusOffset={8}
         layers={[
@@ -56,6 +124,7 @@ const DonutsGraph = ({ data }) => {
           //   "arcLinkLabels",
           "legends",
           CenteredMetric,
+          CustomArcLabels,
         ]}
         colors={(datum) => datum.data.color}
         margin={{ top: 30, right: 50, bottom: 100, left: 50 }}
@@ -77,17 +146,17 @@ const DonutsGraph = ({ data }) => {
             },
           },
         }}
-        legends={[
-          {
-            anchor: "bottom",
-            direction: "row",
-            translateY: 56,
-            itemWidth: 80,
-            itemHeight: 18,
-            symbolShape: "circle",
-            symbolSpacing: 4,
-          },
-        ]}
+        // legends={[
+        //   {
+        //     anchor: "bottom",
+        //     direction: "row",
+        //     translateY: 56,
+        //     itemWidth: 80,
+        //     itemHeight: 18,
+        //     symbolShape: "circle",
+        //     symbolSpacing: 4,
+        //   },
+        // ]}
         arcLabel={(d) => {
           const total = data.reduce((sum, v) => sum + v.value, 0);
           const percent = ((d.value / total) * 100).toFixed(1);
@@ -111,6 +180,14 @@ const DonutsGraph = ({ data }) => {
           </div>
         )}
       />
+      <div style={legendContainerStyle}>
+        {data.map((item) => (
+          <div key={item.id} style={legendItemStyle}>
+            <div style={colorBoxStyle(item.color)} />
+            <span>{item.id}</span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

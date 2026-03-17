@@ -217,7 +217,7 @@ const BarsContainer = ({ data, showingIndex }) => {
                   );
                 })}
               </select>
-              <span>MC율</span>
+              <span>MC율 (단위: 억원)</span>
             </div>
             <div
               className="IconsBox"

@@ -2,14 +2,14 @@ import React from "react";
 import { ResponsiveBar } from "@nivo/bar";
 import { BarGraphMainDivBox, ChartWrapper } from "./BarGraph";
 
-const MCBarGraph = ({ data, setSelectBarSegment, setSelectBarTitle }) => {
+const MCBarGraph = ({ data, setSelectBarSegment }) => {
   return (
     <BarGraphMainDivBox>
       <ChartWrapper>
         <ResponsiveBar
           onClick={(e) => {
             setSelectBarSegment(e.indexValue);
-            setSelectBarTitle(e.indexValue);
+            // setSelectBarTitle(e.indexValue);
           }}
           defs={[
             {
@@ -31,7 +31,7 @@ const MCBarGraph = ({ data, setSelectBarSegment, setSelectBarTitle }) => {
           maxValue={100}
           keys={["MCRate"]}
           indexBy="code"
-          margin={{ top: 50, right: 0, left: 40, bottom: 40 }}
+          margin={{ top: 50, right: 50, left: 40, bottom: 40 }}
           padding={0.5}
           groupMode="stacked"
           colors={({ id }) => {
