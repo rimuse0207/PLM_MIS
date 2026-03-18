@@ -58,7 +58,7 @@ const BarGraph = ({ data }) => {
   );
 
   const MAX_VISIBLE_ITEMS = 7;
-  const ITEM_WIDTH = 120;
+  const ITEM_WIDTH = 110;
   const dynamicWidth =
     data.length > MAX_VISIBLE_ITEMS ? `${data.length * ITEM_WIDTH}px` : "100%";
 
@@ -72,58 +72,7 @@ const BarGraph = ({ data }) => {
     Math.max(...chartData.map((d) => d.MC_Price + d.Sell_Price_View)) * 1.1;
 
   // 공통 마진
-  const commonMargin = { top: 30, right: 100, bottom: 120, left: 0 };
-
-  const StackEndMarkerLayer = ({ bars }) => {
-    const value1Bars = bars.filter((bar) => bar.data.id === "MC_Price");
-    return (
-      <g>
-        {value1Bars.map((bar) => {
-          const { Sell_Price } = bar.data.data;
-          const centerX = bar.x + bar.width / 2;
-          const y = bar.y;
-          const showAbove = Sell_Price <= globalMaxValue * 0.8;
-          const textY = showAbove ? y - 30 : y + 25;
-
-          return (
-            <g key={bar.key}>
-              <rect
-                x={centerX - bar.width / 2}
-                y={y - 6.5}
-                width={3}
-                height={13}
-                fill="#FFC400"
-              />
-              <rect
-                x={centerX - bar.width / 2}
-                y={y - 1.5}
-                width={bar.width}
-                height={3}
-                fill="#FFC400"
-              />
-              <rect
-                x={centerX + bar.width / 2 - 3}
-                y={y - 6.5}
-                width={3}
-                height={13}
-                fill="#FFC400"
-              />
-              <text
-                x={centerX}
-                y={textY}
-                textAnchor="middle"
-                fontSize={18}
-                fontWeight="bold"
-                fill="#FFC400"
-              >
-                {bar.data.data.MCRate}%
-              </text>
-            </g>
-          );
-        })}
-      </g>
-    );
-  };
+  const commonMargin = { top: 30, right: 0, bottom: 120, left: 0 };
 
   return (
     <BarGraphMainDivBox>

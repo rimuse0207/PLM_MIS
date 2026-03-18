@@ -99,7 +99,7 @@ const DonutsGraph = ({ data }) => {
           dominantBaseline="central"
           style={{
             fill: "#FFFFFF",
-            fontSize: isFirst ? "20px" : "12px",
+            fontSize: isFirst ? "20px" : "17px",
             fontWeight: isFirst ? "900" : "500",
             pointerEvents: "none",
           }}

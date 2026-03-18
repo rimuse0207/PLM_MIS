@@ -244,7 +244,7 @@ const BarsContainer = ({ data, showingIndex }) => {
       <div style={{ height: "100%" }} className="GraphsContainersCount">
         {SelectBarSegment === "all" ? (
           <MCBarGraph
-            data={MakingMCGraphData}
+            data={MakingMCGraphData.filter((item) => item.MCRate !== 0)}
             setSelectBarSegment={(data) => setSelectBarSegment(data)}
           />
         ) : (
