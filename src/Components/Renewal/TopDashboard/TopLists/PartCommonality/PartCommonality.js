@@ -24,31 +24,30 @@ const PartCommonality = ({
         <div className="Title">
           <h4>부품 공용화율</h4>
         </div>
-        <div className="MainContent">
-          <div className="WorkOrderContainer">
-            <h2>
-              {MakingPercent(data.Now)}
-              <span style={{ fontSize: "40px" }}>{subTitle}</span>
-            </h2>
+
+        <div className="FloatContainer">
+          <div className="RightContainer" style={{ width: "100%" }}>
+            <div className="MainContent">
+              <div className="WorkOrderContainer">
+                <h2>
+                  {MakingPercent(data.Now)}
+                  <span style={{ fontSize: "40px" }}>{subTitle}</span>
+                </h2>
+              </div>
+              <div className="bottomBoard">
+                {currentItem && (
+                  <AnimatedItemBox key={showingIndex}>
+                    <span className="index-num">{safeIndex + 1} </span>
+                    {currentItem.partTypeName}
+                    {"_"}
+                    <strong>{Math.round(currentItem.reuseRate)}</strong>
+                    <span className="unit">%</span>
+                  </AnimatedItemBox>
+                )}
+              </div>
+            </div>
           </div>
         </div>
-
-        {currentItem && (
-          <AnimatedItemBox
-            key={showingIndex}
-            style={{
-              fontSize: "20px",
-              paddingTop: "10px",
-              position: "absolute",
-              bottom: "20px",
-            }}
-          >
-            <span className="index-num">{safeIndex + 1} </span>
-            {currentItem.partTypeName}{" "}
-            <strong>{Math.round(currentItem.reuseRate)}</strong>
-            <span className="unit">%</span>
-          </AnimatedItemBox>
-        )}
       </div>
     </AnnualRevenueMainDivBox>
   );

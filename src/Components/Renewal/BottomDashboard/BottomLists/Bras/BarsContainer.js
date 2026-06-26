@@ -8,12 +8,12 @@ import { IoArrowRedo } from "react-icons/io5";
 
 export const BarsContainerMainDivBox = styled.div`
   height: 100%;
-  width: 840px;
+  width: 925px;
   /* min-width: 800px; */
-  height: calc(100vh - 450px);
+  height: calc(100vh - 395px);
   background-color: #fff;
   border-radius: 10px;
-
+  overflow: hidden;
   padding: 10px;
   color: #4d4d4d;
   select {
@@ -249,45 +249,10 @@ const BarsContainer = ({ data, showingIndex }) => {
           />
         ) : (
           <Fragment>
-            <BarGraph data={filterSegmentData(SegmentfilteredData)}></BarGraph>
-            <div>
-              <ul
-                className="LegendContainer"
-                style={{
-                  bottom:
-                    filterSegmentData(SegmentfilteredData).length > 6
-                      ? "80px"
-                      : "72px",
-                }}
-              >
-                <li>
-                  <div className="LegendBox">
-                    <div
-                      className="LegendColors"
-                      style={{ backgroundColor: "#ddddff" }}
-                    >
-                      판가
-                    </div>
-                    {/* <div className="LegendText">Price</div> */}
-                  </div>
-                </li>
-                <li>
-                  <div className="LegendBox">
-                    <div
-                      className="LegendColors"
-                      style={{
-                        backgroundColor: "#0000ff",
-                        color: "#fff",
-                        marginTop: "2px",
-                      }}
-                    >
-                      MC
-                    </div>
-                    {/* <div className="LegendText">MC</div> */}
-                  </div>
-                </li>
-              </ul>
-            </div>
+            <BarGraph
+              data={filterSegmentData(SegmentfilteredData)}
+              types={SelectBarSegment}
+            ></BarGraph>
           </Fragment>
         )}
       </div>

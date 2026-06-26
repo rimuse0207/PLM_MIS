@@ -8,17 +8,9 @@ import { diviceNumber } from "../../../RenewalMainPage";
 export const BarGraphMainDivBox = styled.div`
   background-color: #fff;
   width: 100%;
-  height: 88%;
+  height: 95%;
   display: flex; /* Y축 고정 배치 */
   position: relative;
-`;
-
-const FixedYAxis = styled.div`
-  width: 70px;
-  height: 100%;
-  flex-shrink: 0;
-  background-color: #fff;
-  z-index: 2;
 `;
 
 export const ChartWrapper = styled.div`
@@ -47,18 +39,61 @@ export const ChartWrapper = styled.div`
   }
 `;
 
+const ColoPicks = [
+  {
+    id: "CLT",
+    label: "CLT",
+    code: "CLT",
+    value: 0,
+    SumValue: 0,
+    color: "#1146af",
+  },
+  {
+    id: "MBT",
+    label: "MBT",
+    code: "MBT",
+    value: 0,
+    SumValue: 0,
+    color: "#b9e3a6",
+  },
+  {
+    id: "Storage",
+    label: "Storage",
+    code: "Storage",
+    value: 0,
+    SumValue: 0,
+    color: "#8acaf4",
+  },
+  {
+    id: "DC/Module",
+    label: "DC/Module",
+    code: "Module",
+    value: 0,
+    SumValue: 0,
+    color: "#f6e7bc ",
+  },
+  {
+    id: "SoC",
+    label: "SoC",
+    code: "SOC",
+    value: 0,
+    SumValue: 0,
+    color: "#6600cc",
+  },
+];
+
 export const InnerChartContainer = styled.div`
   height: 100%;
   width: ${(props) => props.width};
 `;
 
-const BarGraph = ({ data }) => {
+const BarGraph = ({ data, types }) => {
   const Select_Date_State = useSelector(
     (state) => state.Select_Date_Reducer_State.Select_Date_State,
   );
 
   const MAX_VISIBLE_ITEMS = 7;
-  const ITEM_WIDTH = 110;
+  const ITEM_WIDTH = 130;
   const dynamicWidth =
     data.length > MAX_VISIBLE_ITEMS ? `${data.length * ITEM_WIDTH}px` : "100%";
 
@@ -67,53 +102,26 @@ const BarGraph = ({ data }) => {
     Sell_Price_View: d.Sell_Price - d.MC_Price,
   }));
 
-  // 높이 기준점 계산
-  const globalMaxValue =
-    Math.max(...chartData.map((d) => d.MC_Price + d.Sell_Price_View)) * 1.1;
-
   // 공통 마진
-  const commonMargin = { top: 30, right: 0, bottom: 120, left: 0 };
+  const commonMargin = { top: 130, right: 0, bottom: 100, left: 0 };
 
   return (
     <BarGraphMainDivBox>
-      {/* --- 1. 고정된 Y축 (가로선 제거 및 틱 개수 조절) --- */}
-      <FixedYAxis>
-        <ResponsiveBar
-          data={chartData}
-          keys={["MC_Price", "Sell_Price_View"]}
-          indexBy="EQ_NO"
-          maxValue={globalMaxValue}
-          margin={{ ...commonMargin, left: 60 }}
-          padding={0.5}
-          axisLeft={{
-            tickSize: 5,
-            tickPadding: 5,
-            tickValues: 5, // Y축 눈금 개수를 최대 5개로 설정
-            format: (v) => v.toLocaleString(),
-          }}
-          axisBottom={null}
-          enableGridX={false}
-          enableGridY={false} // ★ Y축 배경 선 제거
-          layers={["axes"]} // ★ grid 레이어를 제거하여 선을 없앰
-          theme={{
-            axis: { ticks: { text: { fontSize: 13, fontWeight: 600 } } },
-          }}
-        />
-      </FixedYAxis>
-
-      {/* --- 2. 실제 데이터 스크롤 차트 (가로선 제거) --- */}
       <ChartWrapper>
         <InnerChartContainer width={dynamicWidth}>
           <ResponsiveBar
             data={chartData}
             keys={["MC_Price", "Sell_Price_View"]}
             indexBy="EQ_NO"
-            maxValue={globalMaxValue}
             margin={commonMargin}
-            padding={0.5}
-            colors={({ id }) => (id === "MC_Price" ? "#0000ff" : "#ddddff")}
+            padding={0.6}
+            colors={({ id }) =>
+              id === "MC_Price"
+                ? ColoPicks.find((item) => item.code === types).color
+                : "#efefef"
+            }
             enableLabel={false}
-            enableGridY={false} // ★ 데이터 영역 가로 선 제거
+            enableGridY={false}
             axisLeft={null}
             axisBottom={{
               tickSize: 5,
@@ -122,15 +130,16 @@ const BarGraph = ({ data }) => {
                 const item = chartData.find((d) => d.EQ_NO === tick.value);
 
                 return (
-                  <g transform={`translate(${tick.x},${tick.y + 22})`}>
+                  <g transform={`translate(${tick.x},${tick.y})`}>
                     <text
+                      y={22}
                       textAnchor="middle"
                       style={{ fontSize: 12, fontWeight: "bold" }}
                     >
                       {item?.Models}
                     </text>
-                    <text y={14} textAnchor="middle" style={{ fontSize: 11 }}>
-                      {`#${item?.CHNG_CONT?.split("#")[1]}`}_
+                    <text y={38} textAnchor="middle" style={{ fontSize: 11 }}>
+                      {`#${item?.CHNG_CONT?.split("#")[1]?.split("호기")[0]}`}_
                       {moment(item?.ProductCreactDate).format("YYYY") ===
                       Select_Date_State.value
                         ? moment(item?.ProductCreactDate)
@@ -140,62 +149,68 @@ const BarGraph = ({ data }) => {
                             .locale("en")
                             .format("YY MMM")}
                     </text>
-                    <text
-                      y={50}
-                      textAnchor="middle"
-                      style={{ fontSize: 15, fontWeight: "bolder" }}
-                    >
-                      {(item?.EXPC_SEL_PRICE / diviceNumber).toFixed(1)}
-                    </text>
-                    <text
-                      y={75}
-                      textAnchor="middle"
-                      style={{
-                        fontSize: 15,
-                        color: "blue",
-                        fill: "blue",
-                        fontWeight: "bolder",
-                      }}
-                    >
-                      {(
-                        (item?.partSum + item?.outSoucingPriceSum) /
-                        diviceNumber
-                      ).toFixed(1)}
-                    </text>
                   </g>
                 );
               },
             }}
-            // grid를 제외하고 바와 축(X축용)만 표시
             layers={[
               "grid",
               "axes",
               "bars",
               "markers",
               "legends",
-              ({ bars }) => (
+              ({ bars, innerWidth, innerHeight }) => (
                 <g>
+                  <line
+                    x1={0}
+                    x2={innerWidth} // 차트 전체 너비만큼 오른쪽으로 쭈욱
+                    y1={innerHeight} // 차트 바닥 면 높이
+                    y2={innerHeight} // 동일한 높이로 수평선 유지
+                    stroke="lightgray" // 선 색상 (글자들과 어울리는 회색)
+                    strokeWidth={2} // 선 두께
+                  />
                   {bars.map((bar) => {
-                    const percent = bar.data.data.MCRate;
-
-                    if (bar.data.id === "MC_Price") return;
-                    return (
-                      <text
-                        key={`${bar.key}-percent`}
-                        x={bar.x + bar.width / 2}
-                        y={bar.y - 6}
-                        textAnchor="middle"
-                        dominantBaseline="baseline"
-                        style={{
-                          fill: "#FFC400",
-                          fontSize: "20px",
-                          fontWeight: 700,
-                          pointerEvents: "none",
-                        }}
-                      >
-                        {percent}%
-                      </text>
-                    );
+                    if (bar.data.id === "MC_Price") {
+                      return (
+                        <text
+                          key={`${bar.key}-mc`}
+                          x={bar.x + bar.width / 2}
+                          y={bar.y + bar.height / 2}
+                          textAnchor="middle"
+                          dominantBaseline="central"
+                          style={{
+                            fill:
+                              bar.data.data.Segment === "Module"
+                                ? "black"
+                                : "#ffffff",
+                            fontSize: "14px",
+                            fontWeight: "bold",
+                            pointerEvents: "none",
+                          }}
+                        >
+                          {bar.data.data.MC_Price}
+                        </text>
+                      );
+                    } else {
+                      const percent = bar.data.data.Sell_Price;
+                      return (
+                        <text
+                          key={`${bar.key}-percent`}
+                          x={bar.x + bar.width / 2}
+                          y={bar.y - 6}
+                          textAnchor="middle"
+                          dominantBaseline="baseline"
+                          style={{
+                            fill: "gray",
+                            fontSize: "15px",
+                            fontWeight: 700,
+                            pointerEvents: "none",
+                          }}
+                        >
+                          {percent.toLocaleString()}
+                        </text>
+                      );
+                    }
                   })}
                 </g>
               ),

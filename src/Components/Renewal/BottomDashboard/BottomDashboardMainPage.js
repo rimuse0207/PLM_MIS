@@ -17,7 +17,7 @@ export const ColorArray = [
   "#6600cc",
 ];
 
-const BottomDashboardMainPage = ({ bottomData, showingIndex }) => {
+const BottomDashboardMainPage = ({ bottomData, topData, showingIndex }) => {
   return (
     <BottomDashboardMainPageMainDivBox>
       {bottomData.map((list) => {
@@ -29,6 +29,7 @@ const BottomDashboardMainPage = ({ bottomData, showingIndex }) => {
             formData={list.formData}
             bottomData={bottomData}
             showingIndex={showingIndex}
+            topData={topData}
           ></BottomListsContainer>
         );
       })}

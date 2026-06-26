@@ -18,6 +18,7 @@ const BottomListsContainer = ({
   bottomData,
   formData,
   showingIndex,
+  topData = [],
 }) => {
   const typeRendering = () => {
     switch (type) {
@@ -27,6 +28,7 @@ const BottomListsContainer = ({
             data={data?.sort((a, b) => b.value - a.value)}
             bottomData={bottomData}
             formData={formData}
+            topData={topData}
           ></DonutsContainer>
         );
       case "Bars":

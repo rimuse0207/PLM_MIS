@@ -8,6 +8,7 @@ import styled from "styled-components";
 import { API_Request_Get_Axios, Request_Get_Axios } from "../../API";
 import { useSelector } from "react-redux";
 import Loader from "../../Loader/Loader";
+import { getMonthsOfYearUntilNow } from "../Home/Stock/CommonFunc/CommonFunc";
 
 export const RenewalMainPageMainDivBox = styled.div`
   display: flex;
@@ -38,13 +39,13 @@ export const diviceNumber = 100000000;
 const RenewalMainPage = () => {
   const [showingIndex, setShowingIndex] = useState(0);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setShowingIndex((prev) => (prev + 1) % 5);
-    }, 10000);
+  // useEffect(() => {
+  //   const timer = setInterval(() => {
+  //     setShowingIndex((prev) => (prev + 1) % 5);
+  //   }, 10000);
 
-    return () => clearInterval(timer);
-  }, []);
+  //   return () => clearInterval(timer);
+  // }, []);
 
   const Select_Date_State = useSelector(
     (state) => state.Select_Date_Reducer_State.Select_Date_State,
@@ -55,13 +56,15 @@ const RenewalMainPage = () => {
 
   const Getting_Axios_Data = async () => {
     setLoading(true);
-
+    const Months = await getMonthsOfYearUntilNow(Select_Date_State.value);
     const GettingData = await API_Request_Get_Axios(
       "/Dashboard/EIS_RenewalData_For_Dashboards",
       {
         Select_Date_State: Select_Date_State.value,
+        Months,
       },
     );
+    console.log(GettingData);
 
     if (GettingData.status) {
       setTopData(GettingData.data.TopData);
@@ -88,6 +91,7 @@ const RenewalMainPage = () => {
           ></TopDashboardMainPage>
           <BottomDashboardMainPage
             bottomData={bottomData}
+            topData={topData}
             showingIndex={showingIndex}
           ></BottomDashboardMainPage>
         </div>

@@ -2,6 +2,8 @@ import React, { useMemo, useState } from "react";
 import { AnnualRevenueMainDivBox } from "../AnnualRevenue/AnnualRevenue";
 import { VscTriangleUp } from "react-icons/vsc";
 import { AnimatedItemBox } from "../CompletedOrders/CompletedOrders";
+import { diviceNumber } from "../../../RenewalMainPage";
+import moment from "moment";
 
 export const SegmentLists = [
   {
@@ -37,76 +39,123 @@ export const SegmentLists = [
 ];
 
 const AverageRatio = ({ data, subTitle, autoShowing = [], showingIndex }) => {
-  const [ChooseSelect, setChooseSelect] = useState("all");
+  const [changeView, setChangeView] = useState(false);
   const safeIndex = Math.min(showingIndex, autoShowing.length - 1);
   const currentItem = autoShowing[safeIndex];
-  const MakingAverage = (MCData) => {
-    if (!MCData.length) return 0;
-    return (
-      Math.round(
-        MCData.reduce((sum, item) => sum + item.MCRate, 0) / MCData.length,
-      ) || 0
-    );
-  };
-  const filteredData = useMemo(() => {
-    const make = () => {
-      if (ChooseSelect === "all") return data ?? [];
-      return data.filter((item) => item.Segment === ChooseSelect) ?? [];
-    };
 
-    return make();
-  }, [data, ChooseSelect]);
+  const CalCulData = (Price) => {
+    console.log("ADADAD", Price);
+    const cal =
+      (Number(Price.newOrdersSumPrice) - Number(Price.actualSalesSumPrice)) /
+      diviceNumber;
+    return cal;
+  };
 
   return (
-    <AnnualRevenueMainDivBox>
-      <div className="MainContainer">
-        <div className="Title" style={{ display: "flex", flexFlow: "wrap" }}>
-          <h4>실적 MC율</h4>
-          {/* <select
-            value={ChooseSelect}
-            onChange={(data) => setChooseSelect(data.target.value)}
-          >
-            <option value="all">Total</option>
-            {SegmentLists.map((list) => {
-              return (
-                <option key={list.code} value={list.code}>
-                  {list.label}
-                </option>
-              );
-            })}
-          </select> */}
-        </div>
-        <div className="MainContent">
-          <h2>
-            {MakingAverage(filteredData)}
-            <span style={{ fontSize: "40px" }}>{subTitle}</span>
-            {/* <div
-              className={`UPDownData ${MakingAverage(filteredData.NowYear) - MakingAverage(filteredData.PreYear) > 0 ? "Up" : "Down"}`}
-            >
-              <div className="IconContainer">
-                <VscTriangleUp />
+    <AnnualRevenueMainDivBox onClick={() => setChangeView(!changeView)}>
+      {changeView ? (
+        <div className="MainContainer">
+          <div className="Title">
+            <h4>수주 잔고</h4>
+          </div>
+
+          <div className="FloatContainer">
+            <div className="RightContainer" style={{ width: "100%" }}>
+              <div className="MainContent">
+                <div className="WorkOrderContainer">
+                  <h2>
+                    {CalCulData(data).toFixed(0)}
+                    <span style={{ fontSize: "40px" }}>{subTitle}</span>
+                  </h2>
+                </div>
+                <div className="bottomBoard">
+                  {currentItem && (
+                    <AnimatedItemBox key={showingIndex}>
+                      <span className="index-num">{safeIndex + 1} </span>
+                      {currentItem.Segment}
+                      {"_"}
+                      <strong>
+                        {(Number(currentItem.SumPrice) / diviceNumber).toFixed(
+                          0,
+                        )}
+                      </strong>
+                      <span className="unit">억원</span>
+                    </AnimatedItemBox>
+                  )}
+                </div>
               </div>
-              <span>
-                {Math.abs(
-                  MakingAverage(filteredData.NowYear) -
-                    MakingAverage(filteredData.PreYear),
-                )}
-                %p
-              </span>
-            </div> */}
-          </h2>
+            </div>
+          </div>
         </div>
-        {currentItem && (
-          <AnimatedItemBox key={showingIndex}>
-            {/* <span className="index-num">{safeIndex + 1}</span> */}
-            {currentItem.Segment}
-            {" #"}
-            {currentItem.CHNG_CONT.split("#")[1]}{" "}
-            <strong>{Number(currentItem.MCRate).toFixed(0)}</strong>
-            <span className="unit">%</span>
-          </AnimatedItemBox>
-        )}
-      </div>
+      ) : (
+        <div
+          className="MainContainer"
+          style={{ display: "flex", flexDirection: "column", height: "100%" }}
+        >
+          <div className="Title">
+            <h4 style={{ margin: 0 }}>매출 미발생 수주</h4>
+          </div>
+
+          {/* flex: 1을 주어 타이틀을 제외한 남은 높이를 꽉 채우고 스크롤을 만듭니다 */}
+          <div
+            className="TableContentBox"
+            style={{
+              flex: 1,
+              overflowY: "auto",
+              height: "auto",
+              paddingTop: 0,
+              marginTop: "40px",
+            }}
+          >
+            <table className="TableContainer">
+              <thead>
+                <tr>
+                  <td style={{ width: "60%" }}>장비/보드</td>
+                  <td>납기월</td>
+                  <td>
+                    <div>금액</div>
+                    <div>(억원)</div>
+                  </td>
+                </tr>
+              </thead>
+              <tbody>
+                {data?.addColumns
+                  .filter(
+                    (item) =>
+                      (Number(item.EXPC_SEL_PRICE) -
+                        Number(item.actualSellPrice)) /
+                        diviceNumber >
+                      0.1,
+                  )
+                  ?.map((list) => (
+                    <tr key={list.WO_NO}>
+                      <td>
+                        {list.WO_TYPE === "E" ? (
+                          `${list.Models}_${list.CHNG_CONT.split("#")[1]}`
+                        ) : (
+                          <div>
+                            <div>{list.Models}</div>
+                            <div>
+                              {list.boardName}_{list.QTY}매
+                            </div>
+                          </div>
+                        )}
+                      </td>
+                      <td>{moment(list.DUE_DT).format("M월")}</td>
+                      <td>
+                        {(
+                          (Number(list.EXPC_SEL_PRICE) -
+                            Number(list.actualSellPrice)) /
+                          diviceNumber
+                        ).toFixed(1)}
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
     </AnnualRevenueMainDivBox>
   );
 };

@@ -19,14 +19,14 @@ const BarListMainDivBox = styled.div`
     margin-top: 5px;
     .ActualContainer {
       background-color: green;
-      height: 22px;
+      height: 27px;
       width: calc(100% - 100px);
       border-radius: 5px;
       position: relative;
       .DivideWhiteLine {
         position: absolute;
         width: 7px;
-        height: 22px;
+        height: 27px;
         left: 50%;
         top: 0px;
         z-index: 10;
@@ -35,7 +35,7 @@ const BarListMainDivBox = styled.div`
     }
     .RealContainer {
       position: absolute;
-      top: 5px;
+      top: 6px;
       left: 0px;
       height: 10px;
       background-color: #efefef;
@@ -66,6 +66,22 @@ const BarListMainDivBox = styled.div`
         font-size: 1.2em;
       }
     }
+  }
+  .LeftCount {
+    color: #fff;
+    font-weight: bolder;
+    position: absolute;
+    left: 0px;
+    top: 3px;
+    text-align: center;
+  }
+  .RightCount {
+    color: #fff;
+    font-weight: bolder;
+    position: absolute;
+    right: 0px;
+    top: 3px;
+    text-align: center;
   }
 `;
 
@@ -126,17 +142,15 @@ const BarList = ({
     } else {
       if (
         Number(
-          SelectData?.reduce((pre, acc) => pre + acc.Real_Sell_Price, 0),
+          SelectData?.reduce((pre, acc) => pre + acc.actualSellPrice, 0),
         ) === 0
       ) {
         return 0;
       } else {
         return Number(
-          (Number(
-            SelectData?.reduce((pre, acc) => pre + acc.Real_Sell_Price, 0),
-          ) /
-            list.value) *
-            100,
+          Number(
+            SelectData?.reduce((pre, acc) => pre + acc.actualSellPrice, 0),
+          ) / diviceNumber,
         ).toFixed(1);
       }
     }
@@ -179,14 +193,14 @@ const BarList = ({
     } else {
       if (
         Number(
-          SelectData?.reduce((pre, acc) => pre + acc.Real_Sell_Price, 0),
+          SelectData?.reduce((pre, acc) => pre + acc.actualSellPrice, 0),
         ) === 0
       ) {
         return 0;
       } else {
         return Number(
           (Number(
-            SelectData?.reduce((pre, acc) => pre + acc.Real_Sell_Price, 0),
+            SelectData?.reduce((pre, acc) => pre + acc.actualSellPrice, 0),
           ) /
             list.value) *
             100,
@@ -214,6 +228,47 @@ const BarList = ({
     return Number((averValue / sumValue) * 100).toFixed(0);
 
     // return 50;
+  };
+  const CalculateWidthPosition123 = (sumValue, equipValue) => {
+    const averValue = equipValue.reduce(
+      (pre, acc) => pre + acc.EXPC_SEL_PRICE,
+      0,
+    );
+
+    if (averValue === 0) {
+      return 0;
+    }
+    return Number(averValue / diviceNumber);
+  };
+
+  const NumberingShow = (LeftNumber, RightNumber, SumNumber) => {
+    const LeftWidth = (((LeftNumber * diviceNumber) / SumNumber) * 100).toFixed(
+      0,
+    );
+    const RightWidth = 100 - Number(LeftWidth);
+
+    return (
+      <>
+        <div
+          className="LeftCount"
+          style={{
+            width: `${LeftWidth}%`,
+            color: `${list.code === "Module" ? "black" : "#fff"}`,
+          }}
+        >
+          {LeftWidth > 20 ? LeftNumber.toFixed(1) : ""}
+        </div>
+        <div
+          className="RightCount"
+          style={{
+            width: `${RightWidth}%`,
+            color: `${list.code === "Module" ? "black" : "#fff"}`,
+          }}
+        >
+          {RightWidth > 20 ? RightNumber.toFixed(1) : ""}
+        </div>
+      </>
+    );
   };
 
   return (
@@ -255,7 +310,6 @@ const BarList = ({
                   : list.color,
             }}
           >
-            {}
             <div
               className="DivideWhiteLine"
               style={
@@ -274,6 +328,20 @@ const BarList = ({
                     }
               }
             ></div>
+            {NumberingShow(
+              CalculateWidthPosition123(
+                list.value,
+                equipmentData.filter((item) => item.Segment === list.code),
+              ),
+              Number(list.value / diviceNumber) -
+                Number(
+                  CalculateWidthPosition123(
+                    list.value,
+                    equipmentData.filter((item) => item.Segment === list.code),
+                  ),
+                ),
+              list.value,
+            )}
           </div>
           <div
             style={{ width: "100px", paddingLeft: "20px", fontSize: "17px" }}

@@ -3,7 +3,6 @@ import TopListsContainer from "./TopLists/TopListsContainer";
 import styled from "styled-components";
 
 export const TopDashboardMainPageMainDivBox = styled.div`
-  margin-top: 40px;
   display: flex;
   flex-flow: wrap;
   justify-content: space-evenly;
@@ -19,13 +18,14 @@ const TopDashboardMainPage = ({ topData = [], showingIndex }) => {
   return (
     <TopDashboardMainPageMainDivBox>
       <div className="FirstContainer">
-        {topData.map((item, j) => (
+        {topData?.slice(0, 4)?.map((item, j) => (
           <TopListsContainer
             key={j}
             type={item.type}
             data={item.data}
             autoShowing={item.autoShowingList}
             showingIndex={showingIndex}
+            topData={topData}
           />
         ))}
       </div>

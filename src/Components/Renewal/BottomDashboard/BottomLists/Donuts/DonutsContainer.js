@@ -7,9 +7,9 @@ import BarGraphContainer from "./BarGraphContainer";
 
 const DonutsContainerMainDivBox = styled.div`
   height: 100%;
-  width: 840px;
+  width: 925px;
   /* min-width: 1100px; */
-  height: calc(100vh - 450px);
+  height: calc(100vh - 395px);
   background-color: #fff;
   border-radius: 10px;
   border: 0.5px solid #e7e6e6;
@@ -35,7 +35,7 @@ const DonutsContainerMainDivBox = styled.div`
   }
 `;
 
-const DonutsContainer = ({ data, bottomData, formData }) => {
+const DonutsContainer = ({ data, bottomData, formData, topData }) => {
   return (
     <DonutsContainerMainDivBox>
       <div className="MainContainers">
@@ -56,7 +56,9 @@ const DonutsContainer = ({ data, bottomData, formData }) => {
         <div className="Right">
           <BarGraphContainer
             data={data.filter((list) => list.value !== 0)}
-            BarData={bottomData.find((list) => list.type === "Bars").data}
+            BarData={
+              topData.find((list) => list.type === "BackLog").data.addColumns
+            }
             formData={formData}
           ></BarGraphContainer>
         </div>
