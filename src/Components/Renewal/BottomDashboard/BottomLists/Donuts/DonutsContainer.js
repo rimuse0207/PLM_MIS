@@ -42,7 +42,7 @@ const DonutsContainer = ({ data, bottomData, formData, topData }) => {
         <div className="Left">
           <h4
             style={{
-              fontWeight: "550",
+              fontWeight: "850",
               marginLeft: "20px",
               marginTop: "20px",
               fontSize: "21px",

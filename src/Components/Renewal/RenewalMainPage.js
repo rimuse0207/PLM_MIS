@@ -39,13 +39,13 @@ export const diviceNumber = 100000000;
 const RenewalMainPage = () => {
   const [showingIndex, setShowingIndex] = useState(0);
 
-  // useEffect(() => {
-  //   const timer = setInterval(() => {
-  //     setShowingIndex((prev) => (prev + 1) % 5);
-  //   }, 10000);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setShowingIndex((prev) => (prev + 1) % 5);
+    }, 10000);
 
-  //   return () => clearInterval(timer);
-  // }, []);
+    return () => clearInterval(timer);
+  }, []);
 
   const Select_Date_State = useSelector(
     (state) => state.Select_Date_Reducer_State.Select_Date_State,
@@ -64,7 +64,6 @@ const RenewalMainPage = () => {
         Months,
       },
     );
-    console.log(GettingData);
 
     if (GettingData.status) {
       setTopData(GettingData.data.TopData);

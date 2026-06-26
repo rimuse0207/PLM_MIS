@@ -104,6 +104,7 @@ const CompletedOrders = ({
       <div className="MainContainer">
         <div className="Title krSuc">
           <h4>월별 재고 금액</h4>
+          <div>(단위: 억원)</div>
         </div>
       </div>
       <div

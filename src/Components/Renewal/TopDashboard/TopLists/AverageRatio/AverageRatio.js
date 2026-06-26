@@ -39,12 +39,11 @@ export const SegmentLists = [
 ];
 
 const AverageRatio = ({ data, subTitle, autoShowing = [], showingIndex }) => {
-  const [changeView, setChangeView] = useState(false);
+  const [changeView, setChangeView] = useState(true);
   const safeIndex = Math.min(showingIndex, autoShowing.length - 1);
   const currentItem = autoShowing[safeIndex];
 
   const CalCulData = (Price) => {
-    console.log("ADADAD", Price);
     const cal =
       (Number(Price.newOrdersSumPrice) - Number(Price.actualSalesSumPrice)) /
       diviceNumber;

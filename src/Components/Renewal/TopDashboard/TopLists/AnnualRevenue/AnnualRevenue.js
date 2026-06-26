@@ -39,7 +39,7 @@ export const AnnualRevenueMainDivBox = styled.div`
       font-size: 21px;
     }
     h4 {
-      font-weight: 500;
+      font-weight: 900;
       font-size: 21px;
     }
   }
@@ -237,7 +237,9 @@ const AnnualRevenue = ({
     <AnnualRevenueMainDivBox>
       <div className="MainContainer">
         <div className="Title krSuc">
-          <h4>실적 (매출 | MC율)</h4>
+          <h4>
+            실적 <strong style={{ fontWeight: "normal" }}>(매출 | MC율)</strong>
+          </h4>
         </div>
         <div className="FloatContainer">
           <div className="LeftContainer">
