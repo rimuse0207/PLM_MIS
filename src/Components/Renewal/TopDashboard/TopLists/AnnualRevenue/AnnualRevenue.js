@@ -224,7 +224,7 @@ const AnnualRevenue = ({
     if (SelectDate?.value === "2024") {
       return Math.round(4120000000 / diviceNumber).toLocaleString("ko-KR");
     } else if (SelectDate?.value === "2025") {
-      return Math.round(58321369823 / diviceNumber).toLocaleString("ko-KR");
+      return Math.round(50101669518 / diviceNumber).toLocaleString("ko-KR");
     } else if (selectData[0]) {
       return Math.round(
         selectData[0]?.sumSupplyPrice / diviceNumber,
