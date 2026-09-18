@@ -132,6 +132,7 @@ const TopNavigationMainPage = () => {
     { value: "2024", label: "2024년" },
     { value: "2025", label: "2025년" },
     { value: "2026", label: "2026년" },
+    { value: "2027", label: "2027년" },
   ];
 
   useEffect(() => {

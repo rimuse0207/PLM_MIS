@@ -383,4 +383,4 @@ const BarList = ({
   );
 };
 
-export default BarList;
+export default React.memo(BarList);

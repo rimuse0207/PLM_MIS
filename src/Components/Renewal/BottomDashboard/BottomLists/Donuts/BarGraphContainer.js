@@ -97,4 +97,4 @@ const BarGraphContainer = ({ data, BarData, formData }) => {
     </BarGraphContainerMainDivBox>
   );
 };
-export default BarGraphContainer;
+export default React.memo(BarGraphContainer);
